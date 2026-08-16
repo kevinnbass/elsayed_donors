@@ -1,0 +1,2 @@
+# report.py needs only the stdlib.
+# scripts/recompute/* also need the hhs_doge tree on PYTHONPATH (src.db, psycopg2).

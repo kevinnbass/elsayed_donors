@@ -1,0 +1,734 @@
+{
+  "named_itemized_total": 10265431.61,
+  "n_gifts": 31180,
+  "form3_itemized": 10265431.61,
+  "gap_vs_form3_itemized": 0.0,
+  "form3_unitemized": 4142626.45,
+  "nppes_confirmed_physician_dollars": 2270392.8,
+  "nppes_confirmed_physician_pct": 22.12,
+  "fec_physician_unmatched_still_unconfirmed": 509230.05,
+  "fec_physician_unique_nppes_nonphysician_dropped": 146398.0,
+  "fec_physician_ambiguous_nppes": 725.0,
+  "upper_bound_physician_if_unmatched_kept": 2780347.85,
+  "buckets": {
+    "not_fec_physician": {
+      "n_donors": 6657,
+      "n_gifts": 25903,
+      "amt": 7338685.76,
+      "pct_of_named_itemized": 71.49
+    },
+    "both_fec_and_nppes_physician": {
+      "n_donors": 994,
+      "n_gifts": 2607,
+      "amt": 1689042.19,
+      "pct_of_named_itemized": 16.45
+    },
+    "nppes_physician_fec_silent": {
+      "n_donors": 436,
+      "n_gifts": 1754,
+      "amt": 581350.61,
+      "pct_of_named_itemized": 5.66
+    },
+    "fec_physician_unmatched": {
+      "n_donors": 291,
+      "n_gifts": 738,
+      "amt": 509230.05,
+      "pct_of_named_itemized": 4.96
+    },
+    "fec_physician_nppes_unique_nonphysician": {
+      "n_donors": 77,
+      "n_gifts": 174,
+      "amt": 146398.0,
+      "pct_of_named_itemized": 1.43
+    },
+    "fec_physician_nppes_ambiguous_or_mixed": {
+      "n_donors": 2,
+      "n_gifts": 4,
+      "amt": 725.0,
+      "pct_of_named_itemized": 0.01
+    }
+  },
+  "caught_consultants_n": 436,
+  "caught_consultants_amt": 581350.61,
+  "caught_consultants_sample": [
+    {
+      "name": "Issa, Said",
+      "state": "MI",
+      "last_norm": "ISSA",
+      "first_norm": "SAID",
+      "n_gifts": 5,
+      "amt": 14500.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": true,
+      "occupations": [
+        "Dentist",
+        "Gee"
+      ],
+      "employers": [
+        "Gee",
+        "Shashi Krishnan, DDS"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207W00000X"
+      ],
+      "npis": [
+        "1003840844"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Huber, Michael",
+      "state": "NY",
+      "last_norm": "HUBER",
+      "first_norm": "MICHAEL",
+      "n_gifts": 4,
+      "amt": 9500.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Owner"
+      ],
+      "employers": [
+        "Self Employed"
+      ],
+      "nppes_verdict": "mixed_hits_some_physician",
+      "n_npi": 2,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207RC0000X",
+        "390200000X"
+      ],
+      "npis": [
+        "1205416500",
+        "1528132867"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Peracha-Riyaz, Manal",
+      "state": "MI",
+      "last_norm": "PERACHA RIYAZ",
+      "first_norm": "MANAL",
+      "n_gifts": 4,
+      "amt": 8000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": true,
+      "occupations": [
+        "Ophthalmologist"
+      ],
+      "employers": [
+        "Eye Surgeons Associates"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207W00000X"
+      ],
+      "npis": [
+        "1588907299"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Abaza, Fadia",
+      "state": "OH",
+      "last_norm": "ABAZA",
+      "first_norm": "FADIA",
+      "n_gifts": 6,
+      "amt": 7500.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Not Employed"
+      ],
+      "employers": [
+        "Not Employed"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "208000000X"
+      ],
+      "npis": [
+        "1013913243"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Khalil, Rafia",
+      "state": "MI",
+      "last_norm": "KHALIL",
+      "first_norm": "RAFIA",
+      "n_gifts": 3,
+      "amt": 7020.26,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Consultant"
+      ],
+      "employers": [
+        "BRG"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207RR0500X"
+      ],
+      "npis": [
+        "1114907912"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Hasan, Syed",
+      "state": "NY",
+      "last_norm": "HASAN",
+      "first_norm": "SYED",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Finance"
+      ],
+      "employers": [
+        "TPG"
+      ],
+      "nppes_verdict": "mixed_hits_some_physician",
+      "n_npi": 6,
+      "n_physician_npi": 3,
+      "taxonomies": [
+        "101YM0800X",
+        "152W00000X",
+        "207Q00000X",
+        "208100000X",
+        "2084P0800X",
+        "390200000X"
+      ],
+      "npis": [
+        "1811944846",
+        "1720027816",
+        "1427285576",
+        "1922769678",
+        "1922741917",
+        "1255807574"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Jondy, Mohammad",
+      "state": "MI",
+      "last_norm": "JONDY",
+      "first_norm": "MOHAMMAD",
+      "n_gifts": 3,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Not Employed"
+      ],
+      "employers": [
+        "Not Employed"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207Q00000X"
+      ],
+      "npis": [
+        "1912312489"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Lu, Yee",
+      "state": "MI",
+      "last_norm": "LU",
+      "first_norm": "YEE",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Retired"
+      ],
+      "employers": [
+        "Not Employed"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207R00000X"
+      ],
+      "npis": [
+        "1205080710"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Kim, Kathleen",
+      "state": "CA",
+      "last_norm": "KIM",
+      "first_norm": "KATHLEEN",
+      "n_gifts": 3,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Law professor"
+      ],
+      "employers": [
+        "LMU Loyola Law School"
+      ],
+      "nppes_verdict": "mixed_hits_some_physician",
+      "n_npi": 3,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "183500000X",
+        "2084P0800X",
+        "390200000X"
+      ],
+      "npis": [
+        "1710902739",
+        "1508213562",
+        "1063883643"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Vasan, Ashwin",
+      "state": "NY",
+      "last_norm": "VASAN",
+      "first_norm": "ASHWIN",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Professor"
+      ],
+      "employers": [
+        "Yale University"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207R00000X"
+      ],
+      "npis": [
+        "1225337413"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Peracha, Zuhair",
+      "state": "MI",
+      "last_norm": "PERACHA",
+      "first_norm": "ZUHAIR",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": true,
+      "occupations": [
+        "Ophthalmologist"
+      ],
+      "employers": [
+        "Eye Surgeons Associates"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207W00000X"
+      ],
+      "npis": [
+        "1790075620"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Almoshelli, Bader",
+      "state": "IL",
+      "last_norm": "ALMOSHELLI",
+      "first_norm": "BADER",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Lawyer"
+      ],
+      "employers": [
+        "KGL"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "208100000X"
+      ],
+      "npis": [
+        "1699090340"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Saadeh, Yamaan",
+      "state": "MI",
+      "last_norm": "SAADEH",
+      "first_norm": "YAMAAN",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Resident"
+      ],
+      "employers": [
+        "University of Michigan"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207T00000X"
+      ],
+      "npis": [
+        "1184014763"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Rasheed, Haroon",
+      "state": "TX",
+      "last_norm": "RASHEED",
+      "first_norm": "HAROON",
+      "n_gifts": 4,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Businessman"
+      ],
+      "employers": [
+        "Self Employed"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207L00000X"
+      ],
+      "npis": [
+        "1285639096"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Tayeb, Jukaku",
+      "state": "MI",
+      "last_norm": "TAYEB",
+      "first_norm": "JUKAKU",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": true,
+      "occupations": [
+        "Nephrologist"
+      ],
+      "employers": [
+        "St Clair Nephrology"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207RN0300X"
+      ],
+      "npis": [
+        "1912909540"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Baig, Mirza",
+      "state": "VA",
+      "last_norm": "BAIG",
+      "first_norm": "MIRZA",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Investor"
+      ],
+      "employers": [
+        "Aldrich Capital"
+      ],
+      "nppes_verdict": "mixed_hits_some_physician",
+      "n_npi": 4,
+      "n_physician_npi": 3,
+      "taxonomies": [
+        "207R00000X",
+        "207RN0300X",
+        "208M00000X",
+        "390200000X"
+      ],
+      "npis": [
+        "1083032676",
+        "1255591376",
+        "1427214063",
+        "1659572386"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Freeman, George",
+      "state": "CA",
+      "last_norm": "FREEMAN",
+      "first_norm": "GEORGE",
+      "n_gifts": 3,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Not Employed"
+      ],
+      "employers": [
+        "Not Employed"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "2084P0800X"
+      ],
+      "npis": [
+        "1285079681"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Liu, Allen",
+      "state": "CA",
+      "last_norm": "LIU",
+      "first_norm": "ALLEN",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Not Employed"
+      ],
+      "employers": [
+        "Not Employed"
+      ],
+      "nppes_verdict": "mixed_hits_some_physician",
+      "n_npi": 2,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "171100000X",
+        "207Q00000X"
+      ],
+      "npis": [
+        "1457454738",
+        "1699273664"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Karim, Syed",
+      "state": "IL",
+      "last_norm": "KARIM",
+      "first_norm": "SYED",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Physcian"
+      ],
+      "employers": [
+        "Self Employed"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207P00000X"
+      ],
+      "npis": [
+        "1497853634"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Kaukab, Zahida",
+      "state": "OH",
+      "last_norm": "KAUKAB",
+      "first_norm": "ZAHIDA",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Not Employed"
+      ],
+      "employers": [
+        "Not Employed"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207R00000X"
+      ],
+      "npis": [
+        "1679557599"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Khan, Nadeem",
+      "state": "OH",
+      "last_norm": "KHAN",
+      "first_norm": "NADEEM",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": true,
+      "occupations": [
+        "Dentist"
+      ],
+      "employers": [
+        "Self Employed"
+      ],
+      "nppes_verdict": "mixed_hits_some_physician",
+      "n_npi": 2,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "1223G0001X",
+        "207L00000X"
+      ],
+      "npis": [
+        "1588610216",
+        "1124010558"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Scanlon, Madeline",
+      "state": "NY",
+      "last_norm": "SCANLON",
+      "first_norm": "MADELINE",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Project Manager"
+      ],
+      "employers": [
+        "Non-Profit"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207LP2900X"
+      ],
+      "npis": [
+        "1588195069"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Mahmoud, Ahmed",
+      "state": "TX",
+      "last_norm": "MAHMOUD",
+      "first_norm": "AHMED",
+      "n_gifts": 3,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "President"
+      ],
+      "employers": [
+        "DEDE Management Services Inc."
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "208100000X"
+      ],
+      "npis": [
+        "1043238553"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Ali, Moiz",
+      "state": "TX",
+      "last_norm": "ALI",
+      "first_norm": "MOIZ",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Not Employed"
+      ],
+      "employers": [
+        "Not Employed"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207R00000X"
+      ],
+      "npis": [
+        "1174803357"
+      ],
+      "label": "nppes_physician_fec_silent"
+    },
+    {
+      "name": "Ahmed, Haseeb",
+      "state": "KS",
+      "last_norm": "AHMED",
+      "first_norm": "HASEEB",
+      "n_gifts": 2,
+      "amt": 7000.0,
+      "fec_physician_occ": false,
+      "fec_clinician_occ": false,
+      "occupations": [
+        "Business Owner"
+      ],
+      "employers": [
+        "Self Employed"
+      ],
+      "nppes_verdict": "confirmed_physician",
+      "n_npi": 1,
+      "n_physician_npi": 1,
+      "taxonomies": [
+        "207R00000X"
+      ],
+      "npis": [
+        "1972701571"
+      ],
+      "label": "nppes_physician_fec_silent"
+    }
+  ],
+  "dropped_false_physician_sample": []
+}

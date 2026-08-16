@@ -1,0 +1,42 @@
+{
+  "url": "https://www.fec.gov/files/bulk-downloads/2026/indiv26.zip",
+  "status": 200,
+  "content_length": "2098465857",
+  "last_modified": "Sun, 16 Aug 2026 15:50:15 GMT",
+  "prior_download_last_modified": "Sun, 16 Aug 2026 15:50:15 GMT",
+  "prior_download_bytes": 2098465857,
+  "newer_than_prior": false,
+  "ingest_ledger": [
+    {
+      "ledger_id": 2314347,
+      "target": "fec_pac_to_candidate_2026",
+      "status": "pending",
+      "rows_inserted": 0,
+      "error": null,
+      "queued_at": "2026-08-16 14:56:44.834480-05:00",
+      "completed_at": "None",
+      "path": "k:/drain/political/fec_2026_refresh/20260816/fec_pac_to_candidate_2026_refresh.txt"
+    },
+    {
+      "ledger_id": 2314348,
+      "target": "fec_independent_expenditures",
+      "status": "pending",
+      "rows_inserted": 0,
+      "error": null,
+      "queued_at": "2026-08-16 14:56:44.871658-05:00",
+      "completed_at": "None",
+      "path": "k:/drain/political/fec_2026_refresh/20260816/independent_expenditure_2026.csv"
+    },
+    {
+      "ledger_id": 2314349,
+      "target": "fec_individual_contributions_2026",
+      "status": "pending",
+      "rows_inserted": 0,
+      "error": null,
+      "queued_at": "2026-08-16 14:58:52.345439-05:00",
+      "completed_at": "None",
+      "path": "k:/drain/political/fec_2026_refresh/20260816/fec_individual_contributions_2026.txt"
+    }
+  ],
+  "decision": "Do not re-download indiv26 unless Last-Modified advances. Q2/12P itemizations are in the e-files, not in the 2026-08-16 bulk. Canonical named roster is the three most-recent F3 e-files, persisted here. Queued 30M-row fec_individual_contributions_2026 remains pending; no second ingest worker started."
+}

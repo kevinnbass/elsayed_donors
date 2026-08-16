@@ -1,0 +1,71 @@
+Top 20 NPPES-confirmed physician donors
+(name — state — dollars — job as filed — employer)
+Issa, Said is a shaky match: FEC says dentist, NPPES hit is an ophthalmology NPI.
+
+Issa, Said — MI — $14,500 — Dentist — Gee / Shashi Krishnan DDS
+Ahmed, Muzammil — MI — $11,600 — Physician — Michigan Healthcare Professionals
+Hussein, Maen — FL — $10,500 — Physician — FCS
+Elnabtity, Mohamed — MI — $9,500 — Physician — Self employed
+Peracha-Riyaz, Manal — MI — $8,000 — Ophthalmologist — Eye Surgeons Associates
+Rizk, Maged — MI — $8,000 — Physician — Maged Rizk MD PLLC
+Sajjad, Syed — PA — $8,000 — Physician — Not employed
+Abaza, Fadia — OH — $7,500 — Not employed — Not employed
+Hamzavi, Iltefat — MI — $7,500 — Physician — Medical Associates
+Mossa-Basha, Ahmad — IN — $7,500 — Physician — Community Hospital
+Ali, Salman — MD — $7,500 — Physician — Self employed
+Safadi, Rami — MI — $7,485 — Physician — McLaren
+Shahrour, Mohamad — FL — $7,450 — Physician — Self employed
+Alwattar, Basil — CA — $7,315 — Physician — SEBMG
+Obeid, Mohammed — MI — $7,100 — Physician — Warrenfield Medical Center
+Khalil, Rafia — MI — $7,020 — Consultant — BRG
+Jurvetson, Karla — CA — $7,009 — Physician — Self employed
+Ali, Reehan — MI — $7,000 — Physician — Botsford Medical Imaging PC
+Baig, Nadeem — NJ — $7,000 — Physician — Allied Digestive Health
+Chowdhary, Sultan — TX — $7,000 — Physician — Cancer center
+
+Top 20 health-system employers
+(Henry Ford is split across three labels, ~$81k combined. Corewell + Corewell Health ~$49k.)
+
+University of Michigan — $64,495
+Henry Ford Health — $56,638
+Corewell Health — $41,010
+Wayne State University — $32,698
+ProMedica — $23,030
+TPMG — $22,720
+Pfizer — $17,500
+Memorial Healthcare — $16,250
+McLaren — $15,035
+Kaiser Permanente — $14,578
+Henry Ford — $14,372
+SEBMF — $14,130
+Ascension — $12,250
+Sutter West Bay Medical Group — $10,930
+Mercy Health — $10,600
+Henry Ford Hospital — $10,210
+Hospital (generic label) — $9,420
+Trinity Health — $8,259
+UW Health — $8,000
+Corewell — $7,630
+
+Top 20 people who listed a system as employer
+
+Ezzeddine, Dina — CA — $14,130 — Physician — SEBMF
+Almadani, Sameh — MI — $7,530 — Physician — Promedica
+Mossa-Basha, Ahmad — IN — $7,500 — Physician — Community Hospital
+Aslam, Aishah — MI — $7,500 — Physician — Ascension
+Safadi, Rami — MI — $7,485 — Physician — McLaren
+Alwattar, Basil — CA — $7,315 — Physician — SEBMG
+Abumustafa, Naser — MI — $7,000 — Associate Dean — Henry Ford College (college, not the hospital)
+Elbanna, Ashraf — MI — $7,000 — Physician — Memorial Healthcare
+Eldawy, Tarek — FL — $7,000 — Physician — ASH hospital
+Hasan, Zenah — NY — $7,000 — Marketing — Pfizer
+Issawi, Ahmad — MI — $7,000 — Physician — IHA Trinity Health
+Siddiqui, Suleman — MI — $7,000 — Physician — Trinity
+Al-Ameri, Hazim — MI — $7,000 — Physician — Corewell Health
+Zakaria, Hesham — CA — $7,000 — Physician — Sutter West Bay Medical Group
+Alghanem, Husam — MI — $7,000 — Physician — Henry Ford Health
+Kurdi, Ramy — MI — $7,000 — Physician — Memorial Healthcare
+Hamad, Judy — MI — $7,000 — Physician — University of Indiana hospitals
+Alnajjar, Raed — MI — $7,000 — Cardiac surgeon — Henry Ford Health
+Saadeh, Yamaan — MI — $7,000 — Resident — University of Michigan
+Hamad, Abdualrahman — MI — $7,000 — Physician — Henry Ford Health

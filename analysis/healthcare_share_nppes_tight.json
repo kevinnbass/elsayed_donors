@@ -1,0 +1,712 @@
+{
+  "named_itemized_total": 10265431.61,
+  "n_donors": 8457,
+  "nppes_confirmed_physician_floor_dollars": 2061368.42,
+  "nppes_confirmed_physician_floor_pct": 20.08,
+  "upper_bound_dollars": 2780347.85,
+  "upper_bound_pct": 27.08,
+  "rule": "Floor = unique NPPES individual with taxonomy 207/208, or every same-name+state NPI is 207/208. Mixed homonyms are NOT in the floor.",
+  "buckets": {
+    "not_physician": {
+      "n_donors": 6657,
+      "n_gifts": 25903,
+      "amt": 7338685.76,
+      "pct": 71.49,
+      "sample": [
+        {
+          "name": "Aljumaily, Anas",
+          "state": "TX",
+          "amt": 14000.0,
+          "occupations": [
+            "CEO"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Barakat, Abdul",
+          "state": "CA",
+          "amt": 14000.0,
+          "occupations": [
+            "Not Employed"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Nafal, Adham",
+          "state": "TX",
+          "amt": 14000.0,
+          "occupations": [
+            "Not Employed"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Barakat, Nidal",
+          "state": "CA",
+          "amt": 14000.0,
+          "occupations": [
+            "Self Employed"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Chami, David",
+          "state": "AZ",
+          "amt": 14000.0,
+          "occupations": [
+            "Attorney"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Dari, Ahmad",
+          "state": "MI",
+          "amt": 14000.0,
+          "occupations": [
+            "President"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Nafal, Mohamad",
+          "state": "TX",
+          "amt": 14000.0,
+          "occupations": [
+            "Real Estate"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Nathoo, Amir",
+          "state": "CA",
+          "amt": 14000.0,
+          "occupations": [
+            "CEO"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        }
+      ]
+    },
+    "confirmed_both": {
+      "n_donors": 927,
+      "n_gifts": 2398,
+      "amt": 1606401.19,
+      "pct": 15.65,
+      "sample": [
+        {
+          "name": "Ahmed, Muzammil",
+          "state": "MI",
+          "amt": 11600.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "208800000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Hussein, Maen",
+          "state": "FL",
+          "amt": 10500.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207RH0000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Elnabtity, Mohamed",
+          "state": "MI",
+          "amt": 9500.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207T00000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Rizk, Maged",
+          "state": "MI",
+          "amt": 8000.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207RI0011X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Sajjad, Syed",
+          "state": "PA",
+          "amt": 8000.0,
+          "occupations": [
+            "Physician",
+            "Retired"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207R00000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Hamzavi, Iltefat",
+          "state": "MI",
+          "amt": 7500.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207NS0135X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Mossa-Basha, Ahmad",
+          "state": "IN",
+          "amt": 7500.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207Q00000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Ali, Salman",
+          "state": "MD",
+          "amt": 7500.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207W00000X"
+          ],
+          "n_npi": 1
+        }
+      ]
+    },
+    "fec_physician_unmatched": {
+      "n_donors": 291,
+      "n_gifts": 738,
+      "amt": 509230.05,
+      "pct": 4.96,
+      "sample": [
+        {
+          "name": "Afaneh, Amer",
+          "state": "OH",
+          "amt": 8000.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Almadani, Sameh",
+          "state": "MI",
+          "amt": 7530.3,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Aslam, Aishah",
+          "state": "MI",
+          "amt": 7500.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Basha, Yahya",
+          "state": "MI",
+          "amt": 7000.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Hammoud, Khaled",
+          "state": "MI",
+          "amt": 7000.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Mohiuddin, Meraj",
+          "state": "CA",
+          "amt": 7000.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Zakaria, Hesham",
+          "state": "CA",
+          "amt": 7000.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        },
+        {
+          "name": "Morsy, Amr",
+          "state": "CA",
+          "amt": 7000.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "unmatched",
+          "taxonomies": [],
+          "n_npi": 0
+        }
+      ]
+    },
+    "confirmed_nppes_fec_silent": {
+      "n_donors": 323,
+      "n_gifts": 1041,
+      "amt": 454967.23,
+      "pct": 4.43,
+      "sample": [
+        {
+          "name": "Issa, Said",
+          "state": "MI",
+          "amt": 14500.0,
+          "occupations": [
+            "Dentist",
+            "Gee"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207W00000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Peracha-Riyaz, Manal",
+          "state": "MI",
+          "amt": 8000.0,
+          "occupations": [
+            "Ophthalmologist"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207W00000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Abaza, Fadia",
+          "state": "OH",
+          "amt": 7500.0,
+          "occupations": [
+            "Not Employed"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "208000000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Khalil, Rafia",
+          "state": "MI",
+          "amt": 7020.26,
+          "occupations": [
+            "Consultant"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207RR0500X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Jondy, Mohammad",
+          "state": "MI",
+          "amt": 7000.0,
+          "occupations": [
+            "Not Employed"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207Q00000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Lu, Yee",
+          "state": "MI",
+          "amt": 7000.0,
+          "occupations": [
+            "Retired"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207R00000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Vasan, Ashwin",
+          "state": "NY",
+          "amt": 7000.0,
+          "occupations": [
+            "Professor"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207R00000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Peracha, Zuhair",
+          "state": "MI",
+          "amt": 7000.0,
+          "occupations": [
+            "Ophthalmologist"
+          ],
+          "verdict": "confirmed_physician",
+          "taxonomies": [
+            "207W00000X"
+          ],
+          "n_npi": 1
+        }
+      ]
+    },
+    "mixed_homonym_not_in_floor": {
+      "n_donors": 180,
+      "n_gifts": 922,
+      "amt": 209024.38,
+      "pct": 2.04,
+      "sample": [
+        {
+          "name": "Huber, Michael",
+          "state": "NY",
+          "amt": 9500.0,
+          "occupations": [
+            "Owner"
+          ],
+          "verdict": "mixed_hits_some_physician",
+          "taxonomies": [
+            "207RC0000X",
+            "390200000X"
+          ],
+          "n_npi": 2
+        },
+        {
+          "name": "Hasan, Syed",
+          "state": "NY",
+          "amt": 7000.0,
+          "occupations": [
+            "Finance"
+          ],
+          "verdict": "mixed_hits_some_physician",
+          "taxonomies": [
+            "101YM0800X",
+            "152W00000X",
+            "207Q00000X",
+            "208100000X",
+            "2084P0800X",
+            "390200000X"
+          ],
+          "n_npi": 6
+        },
+        {
+          "name": "Kim, Kathleen",
+          "state": "CA",
+          "amt": 7000.0,
+          "occupations": [
+            "Law professor"
+          ],
+          "verdict": "mixed_hits_some_physician",
+          "taxonomies": [
+            "183500000X",
+            "2084P0800X",
+            "390200000X"
+          ],
+          "n_npi": 3
+        },
+        {
+          "name": "Baig, Mirza",
+          "state": "VA",
+          "amt": 7000.0,
+          "occupations": [
+            "Investor"
+          ],
+          "verdict": "mixed_hits_some_physician",
+          "taxonomies": [
+            "207R00000X",
+            "207RN0300X",
+            "208M00000X",
+            "390200000X"
+          ],
+          "n_npi": 4
+        },
+        {
+          "name": "Liu, Allen",
+          "state": "CA",
+          "amt": 7000.0,
+          "occupations": [
+            "Not Employed"
+          ],
+          "verdict": "mixed_hits_some_physician",
+          "taxonomies": [
+            "171100000X",
+            "207Q00000X"
+          ],
+          "n_npi": 2
+        },
+        {
+          "name": "Khan, Nadeem",
+          "state": "OH",
+          "amt": 7000.0,
+          "occupations": [
+            "Dentist"
+          ],
+          "verdict": "mixed_hits_some_physician",
+          "taxonomies": [
+            "1223G0001X",
+            "207L00000X"
+          ],
+          "n_npi": 2
+        },
+        {
+          "name": "Rizvi, Syed",
+          "state": "CA",
+          "amt": 6950.0,
+          "occupations": [
+            "Attorney",
+            "Not Employed",
+            "Physician"
+          ],
+          "verdict": "mixed_hits_some_physician",
+          "taxonomies": [
+            "106S00000X",
+            "1223G0001X",
+            "174400000X",
+            "207Q00000X",
+            "207V00000X"
+          ],
+          "n_npi": 5
+        },
+        {
+          "name": "Khalil, Mohammad",
+          "state": "MI",
+          "amt": 5600.0,
+          "occupations": [
+            "Dentist",
+            "Professor"
+          ],
+          "verdict": "mixed_hits_some_physician",
+          "taxonomies": [
+            "1223G0001X",
+            "208M00000X",
+            "213ES0103X",
+            "363LG0600X"
+          ],
+          "n_npi": 4
+        }
+      ]
+    },
+    "dropped_fec_physician_unique_nonmd": {
+      "n_donors": 77,
+      "n_gifts": 174,
+      "amt": 146398.0,
+      "pct": 1.43,
+      "sample": [
+        {
+          "name": "Ezzeddine, Dina",
+          "state": "CA",
+          "amt": 14130.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_nonphysician",
+          "taxonomies": [
+            "174400000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Abunasra, Nazeeh",
+          "state": "CT",
+          "amt": 8000.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_nonphysician",
+          "taxonomies": [
+            "1223S0112X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Javed, Muhammad",
+          "state": "TX",
+          "amt": 7000.0,
+          "occupations": [
+            "Cardiologist"
+          ],
+          "verdict": "confirmed_nonphysician",
+          "taxonomies": [
+            "390200000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Safiedine, Ali",
+          "state": "MI",
+          "amt": 7000.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_nonphysician",
+          "taxonomies": [
+            "213E00000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Shah, Jawad",
+          "state": "MI",
+          "amt": 7000.0,
+          "occupations": [
+            "Physician/business owner"
+          ],
+          "verdict": "confirmed_nonphysician",
+          "taxonomies": [
+            "174400000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Azzawi, Zaher",
+          "state": "CA",
+          "amt": 7000.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_nonphysician",
+          "taxonomies": [
+            "174400000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Abdulhak, Muwaffak",
+          "state": "MI",
+          "amt": 7000.0,
+          "occupations": [
+            "Neurosurgeon"
+          ],
+          "verdict": "confirmed_nonphysician",
+          "taxonomies": [
+            "174400000X"
+          ],
+          "n_npi": 1
+        },
+        {
+          "name": "Khatib, Celena",
+          "state": "MI",
+          "amt": 5500.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "confirmed_nonphysician",
+          "taxonomies": [
+            "103T00000X"
+          ],
+          "n_npi": 1
+        }
+      ]
+    },
+    "fec_physician_other": {
+      "n_donors": 2,
+      "n_gifts": 4,
+      "amt": 725.0,
+      "pct": 0.01,
+      "sample": [
+        {
+          "name": "Tsai, Angela",
+          "state": "CA",
+          "amt": 500.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "matched_nonphysician_ambiguous",
+          "taxonomies": [
+            "106S00000X",
+            "171100000X"
+          ],
+          "n_npi": 2
+        },
+        {
+          "name": "Francis, Gabrielle",
+          "state": "NY",
+          "amt": 225.0,
+          "occupations": [
+            "Physician"
+          ],
+          "verdict": "matched_nonphysician_ambiguous",
+          "taxonomies": [
+            "104100000X",
+            "175F00000X"
+          ],
+          "n_npi": 2
+        }
+      ]
+    }
+  }
+}

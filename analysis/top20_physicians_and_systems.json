@@ -1,0 +1,712 @@
+{
+  "top20_nppes_confirmed_physicians": [
+    {
+      "rank": 1,
+      "name": "Issa, Said",
+      "state": "MI",
+      "amt": 14500.0,
+      "n_gifts": 5,
+      "occupations": [
+        "Dentist",
+        "Gee"
+      ],
+      "employers": [
+        "Gee",
+        "Shashi Krishnan, DDS"
+      ],
+      "npi": "1003840844",
+      "taxonomy": "207W00000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 2,
+      "name": "Ahmed, Muzammil",
+      "state": "MI",
+      "amt": 11600.0,
+      "n_gifts": 8,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Michigan Healthcare professionals"
+      ],
+      "npi": "1689649873",
+      "taxonomy": "208800000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 3,
+      "name": "Hussein, Maen",
+      "state": "FL",
+      "amt": 10500.0,
+      "n_gifts": 4,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "FCS"
+      ],
+      "npi": "1356332506",
+      "taxonomy": "207RH0000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 4,
+      "name": "Elnabtity, Mohamed",
+      "state": "MI",
+      "amt": 9500.0,
+      "n_gifts": 5,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Self Employed"
+      ],
+      "npi": "1255385910",
+      "taxonomy": "207T00000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 5,
+      "name": "Peracha-Riyaz, Manal",
+      "state": "MI",
+      "amt": 8000.0,
+      "n_gifts": 4,
+      "occupations": [
+        "Ophthalmologist"
+      ],
+      "employers": [
+        "Eye Surgeons Associates"
+      ],
+      "npi": "1588907299",
+      "taxonomy": "207W00000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 6,
+      "name": "Rizk, Maged",
+      "state": "MI",
+      "amt": 8000.0,
+      "n_gifts": 4,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Maged Rizk md pllc"
+      ],
+      "npi": "1609891753",
+      "taxonomy": "207RI0011X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 7,
+      "name": "Sajjad, Syed",
+      "state": "PA",
+      "amt": 8000.0,
+      "n_gifts": 5,
+      "occupations": [
+        "Physician",
+        "Retired"
+      ],
+      "employers": [
+        "Not Employed",
+        "Self Employed"
+      ],
+      "npi": "1962596130",
+      "taxonomy": "207R00000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 8,
+      "name": "Abaza, Fadia",
+      "state": "OH",
+      "amt": 7500.0,
+      "n_gifts": 6,
+      "occupations": [
+        "Not Employed"
+      ],
+      "employers": [
+        "Not Employed"
+      ],
+      "npi": "1013913243",
+      "taxonomy": "208000000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 9,
+      "name": "Hamzavi, Iltefat",
+      "state": "MI",
+      "amt": 7500.0,
+      "n_gifts": 9,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Medical Associates"
+      ],
+      "npi": "1538117866",
+      "taxonomy": "207NS0135X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 10,
+      "name": "Mossa-Basha, Ahmad",
+      "state": "IN",
+      "amt": 7500.0,
+      "n_gifts": 8,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Community Hospital"
+      ],
+      "npi": "1306263306",
+      "taxonomy": "207Q00000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 11,
+      "name": "Ali, Salman",
+      "state": "MD",
+      "amt": 7500.0,
+      "n_gifts": 4,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Self Employed"
+      ],
+      "npi": "1659474872",
+      "taxonomy": "207W00000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 12,
+      "name": "Safadi, Rami",
+      "state": "MI",
+      "amt": 7485.0,
+      "n_gifts": 19,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "McLaren"
+      ],
+      "npi": "1720005606",
+      "taxonomy": "2085R0204X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 13,
+      "name": "Shahrour, Mohamad",
+      "state": "FL",
+      "amt": 7450.0,
+      "n_gifts": 9,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Self Employed"
+      ],
+      "npi": "1689913758",
+      "taxonomy": "207R00000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 14,
+      "name": "Alwattar, Basil",
+      "state": "CA",
+      "amt": 7315.0,
+      "n_gifts": 4,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "SEBMG"
+      ],
+      "npi": "1700081502",
+      "taxonomy": "207XX0005X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 15,
+      "name": "Obeid, Mohammed",
+      "state": "MI",
+      "amt": 7100.0,
+      "n_gifts": 3,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Warrenfield Medical Center"
+      ],
+      "npi": "1457383911",
+      "taxonomy": "207R00000X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 16,
+      "name": "Khalil, Rafia",
+      "state": "MI",
+      "amt": 7020.26,
+      "n_gifts": 3,
+      "occupations": [
+        "Consultant"
+      ],
+      "employers": [
+        "BRG"
+      ],
+      "npi": "1114907912",
+      "taxonomy": "207RR0500X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 17,
+      "name": "Jurvetson, Karla",
+      "state": "CA",
+      "amt": 7009.0,
+      "n_gifts": 4,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Self Employed"
+      ],
+      "npi": "1053752386",
+      "taxonomy": "2084P0800X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 18,
+      "name": "Ali, Reehan",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 3,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Botsford Medical Imaging PC"
+      ],
+      "npi": "1619289501",
+      "taxonomy": "2085R0202X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 19,
+      "name": "Baig, Nadeem",
+      "state": "NJ",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Allied Digestive Halth"
+      ],
+      "npi": "1770682668",
+      "taxonomy": "207RG0100X",
+      "nppes_verdict": "confirmed_physician"
+    },
+    {
+      "rank": 20,
+      "name": "Chowdhary, Sultan",
+      "state": "TX",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "occupations": [
+        "Physician"
+      ],
+      "employers": [
+        "Cancer center"
+      ],
+      "npi": "1033114459",
+      "taxonomy": "207RH0003X",
+      "nppes_verdict": "confirmed_physician"
+    }
+  ],
+  "top20_health_systems_by_dollars": [
+    {
+      "employer": "UNIVERSITY OF MICHIGAN",
+      "amt": 64494.91,
+      "n_gifts": 231,
+      "n_names": 69
+    },
+    {
+      "employer": "HENRY FORD HEALTH",
+      "amt": 56638.2,
+      "n_gifts": 62,
+      "n_names": 27
+    },
+    {
+      "employer": "COREWELL HEALTH",
+      "amt": 41010.0,
+      "n_gifts": 77,
+      "n_names": 29
+    },
+    {
+      "employer": "WAYNE STATE UNIVERSITY",
+      "amt": 32697.76,
+      "n_gifts": 69,
+      "n_names": 20
+    },
+    {
+      "employer": "PROMEDICA",
+      "amt": 23030.3,
+      "n_gifts": 38,
+      "n_names": 10
+    },
+    {
+      "employer": "TPMG",
+      "amt": 22720.0,
+      "n_gifts": 25,
+      "n_names": 7
+    },
+    {
+      "employer": "PFIZER",
+      "amt": 17500.0,
+      "n_gifts": 6,
+      "n_names": 3
+    },
+    {
+      "employer": "MEMORIAL HEALTHCARE",
+      "amt": 16250.0,
+      "n_gifts": 9,
+      "n_names": 5
+    },
+    {
+      "employer": "MCLAREN",
+      "amt": 15035.0,
+      "n_gifts": 28,
+      "n_names": 7
+    },
+    {
+      "employer": "KAISER PERMANENTE",
+      "amt": 14578.0,
+      "n_gifts": 13,
+      "n_names": 5
+    },
+    {
+      "employer": "HENRY FORD",
+      "amt": 14372.0,
+      "n_gifts": 21,
+      "n_names": 13
+    },
+    {
+      "employer": "SEBMF",
+      "amt": 14130.0,
+      "n_gifts": 5,
+      "n_names": 1
+    },
+    {
+      "employer": "ASCENSION",
+      "amt": 12250.0,
+      "n_gifts": 13,
+      "n_names": 4
+    },
+    {
+      "employer": "SUTTER WEST BAY MEDICAL GROUP",
+      "amt": 10930.0,
+      "n_gifts": 5,
+      "n_names": 2
+    },
+    {
+      "employer": "MERCY HEALTH",
+      "amt": 10600.0,
+      "n_gifts": 12,
+      "n_names": 8
+    },
+    {
+      "employer": "HENRY FORD HOSPITAL",
+      "amt": 10210.0,
+      "n_gifts": 14,
+      "n_names": 9
+    },
+    {
+      "employer": "HOSPITAL",
+      "amt": 9420.0,
+      "n_gifts": 27,
+      "n_names": 15
+    },
+    {
+      "employer": "TRINITY HEALTH",
+      "amt": 8259.28,
+      "n_gifts": 31,
+      "n_names": 12
+    },
+    {
+      "employer": "UW HEALTH",
+      "amt": 8000.0,
+      "n_gifts": 3,
+      "n_names": 2
+    },
+    {
+      "employer": "COREWELL",
+      "amt": 7630.0,
+      "n_gifts": 14,
+      "n_names": 6
+    }
+  ],
+  "top20_donors_employed_at_a_system": [
+    {
+      "name": "Ezzeddine, Dina",
+      "state": "CA",
+      "amt": 14130.0,
+      "n_gifts": 5,
+      "employers": [
+        "SEBMF"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": false
+    },
+    {
+      "name": "Almadani, Sameh",
+      "state": "MI",
+      "amt": 7530.3,
+      "n_gifts": 14,
+      "employers": [
+        "Promedica"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": false
+    },
+    {
+      "name": "Mossa-Basha, Ahmad",
+      "state": "IN",
+      "amt": 7500.0,
+      "n_gifts": 8,
+      "employers": [
+        "Community Hospital"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Aslam, Aishah",
+      "state": "MI",
+      "amt": 7500.0,
+      "n_gifts": 6,
+      "employers": [
+        "Ascension"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": false
+    },
+    {
+      "name": "Safadi, Rami",
+      "state": "MI",
+      "amt": 7485.0,
+      "n_gifts": 19,
+      "employers": [
+        "McLaren"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Alwattar, Basil",
+      "state": "CA",
+      "amt": 7315.0,
+      "n_gifts": 4,
+      "employers": [
+        "SEBMG"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Abumustafa, Naser",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "Henry Ford college"
+      ],
+      "occupations": [
+        "Associate Dean"
+      ],
+      "nppes_physician": false
+    },
+    {
+      "name": "Elbanna, Ashraf",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 4,
+      "employers": [
+        "Memorial Healthcare"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Eldawy, Tarek",
+      "state": "FL",
+      "amt": 7000.0,
+      "n_gifts": 3,
+      "employers": [
+        "ASH hospital"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Hasan, Zenah",
+      "state": "NY",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "Pfizer"
+      ],
+      "occupations": [
+        "Marketing"
+      ],
+      "nppes_physician": false
+    },
+    {
+      "name": "Issawi, Ahmad",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "Iha Trinity health"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Siddiqui, Suleman",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 4,
+      "employers": [
+        "trinity"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Al-Ameri, Hazim",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "Corewell Health"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Zakaria, Hesham",
+      "state": "CA",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "Sutter West Bay Medical Group"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": false
+    },
+    {
+      "name": "Alghanem, Husam",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "Henry Ford Health"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Kurdi, Ramy",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "Memorial healthcare"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Hamad, Judy",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "University of Indiana hospitals"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": false
+    },
+    {
+      "name": "Alnajjar, Raed",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "Henry Ford Health"
+      ],
+      "occupations": [
+        "Cardiac Surgeon"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Saadeh, Yamaan",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "University of Michigan"
+      ],
+      "occupations": [
+        "Resident"
+      ],
+      "nppes_physician": true
+    },
+    {
+      "name": "Hamad, Abdualrahman",
+      "state": "MI",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "employers": [
+        "Henry Ford Health"
+      ],
+      "occupations": [
+        "Physician"
+      ],
+      "nppes_physician": true
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "indiv26_file_1996846": {
+    "n": 6048,
+    "amt": 1670915.0
+  },
+  "e_file_2005719_most_recent": {
+    "n": 6053,
+    "amt": 1678783.83
+  },
+  "amt_delta_new_minus_old": 7868.83,
+  "n_delta": 5,
+  "tran_ids_only_in_amendment": 5,
+  "tran_ids_only_in_indiv26": 0,
+  "q1_csv": "K:\\drain\\political\\fec_2026_refresh\\20260816\\filings\\q1_2026_2005719.csv",
+  "q1_fec": "K:\\drain\\political\\fec_2026_refresh\\20260816\\filings\\q1_2026_2005719.fec",
+  "note": "Most-recent Q1 e-file replaces indiv26 file_num 1996846 as the Q1 slice."
+}
