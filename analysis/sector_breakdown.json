@@ -1,0 +1,492 @@
+{
+  "named_itemized_total": 10265431.61,
+  "n_gifts": 31180,
+  "sectors": [
+    {
+      "rank": 1,
+      "sector": "Not employed / retired / student",
+      "amt": 2601208.12,
+      "pct": 25.3,
+      "n_gifts": 15237,
+      "top_occupations": [
+        {
+          "occ": "Not Employed",
+          "n": 13708,
+          "amt": 2132847.22
+        },
+        {
+          "occ": "Retired",
+          "n": 1401,
+          "amt": 331230.63
+        },
+        {
+          "occ": "Homemaker",
+          "n": 50,
+          "amt": 111375.0
+        },
+        {
+          "occ": "Student",
+          "n": 57,
+          "amt": 15212.0
+        },
+        {
+          "occ": "N/A",
+          "n": 2,
+          "amt": 7000.0
+        },
+        {
+          "occ": "student",
+          "n": 1,
+          "amt": 1000.0
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "sector": "Healthcare \u2014 physician / surgeon / specialist",
+      "amt": 2398040.77,
+      "pct": 23.4,
+      "n_gifts": 3586,
+      "top_occupations": [
+        {
+          "occ": "Physician",
+          "n": 3178,
+          "amt": 2087812.14
+        },
+        {
+          "occ": "Cardiologist",
+          "n": 24,
+          "amt": 33850.0
+        },
+        {
+          "occ": "Surgeon",
+          "n": 34,
+          "amt": 33350.0
+        },
+        {
+          "occ": "Ophthalmologist",
+          "n": 11,
+          "amt": 18300.0
+        },
+        {
+          "occ": "Doctor",
+          "n": 26,
+          "amt": 17700.0
+        },
+        {
+          "occ": "Dermatologist",
+          "n": 15,
+          "amt": 15750.0
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "sector": "Business owner / executive / consultant (non-health)",
+      "amt": 1410382.03,
+      "pct": 13.7,
+      "n_gifts": 2107,
+      "top_occupations": [
+        {
+          "occ": "CEO",
+          "n": 182,
+          "amt": 306782.0
+        },
+        {
+          "occ": "Consultant",
+          "n": 266,
+          "amt": 110619.49
+        },
+        {
+          "occ": "President",
+          "n": 77,
+          "amt": 92745.0
+        },
+        {
+          "occ": "Manager",
+          "n": 208,
+          "amt": 86293.31
+        },
+        {
+          "occ": "Self Employed",
+          "n": 58,
+          "amt": 70225.0
+        },
+        {
+          "occ": "Business Owner",
+          "n": 68,
+          "amt": 63682.16
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "sector": "Other / unclassified",
+      "amt": 1258828.97,
+      "pct": 12.3,
+      "n_gifts": 3539,
+      "top_occupations": [
+        {
+          "occ": "Information Requested",
+          "n": 48,
+          "amt": 55235.59
+        },
+        {
+          "occ": "Business",
+          "n": 73,
+          "amt": 53153.0
+        },
+        {
+          "occ": "Musician",
+          "n": 47,
+          "amt": 28772.74
+        },
+        {
+          "occ": "COO",
+          "n": 27,
+          "amt": 26887.96
+        },
+        {
+          "occ": "Realtor",
+          "n": 33,
+          "amt": 23561.0
+        },
+        {
+          "occ": "Chairman",
+          "n": 7,
+          "amt": 20500.0
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "sector": "Tech / engineering",
+      "amt": 644183.54,
+      "pct": 6.3,
+      "n_gifts": 2041,
+      "top_occupations": [
+        {
+          "occ": "Engineer",
+          "n": 846,
+          "amt": 264817.9
+        },
+        {
+          "occ": "Software Engineer",
+          "n": 326,
+          "amt": 95683.33
+        },
+        {
+          "occ": "IT",
+          "n": 64,
+          "amt": 27388.41
+        },
+        {
+          "occ": "Software Developer",
+          "n": 62,
+          "amt": 19267.87
+        },
+        {
+          "occ": "Engineering Management",
+          "n": 3,
+          "amt": 10500.0
+        },
+        {
+          "occ": "Real Estate Developer",
+          "n": 4,
+          "amt": 9000.0
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "sector": "Law",
+      "amt": 508406.14,
+      "pct": 5.0,
+      "n_gifts": 1021,
+      "top_occupations": [
+        {
+          "occ": "Attorney",
+          "n": 852,
+          "amt": 456237.24
+        },
+        {
+          "occ": "Law Professor",
+          "n": 6,
+          "amt": 11250.0
+        },
+        {
+          "occ": "Lawyer",
+          "n": 3,
+          "amt": 8000.0
+        },
+        {
+          "occ": "Law professor",
+          "n": 3,
+          "amt": 7000.0
+        },
+        {
+          "occ": "Attorney/educator",
+          "n": 2,
+          "amt": 7000.0
+        },
+        {
+          "occ": "Judge",
+          "n": 19,
+          "amt": 3090.0
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "sector": "Healthcare \u2014 other clinician (dentist, pharmacist, nurse, etc.)",
+      "amt": 396419.71,
+      "pct": 3.9,
+      "n_gifts": 856,
+      "top_occupations": [
+        {
+          "occ": "Dentist",
+          "n": 151,
+          "amt": 146765.2
+        },
+        {
+          "occ": "Pharmacist",
+          "n": 108,
+          "amt": 83038.91
+        },
+        {
+          "occ": "Social Worker",
+          "n": 124,
+          "amt": 20561.31
+        },
+        {
+          "occ": "Psychologist",
+          "n": 67,
+          "amt": 18540.0
+        },
+        {
+          "occ": "Therapist",
+          "n": 36,
+          "amt": 12525.0
+        },
+        {
+          "occ": "Chiropractor",
+          "n": 5,
+          "amt": 11500.0
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "sector": "Finance / investing",
+      "amt": 357960.94,
+      "pct": 3.5,
+      "n_gifts": 631,
+      "top_occupations": [
+        {
+          "occ": "Finance",
+          "n": 57,
+          "amt": 63125.0
+        },
+        {
+          "occ": "Investor",
+          "n": 37,
+          "amt": 42325.0
+        },
+        {
+          "occ": "Accountant",
+          "n": 66,
+          "amt": 27837.49
+        },
+        {
+          "occ": "Analyst",
+          "n": 66,
+          "amt": 21583.4
+        },
+        {
+          "occ": "Venture Capitalist",
+          "n": 5,
+          "amt": 17500.0
+        },
+        {
+          "occ": "Venture Capital",
+          "n": 7,
+          "amt": 15750.0
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "sector": "Media / arts / other professional",
+      "amt": 304621.63,
+      "pct": 3.0,
+      "n_gifts": 768,
+      "top_occupations": [
+        {
+          "occ": "Sales",
+          "n": 172,
+          "amt": 61567.06
+        },
+        {
+          "occ": "Real Estate",
+          "n": 69,
+          "amt": 58306.0
+        },
+        {
+          "occ": "Writer",
+          "n": 83,
+          "amt": 34003.16
+        },
+        {
+          "occ": "Marketing",
+          "n": 15,
+          "amt": 19000.0
+        },
+        {
+          "occ": "Designer",
+          "n": 41,
+          "amt": 15630.27
+        },
+        {
+          "occ": "Architect",
+          "n": 44,
+          "amt": 12860.0
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "sector": "Education / academic",
+      "amt": 226371.83,
+      "pct": 2.2,
+      "n_gifts": 952,
+      "top_occupations": [
+        {
+          "occ": "Professor",
+          "n": 437,
+          "amt": 99043.05
+        },
+        {
+          "occ": "Teacher",
+          "n": 191,
+          "amt": 32035.37
+        },
+        {
+          "occ": "Educator",
+          "n": 46,
+          "amt": 20282.0
+        },
+        {
+          "occ": "Principal",
+          "n": 14,
+          "amt": 16775.0
+        },
+        {
+          "occ": "Faculty",
+          "n": 21,
+          "amt": 11934.2
+        },
+        {
+          "occ": "Principal Program Managerr",
+          "n": 2,
+          "amt": 7000.0
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "sector": "Healthcare \u2014 hospital / system / 'healthcare' staff",
+      "amt": 124265.73,
+      "pct": 1.2,
+      "n_gifts": 363,
+      "top_occupations": [
+        {
+          "occ": "Healthcare",
+          "n": 49,
+          "amt": 18546.0
+        },
+        {
+          "occ": "Public Health",
+          "n": 6,
+          "amt": 9743.0
+        },
+        {
+          "occ": "Certified Nursing Assistant",
+          "n": 2,
+          "amt": 7000.0
+        },
+        {
+          "occ": "CTO",
+          "n": 2,
+          "amt": 7000.0
+        },
+        {
+          "occ": "Epidemiologist",
+          "n": 9,
+          "amt": 5950.0
+        },
+        {
+          "occ": "Veterinarian",
+          "n": 7,
+          "amt": 5750.0
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "sector": "Blank / unknown occupation",
+      "amt": 18550.0,
+      "pct": 0.2,
+      "n_gifts": 6,
+      "top_occupations": [
+        {
+          "occ": "(blank)",
+          "n": 6,
+          "amt": 18550.0
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "sector": "Government / politics / nonprofit",
+      "amt": 16192.2,
+      "pct": 0.2,
+      "n_gifts": 73,
+      "top_occupations": [
+        {
+          "occ": "Public Services",
+          "n": 2,
+          "amt": 3500.0
+        },
+        {
+          "occ": "Organizer",
+          "n": 29,
+          "amt": 3045.0
+        },
+        {
+          "occ": "Government",
+          "n": 5,
+          "amt": 1700.0
+        },
+        {
+          "occ": "Public Servant",
+          "n": 11,
+          "amt": 1547.2
+        },
+        {
+          "occ": "Government Relations",
+          "n": 2,
+          "amt": 1500.0
+        },
+        {
+          "occ": "Federal Tax Policy",
+          "n": 6,
+          "amt": 1350.0
+        }
+      ]
+    }
+  ],
+  "healthcare_combined": {
+    "amt": 2918726.21,
+    "pct": 28.4
+  }
+}

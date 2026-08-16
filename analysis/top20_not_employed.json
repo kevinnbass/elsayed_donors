@@ -1,0 +1,146 @@
+{
+  "bucket_amt": 2583752.85,
+  "n_names_in_bucket": 2911,
+  "top20": [
+    {
+      "rank": 1,
+      "name": "Barakat, Abdul",
+      "amt": 14000.0,
+      "n_gifts": 5,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 2,
+      "name": "Nafal, Adham",
+      "amt": 14000.0,
+      "n_gifts": 3,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 3,
+      "name": "Turk, Aisha",
+      "amt": 13000.0,
+      "n_gifts": 4,
+      "occupation": "Homemaker"
+    },
+    {
+      "rank": 4,
+      "name": "Mokhtarzada, Idris",
+      "amt": 10500.0,
+      "n_gifts": 3,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 5,
+      "name": "Furrha, Aisha",
+      "amt": 9000.0,
+      "n_gifts": 4,
+      "occupation": "Homemaker"
+    },
+    {
+      "rank": 6,
+      "name": "Mohammadi, Rafiq",
+      "amt": 8500.0,
+      "n_gifts": 4,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 7,
+      "name": "Kokoris, Lyndsey",
+      "amt": 8050.0,
+      "n_gifts": 32,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 8,
+      "name": "Hilaly, Fariha",
+      "amt": 8002.0,
+      "n_gifts": 5,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 9,
+      "name": "Khan, Sara",
+      "amt": 7532.92,
+      "n_gifts": 4,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 10,
+      "name": "Abaza, Fadia",
+      "amt": 7500.0,
+      "n_gifts": 6,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 11,
+      "name": "Moammar, Haifaa",
+      "amt": 7350.0,
+      "n_gifts": 7,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 12,
+      "name": "Jimenez, Mauricio",
+      "amt": 7250.0,
+      "n_gifts": 48,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 13,
+      "name": "Barakat, Amani",
+      "amt": 7250.0,
+      "n_gifts": 4,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 14,
+      "name": "Shallal, Marjan",
+      "amt": 7040.0,
+      "n_gifts": 10,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 15,
+      "name": "Ross, Andy",
+      "amt": 7025.0,
+      "n_gifts": 17,
+      "occupation": "Retired"
+    },
+    {
+      "rank": 16,
+      "name": "Abounassif, Mada",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 17,
+      "name": "Arain, Aida",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Homemaker"
+    },
+    {
+      "rank": 18,
+      "name": "Auerbach, Steve",
+      "amt": 7000.0,
+      "n_gifts": 6,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 19,
+      "name": "Connell, William",
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "rank": 20,
+      "name": "Furrha, Rushdi",
+      "amt": 7000.0,
+      "n_gifts": 4,
+      "occupation": "Not Employed"
+    }
+  ]
+}

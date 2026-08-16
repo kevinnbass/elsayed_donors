@@ -26,21 +26,15 @@ def main() -> int:
         f"({tight['upper_bound_pct']}%)",
     )
     print()
-    print("=== Top 20 NPPES-confirmed physicians ===")
+    print("=== Top 20 physician donors ===")
     for r in top["top20_nppes_confirmed_physicians"]:
-        occ = (r.get("occupations") or [""])[0]
-        emp = (r.get("employers") or [""])[0]
-        print(f"{r['name']} — {r['state']} — ${r['amt']:,.0f} — {occ} — {emp}")
+        occs = [o for o in (r.get("occupations") or []) if o and o.strip().lower() not in {"gee", "none"}]
+        occ = occs[0] if occs else "—"
+        print(f"{r['name']} — ${r['amt']:,.0f} — {occ}")
     print()
     print("=== Top 20 health-system employers ===")
     for r in top["top20_health_systems_by_dollars"]:
-        print(f"{r['employer']} — ${r['amt']:,.0f} — {r['n_gifts']} gifts — {r['n_names']} names")
-    print()
-    print("=== Top 20 people who listed a system ===")
-    for r in top["top20_donors_employed_at_a_system"]:
-        occ = ", ".join(r.get("occupations") or [])
-        emp = ", ".join(r.get("employers") or [])
-        print(f"{r['name']} — {r['state']} — ${r['amt']:,.0f} — {occ} — {emp}")
+        print(f"{r['employer'].title()} — ${r['amt']:,.0f}")
     return 0
 
 
