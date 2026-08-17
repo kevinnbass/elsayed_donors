@@ -1,0 +1,710 @@
+<title>The El-Sayed Ledger</title>
+<style>
+  :root {
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.10);
+    --blue: #2a78d6;
+    --orange: #eb6834;
+    --dim: #c3c2b7;
+    --tip-bg: #0b0b0b;
+    --tip-ink: #fcfcfb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255, 255, 255, 0.10);
+      --blue: #3987e5;
+      --orange: #d95926;
+      --dim: #52514e;
+      --tip-bg: #fcfcfb;
+      --tip-ink: #0b0b0b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --blue: #3987e5;
+    --orange: #d95926;
+    --dim: #52514e;
+    --tip-bg: #fcfcfb;
+    --tip-ink: #0b0b0b;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    margin: 0;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 40px 20px 64px; }
+
+  .mono {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+  }
+  .eyebrow {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  header.masthead { padding: 8px 0 28px; border-bottom: 1px solid var(--grid); margin-bottom: 28px; }
+  .masthead h1 {
+    font-size: clamp(28px, 4.5vw, 42px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 10px 0 8px;
+    text-wrap: balance;
+  }
+  .masthead p.lede { color: var(--ink-2); max-width: 62ch; margin: 0 0 14px; font-size: 15px; }
+  .fileline {
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    font-size: 11.5px; color: var(--muted);
+  }
+  .fileline b { color: var(--ink-2); font-weight: 600; }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 800px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+  .kpi {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px 12px;
+  }
+  .kpi .lab { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .kpi .val { font-size: 27px; font-weight: 650; letter-spacing: -0.01em; line-height: 1.1; }
+  .kpi .sub { font-size: 12px; color: var(--ink-2); margin-top: 4px; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 18px 18px 12px; margin-bottom: 12px; min-width: 0;
+  }
+  .card h2 { font-size: 16.5px; font-weight: 650; margin: 2px 0 2px; letter-spacing: -0.01em; }
+  .card p.note { font-size: 13px; color: var(--ink-2); margin: 2px 0 14px; max-width: 72ch; }
+  .card .chartbox { min-width: 0; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 10px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-2); }
+  .legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+  /* horizontal bar rows */
+  .hb { display: grid; grid-template-columns: var(--labw, 120px) 1fr 76px; gap: 4px 10px; align-items: center; }
+  .hb .rlab { font-size: 12.5px; color: var(--ink-2); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hb .track { position: relative; height: 22px; display: flex; align-items: center; border-radius: 4px; }
+  .hb .bar { height: 18px; border-radius: 0 4px 4px 0; min-width: 2px; }
+  .hb .rval {
+    font-size: 12px; color: var(--ink-2);
+    font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .hb .chip {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin-left: 8px; white-space: nowrap;
+  }
+  @media (max-width: 640px) { .hb { --labw: 118px !important; } }
+  .hb.grouped .bar { height: 8px; }
+  .hb.grouped .track { height: 22px; flex-direction: column; justify-content: center; align-items: stretch; gap: 2px; }
+
+  .pierow { display: flex; gap: 12px 56px; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin: 10px 0 22px; }
+  .pie { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .pie .pt {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+  }
+  .pie .pl { font-size: 12.5px; color: var(--ink-2); text-align: center; max-width: 24ch; }
+  .pievs {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    font-size: 12px; color: var(--muted); align-self: flex-start; padding-top: 104px;
+  }
+  @media (max-width: 560px) { .pievs { display: none; } }
+
+  .statstrip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 800px) { .statstrip { grid-template-columns: repeat(2, 1fr); } }
+
+  details.tblv { margin-top: 10px; border-top: 1px solid var(--grid); padding-top: 8px; }
+  details.tblv summary {
+    cursor: pointer; font-size: 12px; color: var(--muted); user-select: none;
+    list-style: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  details.tblv summary::before { content: "▸"; font-size: 10px; transition: transform 0.15s; }
+  details.tblv[open] summary::before { transform: rotate(90deg); }
+  @media (prefers-reduced-motion: reduce) { details.tblv summary::before { transition: none; } }
+  details.tblv table { border-collapse: collapse; margin-top: 8px; font-size: 12.5px; width: 100%; }
+  details.tblv th, details.tblv td { text-align: right; padding: 4px 10px; border-bottom: 1px solid var(--grid); }
+  details.tblv th:first-child, details.tblv td:first-child { text-align: left; padding-left: 0; }
+  details.tblv th { color: var(--muted); font-weight: 500; font-size: 11.5px; }
+  details.tblv td { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+  .tscroll { overflow-x: auto; }
+
+  #tip {
+    position: fixed; z-index: 50; pointer-events: none; display: none;
+    background: var(--tip-bg); color: var(--tip-ink);
+    border-radius: 6px; padding: 7px 10px; font-size: 12px; line-height: 1.5;
+    max-width: 260px; box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+  #tip b { font-weight: 650; }
+  #tip .d { opacity: 0.75; }
+
+  svg text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+
+  footer.methods {
+    border-top: 1px solid var(--grid); margin-top: 28px; padding-top: 18px;
+    font-size: 12.5px; color: var(--ink-2); max-width: 78ch;
+  }
+  footer.methods h3 { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+  footer.methods p { margin: 0 0 8px; }
+  footer.methods code {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    font-size: 11.5px; color: var(--muted);
+  }
+  a:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 3px;
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">FEC Class-A e-filings · Committee C00902668 · Candidate S6MI00418</div>
+    <h1>The El-Sayed Ledger</h1>
+    <p class="lede">
+      Every named, itemized dollar reported by <b>Abdul for U.S. Senate</b> — Abdul El-Sayed's 2026
+      Michigan Senate campaign — reconstructed from six electronic filings and reconciled to the penny
+      against Form 3 line 11a(i).
+    </p>
+    <div class="fileline">
+      <span>COVERAGE <b>Apr 2025 – Jul 15 2026</b></span>
+      <span>FILINGS <b>6 (H1 → pre-primary)</b></span>
+      <span>NAMED GIFTS <b>31,180</b></span>
+      <span>RECONCILIATION GAP <b>$0.00</b></span>
+    </div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="lab">Total receipts (Form 3)</div>
+      <div class="val">$14.51M</div>
+      <div class="sub">through the pre-primary report</div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Named itemized</div>
+      <div class="val">$10.27M</div>
+      <div class="sub">31,180 gifts · 8,457 named donors</div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Unitemized (≤$200 donors)</div>
+      <div class="val">$4.14M</div>
+      <div class="sub">28.5% of receipts — no names attached</div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Median gift</div>
+      <div class="val">$50</div>
+      <div class="sub">mean $329 — the gap is the story below</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Money arrives on deadline</h2>
+    <p class="note">
+      Named itemized dollars by month. Every filing-period close (June, September, December, March, June)
+      raises 2–4× the month before it — the signature of deadline email pushes. The half-month of July 2026
+      before the pre-primary cutoff ran <b>$93k/day</b>, the fastest pace of the campaign.
+    </p>
+    <div class="legend" id="lg-monthly"></div>
+    <div class="chartbox" id="c-monthly"></div>
+    <details class="tblv"><summary>Table view</summary><div class="tscroll" id="t-monthly"></div></details>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Clicks count the gifts, checks carry the money</h2>
+      <p class="note">
+        Gifts of $100 or less are <b>69% of all gifts but 8% of the dollars</b>. Gifts of $1,000+
+        are 7% of gifts and <b>57% of the dollars</b>. Both fundraising stories are true at once.
+      </p>
+      <div class="legend" id="lg-size"></div>
+      <div class="chartbox" id="c-size"></div>
+      <details class="tblv"><summary>Table view</summary><div class="tscroll" id="t-size"></div></details>
+    </div>
+
+    <div class="card">
+      <h2>Where each donor ends up</h2>
+      <p class="note">
+        Cycle totals per named donor. <b>721 donors (8.5%)</b> finished above the $3,500 per-election limit —
+        i.e. gave toward both primary and general — and account for <b>$4.67M, 45% of named money</b>.
+        1,015 donors reached at least one $3,500 max.
+      </p>
+      <div class="chartbox" id="c-donor"></div>
+      <details class="tblv"><summary>Table view</summary><div class="tscroll" id="t-donor"></div></details>
+    </div>
+
+    <div class="card">
+      <h2>Two of every three dollars come from outside Michigan</h2>
+      <p class="note">
+        Michigan is the single largest source at <b>32.2%</b> — but California alone sent $1.78M,
+        and 55 states and territories appear in the roster. A national donor file for a state race.
+      </p>
+      <div class="legend" id="lg-states"></div>
+      <div class="chartbox" id="c-states"></div>
+      <details class="tblv"><summary>Table view</summary><div class="tscroll" id="t-states"></div></details>
+    </div>
+
+    <div class="card">
+      <h2>White coats fund the campaign</h2>
+      <p class="note">
+        Occupation sectors, share of named dollars. Healthcare — led by physicians at $2.40M — is the
+        largest employed sector for the physician-candidate. NPPES cross-match confirms MDs alone are
+        a 20–27% band of all named money.
+      </p>
+      <div class="legend" id="lg-sector"></div>
+      <div class="chartbox" id="c-sector"></div>
+      <details class="tblv"><summary>Table view</summary><div class="tscroll" id="t-sector"></div></details>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>The employer roll: Michigan medicine, Big Tech paychecks</h2>
+    <p class="note">
+      Top disclosed employers by named dollars (self-employed, retired and not-employed excluded;
+      "Information Requested" — $54k — omitted). Michigan's health systems and universities anchor the list,
+      but Apple, Google, Microsoft and Nvidia employees together sent <b>$174k</b> — more than any single
+      health system. Henry Ford figures combine the "Henry Ford Health" and "Henry Ford" spellings.
+    </p>
+    <div class="chartbox" id="c-emp"></div>
+    <details class="tblv"><summary>Table view</summary><div class="tscroll" id="t-emp"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>An Arab- and Muslim-American funding base</h2>
+    <p class="note">
+      Name-token classification of the named dollars — the roster's most distinctive feature, and a story
+      either way it's told: a historic national mobilization of Arab- and Muslim-American donors behind a
+      candidate who would be the first Muslim U.S. senator. Names matching Arab, Persian, Urdu or Turkish
+      token lists (including Levantine Christian surnames) account for <b>69.5% of named dollars but only
+      29.3% of gifts</b> — an average gift of <b>$782 vs. $329</b> overall — against a population base of
+      roughly <b>2%</b>: about <b>35× overrepresented</b> by dollars. The community writes the checks; the
+      small-dollar base is broader.
+    </p>
+    <div class="pierow" id="c-pies"></div>
+    <div class="legend" id="lg-names"></div>
+    <div class="chartbox" id="c-names"></div>
+    <p class="note" style="margin-top:12px">
+      <b>Read the bounds, not just the headline.</b> These are name tokens, not a religion or race census —
+      shared names (Ali, Khan, Shah, Hanna) inflate the cut, converts and Anglicized names deflate it, and
+      the strict cut requiring first <i>and</i> last name to match is 26.4%. The figure has grown with each
+      recall pass (49% → 64.7% → 69.5%): the latest pass reclassified the formerly 20.8%-ambiguous bucket
+      down to 11.9% using ~450 additional surname tokens curated on <i>both</i> sides (Bazzi, Itani, Iqbal …
+      and Griswold, Costello, Katz …), applied only to previously unclassified rows. What remains ambiguous
+      is 12,214 mostly small gifts averaging ~$100 — Western given names with uncommon surnames. The
+      population reference is Arab Americans (≈1.2%) plus U.S. Muslims (≈1.1–1.3%), overlapping, ≈2%
+      combined. Top-20 donor lists run ~85% Arab-or-Muslim-named because the top is concentrated — but the
+      top 100 donors are only ~9% of all named dollars, so the share is base-wide, not a top-donor artifact.
+    </p>
+    <details class="tblv"><summary>Table view</summary><div class="tscroll" id="t-names"></div></details>
+  </div>
+
+  <div class="statstrip">
+    <div class="kpi">
+      <div class="lab">Repeat donors</div>
+      <div class="val">54.3%</div>
+      <div class="sub">of named donors gave more than once; they account for 87.6% of all gifts</div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Top 1,000 donors</div>
+      <div class="val">55.0%</div>
+      <div class="sub">of named dollars — 12% of donors carry the majority of the money</div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Donors at ≥ $7,000</div>
+      <div class="val">444</div>
+      <div class="sub">reached the combined primary + general maximum</div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Itemized above $7,000</div>
+      <div class="val">78</div>
+      <div class="sub">donors show apparent overages (max $14.5k) — typically resolved later by refund or reattribution to a spouse</div>
+    </div>
+  </div>
+
+  <footer class="methods">
+    <h3>Method &amp; caveats</h3>
+    <p>
+      Source: six Class-A FEC electronic filings for committee <code>C00902668</code>
+      (<code>2005714, 2005716, 2005717, 2005719, 2005720, 2005721</code>), Schedule A individual
+      contributions, April 2025 through July 15, 2026. The 31,180-row named roster sums to
+      <b>$10,265,431.61</b>, matching Form 3 line 11a(i) exactly.
+    </p>
+    <p>
+      A "donor" is a unique last name + first name + state; shared names merge and movers split, so donor
+      counts are estimates. Occupation and employer are self-reported by donors. The $4.14M unitemized
+      total has no names, occupations, or locations by law, so every per-donor figure here describes only
+      the itemized 71% of receipts. Refund/redesignation entries filed later can revise individual totals.
+    </p>
+    <p>
+      FEC contributor data is a public record; federal law prohibits its use for soliciting contributions
+      or for commercial purposes. Super-PAC and other outside money is not part of this donor base.
+    </p>
+  </footer>
+</div>
+
+<div id="tip" role="status" aria-hidden="true"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  // colors referenced as CSS variables so every mark follows the viewer's theme live
+  var C = { blue: "var(--blue)", orange: "var(--orange)", dim: "var(--dim)",
+            grid: "var(--grid)", baseline: "var(--baseline)", muted: "var(--muted)",
+            ink2: "var(--ink-2)", ink: "var(--ink)", surface: "var(--surface)" };
+
+  // ---------- data ----------
+  var MONTHS = [
+    ["Mar ’25", 29000, 10, 0], ["Apr", 402229, 472, 0], ["May", 180637, 333, 0],
+    ["Jun", 740124, 747, 1], ["Jul", 154772, 625, 0], ["Aug", 257964, 780, 0],
+    ["Sep", 941438, 1286, 1], ["Oct", 308653, 1313, 0], ["Nov", 212328, 1194, 0],
+    ["Dec", 667119, 1540, 1], ["Jan ’26", 296052, 1589, 0], ["Feb", 357201, 1758, 0],
+    ["Mar", 1025531, 2706, 1], ["Apr", 766531, 3325, 0], ["May", 736073, 3426, 0],
+    ["Jun", 1795104, 5262, 1], ["Jul 1–15", 1394675, 4814, 1]
+  ];
+  var SIZE = [ // bracket, % of gifts, % of dollars, n, $
+    ["$1–25", 39.2, 1.9, 12235, 193381],
+    ["$26–100", 29.6, 6.2, 9235, 641056],
+    ["$101–250", 10.7, 7.6, 3343, 778025],
+    ["$251–1k", 13.6, 27.3, 4252, 2803778],
+    ["$1k–3.5k", 6.7, 55.8, 2088, 5726592],
+    ["$3.5k+", 0.07, 1.4, 23, 142100]
+  ];
+  var DONOR = [ // bracket, $, n donors
+    ["$1–100", 59912, 860], ["$101–500", 1339348, 4167], ["$501–1k", 1140163, 1354],
+    ["$1k–3.5k", 3059781, 1354], ["$3.5k–7k", 3922883, 643], ["$7k+", 743344, 78]
+  ];
+  var STATES = [ // state, $, gifts, isMI
+    ["Michigan", 3300373, 12847, 1], ["California", 1776711, 4300, 0], ["New York", 719122, 1824, 0],
+    ["Texas", 698537, 1085, 0], ["Illinois", 634810, 1335, 0], ["New Jersey", 380398, 832, 0],
+    ["Virginia", 319145, 687, 0], ["Massachusetts", 300971, 944, 0], ["Florida", 278602, 652, 0],
+    ["Ohio", 236659, 576, 0], ["All others (45)", 2620103, 6098, 0]
+  ];
+  var SECTOR = [ // name, $, pct, emphasized
+    ["Healthcare", 2918726, 28.4, 1], ["Not employed / retired", 2601208, 25.3, 0],
+    ["Business / execs / consultants", 1410382, 13.7, 0], ["Unclassified / other", 1258829, 12.3, 0],
+    ["Tech / engineering", 644184, 6.3, 0], ["Law", 508406, 5.0, 0],
+    ["Finance", 357961, 3.5, 0], ["Media / sales / arts", 304622, 3.0, 0],
+    ["Education", 226372, 2.2, 0], ["Gov’t / politics / nonprofit", 16192, 0.2, 0]
+  ];
+  var EMP = [ // employer, $, donors, chip
+    ["Henry Ford Health", 71010, 40, "health"], ["University of Michigan", 64495, 69, "university"],
+    ["Apple", 51475, 20, "tech"], ["Google", 48045, 28, "tech"],
+    ["Microsoft", 41505, 18, "tech"], ["Corewell Health", 41010, 29, "health"],
+    ["Nvidia", 33250, 8, "tech"], ["Wayne State University", 32698, 20, "university"],
+    ["ACCESS (Dearborn)", 25200, 6, "nonprofit"], ["ProMedica", 23030, 10, "health"],
+    ["TPMG (Permanente)", 22720, 7, "health"], ["Dreampak", 20050, 4, "mfg"]
+  ];
+
+  // ---------- helpers ----------
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
+  function fmt$(v) {
+    if (v >= 1e6) return "$" + (v / 1e6).toFixed(v >= 9.95e6 ? 1 : 2) + "M";
+    if (v >= 1e3) return "$" + Math.round(v / 1e3) + "k";
+    return "$" + Math.round(v);
+  }
+  function fmtN(v) { return v.toLocaleString("en-US"); }
+
+  var tip = document.getElementById("tip");
+  function bindTips(root) {
+    root.addEventListener("mousemove", function (e) {
+      var t = e.target.closest("[data-tip]");
+      if (!t) { tip.style.display = "none"; return; }
+      tip.innerHTML = t.getAttribute("data-tip");
+      tip.style.display = "block";
+      var w = tip.offsetWidth, h = tip.offsetHeight;
+      var x = Math.min(e.clientX + 14, window.innerWidth - w - 10);
+      var y = e.clientY - h - 12; if (y < 8) y = e.clientY + 16;
+      tip.style.left = x + "px"; tip.style.top = y + "px";
+    });
+    root.addEventListener("mouseleave", function () { tip.style.display = "none"; }, true);
+  }
+  bindTips(document.body);
+
+  function legend(id, items) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = items.map(function (it) {
+      return "<span><i style='background:" + it[1] + "'></i>" + esc(it[0]) + "</span>";
+    }).join("");
+  }
+
+  function table(id, head, rows) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = "<table><thead><tr>" +
+      head.map(function (h) { return "<th>" + esc(h) + "</th>"; }).join("") +
+      "</tr></thead><tbody>" +
+      rows.map(function (r) {
+        return "<tr>" + r.map(function (c) { return "<td>" + esc(c) + "</td>"; }).join("") + "</tr>";
+      }).join("") + "</tbody></table>";
+  }
+
+  // horizontal bars: rows = {label, frac (0..1), color, value, chip?, tip}
+  function hbars(id, rows, labw) {
+    var el = document.getElementById(id);
+    el.innerHTML = "";
+    var box = document.createElement("div");
+    box.className = "hb";
+    box.style.setProperty("--labw", labw + "px");
+    rows.forEach(function (r) {
+      var lab = document.createElement("div");
+      lab.className = "rlab"; lab.textContent = r.label; lab.title = r.label;
+      var track = document.createElement("div");
+      track.className = "track";
+      track.setAttribute("data-tip", r.tip);
+      track.setAttribute("tabindex", "0");
+      track.setAttribute("role", "img");
+      track.setAttribute("aria-label", r.label + ": " + r.value);
+      var bar = document.createElement("div");
+      bar.className = "bar";
+      bar.style.width = Math.max(0.4, r.frac * 100) + "%";
+      bar.style.background = r.color;
+      track.appendChild(bar);
+      if (r.chip) {
+        var ch = document.createElement("span");
+        ch.className = "chip"; ch.textContent = r.chip;
+        track.appendChild(ch);
+      }
+      var val = document.createElement("div");
+      val.className = "rval"; val.textContent = r.value;
+      box.appendChild(lab); box.appendChild(track); box.appendChild(val);
+    });
+    el.appendChild(box);
+  }
+
+  // grouped pair per category (two thin bars per row)
+  function hbarsPair(id, rows, labw) {
+    var el = document.getElementById(id);
+    el.innerHTML = "";
+    var box = document.createElement("div");
+    box.className = "hb grouped";
+    box.style.setProperty("--labw", labw + "px");
+    rows.forEach(function (r) {
+      var lab = document.createElement("div");
+      lab.className = "rlab"; lab.textContent = r.label;
+      var track = document.createElement("div");
+      track.className = "track";
+      track.setAttribute("data-tip", r.tip);
+      track.setAttribute("tabindex", "0");
+      track.setAttribute("role", "img");
+      track.setAttribute("aria-label", r.label + ": " + r.aria);
+      [[r.fracA, C.blue], [r.fracB, C.orange]].forEach(function (p) {
+        var bar = document.createElement("div");
+        bar.className = "bar";
+        bar.style.width = Math.max(0.5, p[0] * 100) + "%";
+        bar.style.background = p[1];
+        bar.style.borderRadius = "0 4px 4px 0";
+        track.appendChild(bar);
+      });
+      var val = document.createElement("div");
+      val.className = "rval"; val.textContent = r.value;
+      box.appendChild(lab); box.appendChild(track); box.appendChild(val);
+    });
+    el.appendChild(box);
+  }
+
+  // ---------- monthly column chart (SVG, re-rendered on resize) ----------
+  function renderMonthly() {
+    var host = document.getElementById("c-monthly");
+    var W = Math.max(320, host.clientWidth);
+    var H = 250, padL = 44, padR = 8, padT = 20, padB = 34;
+    var iw = W - padL - padR, ih = H - padT - padB;
+    var max = 2000000;
+    var n = MONTHS.length;
+    var band = iw / n;
+    var bw = Math.min(24, band - 4);
+    var svg = "<svg viewBox='0 0 " + W + " " + H + "' width='" + W + "' height='" + H + "' role='img' aria-label='Named itemized dollars by month, April 2025 to July 15 2026'>";
+    // gridlines + y ticks
+    [0, 0.5e6, 1e6, 1.5e6, 2e6].forEach(function (v) {
+      var y = padT + ih - (v / max) * ih;
+      svg += "<line x1='" + padL + "' y1='" + y + "' x2='" + (W - padR) + "' y2='" + y +
+        "' stroke='" + (v === 0 ? C.baseline : C.grid) + "' stroke-width='1'/>";
+      svg += "<text x='" + (padL - 8) + "' y='" + (y + 4) + "' text-anchor='end' font-size='11' fill='" + C.muted + "'>" +
+        (v === 0 ? "0" : "$" + (v / 1e6).toFixed(1).replace(".0", "") + "M") + "</text>";
+    });
+    var thin = band < 34; // thin labels on narrow screens
+    MONTHS.forEach(function (m, i) {
+      var x = padL + band * i + (band - bw) / 2;
+      var h = (m[1] / max) * ih;
+      var y = padT + ih - h;
+      var col = m[3] ? C.blue : C.dim;
+      var r = Math.min(4, h / 2);
+      var path = "M" + x + " " + (padT + ih) + " V" + (y + r) + " Q" + x + " " + y + " " + (x + r) + " " + y +
+        " H" + (x + bw - r) + " Q" + (x + bw) + " " + y + " " + (x + bw) + " " + (y + r) + " V" + (padT + ih) + " Z";
+      svg += "<path d='" + path + "' fill='" + col + "'><title>" + esc(m[0]) + ": " + fmt$(m[1]) + ", " + fmtN(m[2]) + " gifts</title></path>";
+      // invisible wide hit target for tooltip
+      svg += "<rect x='" + (padL + band * i) + "' y='" + padT + "' width='" + band + "' height='" + ih +
+        "' fill='transparent' data-tip=\"<b>" + esc(m[0]) + (m[0].indexOf("’") < 0 ? (i < 10 ? " ’25" : " ’26") : "") +
+        "</b><br>" + fmt$(m[1]) + " itemized<br><span class='d'>" + fmtN(m[2]) + " gifts · avg " + fmt$(Math.round(m[1] / m[2])) + "</span>\"/>";
+      // x labels
+      if (!thin || m[3] || i === 0) {
+        svg += "<text x='" + (padL + band * i + band / 2) + "' y='" + (H - 16) + "' text-anchor='middle' font-size='10.5' fill='" + C.muted + "'>" +
+          esc(m[0].split(" ")[0]) + "</text>";
+      }
+      if (m[0].indexOf("’") > 0) {
+        svg += "<text x='" + (padL + band * i + band / 2) + "' y='" + (H - 3) + "' text-anchor='middle' font-size='10' fill='" + C.muted + "'>" +
+          esc(m[0].indexOf("Jul") === 0 ? "’26" : m[0].split(" ")[1]) + "</text>";
+      }
+    });
+    // direct labels on the two extremes only
+    var jun = 15, jul = 16;
+    [[jun, "$1.80M"], [jul, "$1.39M"]].forEach(function (d) {
+      var x = padL + band * d[0] + band / 2;
+      var y = padT + ih - (MONTHS[d[0]][1] / max) * ih - 7;
+      svg += "<text x='" + x + "' y='" + y + "' text-anchor='middle' font-size='11' font-weight='600' fill='" + C.ink + "'>" + d[1] + "</text>";
+    });
+    svg += "</svg>";
+    host.innerHTML = svg;
+  }
+
+  legend("lg-monthly", [["Filing-period close", C.blue], ["Mid-period month", C.dim]]);
+  renderMonthly();
+  var rto;
+  window.addEventListener("resize", function () { clearTimeout(rto); rto = setTimeout(renderMonthly, 120); });
+  table("t-monthly", ["Month", "Itemized $", "Gifts", "Avg gift"],
+    MONTHS.map(function (m, i) {
+      var yr = m[0].indexOf("’") > 0 ? m[0] : m[0] + (i < 10 ? " ’25" : " ’26");
+      return [yr, "$" + fmtN(m[1]), fmtN(m[2]), "$" + fmtN(Math.round(m[1] / m[2]))];
+    }));
+
+  // ---------- gift-size grouped ----------
+  legend("lg-size", [["Share of gifts", C.blue], ["Share of dollars", C.orange]]);
+  hbarsPair("c-size", SIZE.map(function (s) {
+    return {
+      label: s[0], fracA: s[1] / 60, fracB: s[2] / 60,
+      value: s[2].toFixed(1) + "% of $",
+      aria: s[1] + "% of gifts, " + s[2] + "% of dollars",
+      tip: "<b>" + esc(s[0]) + "</b><br>" + s[1] + "% of gifts (" + fmtN(s[3]) + ")<br>" +
+        s[2] + "% of dollars (" + fmt$(s[4]) + ")"
+    };
+  }), 78);
+  table("t-size", ["Gift size", "Gifts", "% of gifts", "Dollars", "% of $"],
+    SIZE.map(function (s) { return [s[0], fmtN(s[3]), s[1] + "%", "$" + fmtN(s[4]), s[2] + "%"]; }));
+
+  // ---------- donor totals ----------
+  hbars("c-donor", DONOR.map(function (d) {
+    return {
+      label: d[0], frac: d[1] / 4000000, color: C.blue, value: fmt$(d[1]),
+      tip: "<b>" + esc(d[0]) + " total per donor</b><br>" + fmt$(d[1]) + " · " + fmtN(d[2]) + " donors<br><span class='d'>avg " +
+        fmt$(Math.round(d[1] / d[2])) + " per donor</span>"
+    };
+  }), 78);
+  table("t-donor", ["Donor cycle total", "Donors", "Dollars", "% of named $"],
+    DONOR.map(function (d) { return [d[0], fmtN(d[2]), "$" + fmtN(d[1]), (d[1] / 10265432 * 100).toFixed(1) + "%"]; }));
+
+  // ---------- states ----------
+  legend("lg-states", [["Michigan", C.blue], ["Out of state", C.dim]]);
+  hbars("c-states", STATES.map(function (s) {
+    return {
+      label: s[0], frac: s[1] / 3400000, color: s[3] ? C.blue : C.dim, value: fmt$(s[1]),
+      tip: "<b>" + esc(s[0]) + "</b><br>" + fmt$(s[1]) + " (" + (s[1] / 10265432 * 100).toFixed(1) + "% of named $)<br><span class='d'>" +
+        fmtN(s[2]) + " gifts</span>"
+    };
+  }), 110);
+  table("t-states", ["State", "Dollars", "% of named $", "Gifts"],
+    STATES.map(function (s) { return [s[0], "$" + fmtN(s[1]), (s[1] / 10265432 * 100).toFixed(1) + "%", fmtN(s[2])]; }));
+
+  // ---------- sectors ----------
+  legend("lg-sector", [["Healthcare", C.blue], ["All other sectors", C.dim]]);
+  hbars("c-sector", SECTOR.map(function (s) {
+    return {
+      label: s[0], frac: s[1] / 3000000, color: s[3] ? C.blue : C.dim, value: s[2].toFixed(1) + "%",
+      tip: "<b>" + esc(s[0]) + "</b><br>" + fmt$(s[1]) + " · " + s[2] + "% of named $"
+    };
+  }), 200);
+  table("t-sector", ["Sector", "Dollars", "% of named $"],
+    SECTOR.map(function (s) { return [s[0], "$" + fmtN(s[1]), s[2] + "%"]; }));
+
+  // ---------- employers ----------
+  hbars("c-emp", EMP.map(function (e) {
+    return {
+      label: e[0], frac: e[1] / 95000, color: C.blue, value: fmt$(e[1]), chip: e[3],
+      tip: "<b>" + esc(e[0]) + "</b><br>" + fmt$(e[1]) + " · " + e[2] + " donors"
+    };
+  }), 170);
+  table("t-emp", ["Employer", "Dollars", "Donors", "Type"],
+    EMP.map(function (e) { return [e[0], "$" + fmtN(e[1]), e[2], e[3]]; }));
+
+  // ---------- name-token cuts ----------
+  function donut(title, pctText, pct, sublabel, tipHtml, color) {
+    var S = 180, cx = S / 2, r = 64, sw = 26;
+    var circ = 2 * Math.PI * r;
+    var wrap = document.createElement("div");
+    wrap.className = "pie";
+    wrap.innerHTML =
+      "<div class='pt'>" + esc(title) + "</div>" +
+      "<svg viewBox='0 0 " + S + " " + S + "' width='" + S + "' height='" + S + "' role='img' " +
+      "aria-label='" + esc(title + ": " + pctText + " " + sublabel) + "' data-tip=\"" + tipHtml + "\">" +
+      "<circle cx='" + cx + "' cy='" + cx + "' r='" + r + "' fill='none' stroke='" + C.dim + "' stroke-width='" + sw + "'/>" +
+      "<circle cx='" + cx + "' cy='" + cx + "' r='" + r + "' fill='none' stroke='" + color + "' stroke-width='" + sw + "' " +
+      "stroke-dasharray='" + (pct / 100 * circ) + " " + circ + "' transform='rotate(-90 " + cx + " " + cx + ")' stroke-linecap='butt'/>" +
+      "<text x='" + cx + "' y='" + (cx + 9) + "' text-anchor='middle' font-size='27' font-weight='650' fill='" + C.ink + "'>" + esc(pctText) + "</text>" +
+      "</svg>" +
+      "<div class='pl'>" + esc(sublabel) + "</div>";
+    return wrap;
+  }
+  (function () {
+    var row = document.getElementById("c-pies");
+    row.appendChild(donut("Donation dollars", "70%", 69.5,
+      "of named itemized dollars are from Arab- or Muslim-coded names",
+      "<b>Named donation dollars</b><br>Arab/Muslim-coded $7.13M of $10.27M (69.5%)", C.blue));
+    var vs = document.createElement("div");
+    vs.className = "pievs"; vs.textContent = "vs";
+    row.appendChild(vs);
+    row.appendChild(donut("U.S. population", "≈2%", 2,
+      "of the U.S. population is Arab or Muslim",
+      "<b>U.S. population</b><br>Arab Americans ≈1.2% + U.S. Muslims ≈1.1–1.3%, overlapping ≈2%", C.orange));
+  })();
+
+  legend("lg-names", [["Share of named dollars", C.blue], ["Share of U.S. population (reference)", C.orange], ["Unclassified", C.dim]]);
+  var NAMES = [ // label, pct, $ (0 = n/a), kind: 1 data / 2 reference / 0 ambiguous
+    ["All non-white-coded names", 72.1, 7404959, 1],
+    ["Arab or Muslim coded names", 69.5, 7133411, 1],
+    ["Anglo / White-coded surname", 15.8, 1623339, 1],
+    ["Ambiguous after recall pass", 11.9, 1218584, 0],
+    ["Arab or Muslim share of U.S. population", 2.0, 0, 2]
+  ];
+  hbars("c-names", NAMES.map(function (s) {
+    return {
+      label: s[0], frac: s[1] / 75,
+      color: s[3] === 1 ? C.blue : s[3] === 2 ? C.orange : C.dim,
+      value: (s[3] === 2 ? "≈" : "") + s[1].toFixed(1) + "%",
+      tip: s[3] === 2
+        ? "<b>" + esc(s[0]) + "</b><br>≈2% — Arab Americans ≈1.2% + U.S. Muslims ≈1.1–1.3%, overlapping"
+        : "<b>" + esc(s[0]) + "</b><br>" + fmt$(s[2]) + " · " + s[1] + "% of named $"
+    };
+  }), 250);
+  table("t-names", ["Cut", "Dollars", "% "],
+    NAMES.map(function (s) { return [s[0], s[2] ? "$" + fmtN(s[2]) : "—", (s[3] === 2 ? "≈" : "") + s[1] + "%"]; }));
+})();
+</script>

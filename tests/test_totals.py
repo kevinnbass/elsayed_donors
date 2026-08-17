@@ -22,6 +22,16 @@ def test_nppes_floor_present():
     assert tight["named_itemized_total"] == 10265431.61
 
 
+def test_name_token_shares():
+    mus = json.loads((ROOT / "analysis" / "muslim_name_share.json").read_text(encoding="utf-8"))
+    nw = json.loads((ROOT / "analysis" / "nonwhite_name_share.json").read_text(encoding="utf-8"))
+    assert mus["named_itemized_total"] == 10265431.61
+    assert mus["label"] == "arab_or_muslim"
+    assert mus["any_name_token"]["pct"] == 64.7
+    assert nw["nonwhite_coded"]["pct"] == 66.9
+    assert nw["nonwhite_coded"]["pct"] > mus["any_name_token"]["pct"]
+
+
 def test_top20_has_twenty():
     top = json.loads(
         (ROOT / "analysis" / "top20_physicians_and_systems.json").read_text(encoding="utf-8")

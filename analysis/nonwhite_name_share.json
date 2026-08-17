@@ -1,0 +1,218 @@
+{
+  "named_itemized_total": 10265431.61,
+  "method": "Name-token classifier. Non-white-coded = Arab-or-Muslim (includes Levantine Christian surnames) OR leftover Levantine OR Hispanic/Latino OR South Asian OR East/Southeast Asian OR a small African-American given-name list. Anglo/White-coded = common US/European/Ashkenazi surnames. Not a race census.",
+  "nonwhite_coded": {
+    "amt": 6868753.78,
+    "pct": 66.9
+  },
+  "non_anglo_including_ambiguous": {
+    "amt": 9005374.17,
+    "pct": 87.7,
+    "note": "Everything except clearly Anglo/White surnames."
+  },
+  "anglo_white_coded": {
+    "amt": 1241507.44,
+    "pct": 12.1
+  },
+  "by_bucket": {
+    "arab_or_muslim": {
+      "amt": 6638796.95,
+      "n_gifts": 8274,
+      "pct": 64.7
+    },
+    "ambiguous": {
+      "amt": 2136620.39,
+      "n_gifts": 14875,
+      "pct": 20.8
+    },
+    "anglo_white": {
+      "amt": 1241507.44,
+      "n_gifts": 7522,
+      "pct": 12.1
+    },
+    "south_asian": {
+      "amt": 109980.0,
+      "n_gifts": 109,
+      "pct": 1.1
+    },
+    "east_asian": {
+      "amt": 66041.25,
+      "n_gifts": 166,
+      "pct": 0.6
+    },
+    "hispanic_latino": {
+      "amt": 46935.58,
+      "n_gifts": 226,
+      "pct": 0.5
+    },
+    "unknown": {
+      "amt": 18550.0,
+      "n_gifts": 6,
+      "pct": 0.2
+    },
+    "levantine_mena": {
+      "amt": 7000.0,
+      "n_gifts": 2,
+      "pct": 0.1
+    },
+    "african_distinctive": {
+      "amt": 0.0,
+      "n_gifts": 0,
+      "pct": 0.0
+    }
+  },
+  "top15_nonwhite": [
+    {
+      "name": "Issa, Said",
+      "amt": 14500.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Ezzeddine, Dina",
+      "amt": 14130.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Aljumaily, Anas",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Barakat, Abdul",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Nafal, Adham",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Barakat, Nidal",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Chami, David",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Dari, Ahmad",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Nafal, Mohamad",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Nathoo, Amir",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Abdo, David",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Nasr, Khaled",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Ahmad, Mohamad",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Godil, Saad",
+      "amt": 14000.0,
+      "bucket": "arab_or_muslim"
+    },
+    {
+      "name": "Turk, Aisha",
+      "amt": 13000.0,
+      "bucket": "arab_or_muslim"
+    }
+  ],
+  "top15_anglo": [
+    {
+      "name": "Allen, James",
+      "amt": 9500.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Huber, Michael",
+      "amt": 9500.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Skloff, Michael",
+      "amt": 9000.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Clifford, David",
+      "amt": 8550.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Kokoris, Lyndsey",
+      "amt": 8050.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Vanbelle, Brandon",
+      "amt": 7117.53,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Ross, Andy",
+      "amt": 7025.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Jurvetson, Karla",
+      "amt": 7009.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Auerbach, Steve",
+      "amt": 7000.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Connell, William",
+      "amt": 7000.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Saginaw, Lori",
+      "amt": 7000.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Saginaw, Paul",
+      "amt": 7000.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Pennington, Kenneth",
+      "amt": 7000.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Langhorne, William",
+      "amt": 7000.0,
+      "bucket": "anglo_white"
+    },
+    {
+      "name": "Craig, Meki",
+      "amt": 7000.0,
+      "bucket": "anglo_white"
+    }
+  ]
+}

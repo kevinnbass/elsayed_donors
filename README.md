@@ -40,6 +40,46 @@ NPPES-confirmed MDs (unique last+first+state, taxonomy 207/208): **20%** floor /
 
 Machine-readable: `analysis/sector_breakdown.json`
 
+## Name-token shares of the $10.26M named
+
+These are **name tokens**, not a religion or race census. Anglicized names, converts, and shared surnames (Ali, Khan, Hanna, Lee, Williams) cut both ways.
+
+Headline cut is **Arab or Muslim**, not Muslim-only. Pakistani / Persian / Turkish Muslim names count. Levantine Christian surnames (Haddad, Khoury, Abdo, Chami, Dudum) count.
+
+| Cut | $ | Share of named |
+|---|---:|---:|
+| **Arab or Muslim name** | **$6,638,797** | **64.7%** |
+| Non-white-coded name (Arab/Muslim + Hispanic + South/East Asian) | $6,868,754 | **66.9%** |
+| Clearly Anglo / White-coded surname | $1,241,507 | 12.1% |
+| Ambiguous leftover (not counted as non-white) | $2,136,620 | 20.8% |
+
+A first-pass **Muslim-only** list was 49%. After recall (Rasheed, Zaidi, Abdulhak, ABU- prefixes, …) that same Muslim-only cut was 63.1%. Adding Arab Christian / Levantine surnames moves the headline to **64.7%**. Top-20 donor lists are ~85% Arab-or-Muslim-named because the top is concentrated; those top 100 people are only ~9% of all named dollars.
+
+The non-white figure is the Arab-or-Muslim figure plus:
+
+- South Asian surnames not already in that cut: **1.1%** ($110k)
+- East / Southeast Asian surnames: **0.6%** ($66k)
+- Hispanic / Latino surnames: **0.5%** ($47k)
+
+Machine-readable: `analysis/muslim_name_share.json`, `analysis/nonwhite_name_share.json`. Re-run: `python scripts/muslim_name_share.py` then `python scripts/nonwhite_name_share.py`.
+
+### Recall pass over the ambiguous bucket (Aug 16, 2026)
+
+`scripts/name_share_recall.py` reclassifies the 20.8% ambiguous leftover with ~450 additional surname tokens curated from its top surnames by dollars, **on both sides** (Bazzi, Itani, Iqbal, … and Griswold, Costello, Katz, …), plus a distinctive-given-name list for the tail. Recovery applies only to base-ambiguous rows. Updated cuts (supersede the table above):
+
+| Cut | $ | Share of named |
+|---|---:|---:|
+| **Arab or Muslim name** | **$7,133,411** | **69.5%** |
+| Non-white-coded name | $7,404,959 | **72.1%** |
+| Clearly Anglo / White-coded surname | $1,623,339 | 15.8% |
+| Ambiguous remaining | $1,218,584 | 11.9% |
+
+Remaining ambiguity is 12,214 mostly small gifts (avg ~$100) — Western given names with uncommon surnames. Machine-readable: `analysis/name_share_recall.json`.
+
+## Figures
+
+`figures/elsayed_ledger.html` — self-contained interactive dashboard (open in any browser): monthly deadline dynamics, gift-size vs dollar shares, donor concentration, geography, sectors, employers, and the name-token cuts with a ≈2% U.S.-population reference. Aggregates feeding it: `analysis/figure_aggregates.json` (re-run `python scripts/figure_aggregates.py`).
+
 ## Top-20 lists (copy-paste)
 
 - Physicians and health-system employers: [`analysis/TOP20.txt`](analysis/TOP20.txt)

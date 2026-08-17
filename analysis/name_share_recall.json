@@ -1,0 +1,92 @@
+{
+  "named_itemized_total": 10265431.61,
+  "method": "Base classifier from nonwhite_name_share.py, then a recall pass over its ambiguous bucket using supplementary token lists curated from the top ~450 ambiguous surnames by dollars plus a distinctive-given-name list. Recovery applied to all buckets (Anglo/European included), only to base-ambiguous rows. Name tokens, not a religion or race census.",
+  "arab_or_muslim_incl_levantine": {
+    "amt": 7133411.47,
+    "pct": 69.5,
+    "n_gifts": 9122
+  },
+  "nonwhite_coded": {
+    "amt": 7404958.69,
+    "pct": 72.1
+  },
+  "anglo_white_coded": {
+    "amt": 1623338.57,
+    "pct": 15.8,
+    "n_gifts": 9208
+  },
+  "ambiguous_remaining": {
+    "amt": 1218584.35,
+    "pct": 11.9,
+    "n_gifts": 12214
+  },
+  "recovered_from_ambiguous": {
+    "arab_or_muslim": {
+      "amt": 487614.52,
+      "n_gifts": 846
+    },
+    "anglo_white": {
+      "amt": 381831.13,
+      "n_gifts": 1686
+    },
+    "south_asian": {
+      "amt": 24091.47,
+      "n_gifts": 43
+    },
+    "hispanic_latino": {
+      "amt": 19398.92,
+      "n_gifts": 81
+    },
+    "east_asian": {
+      "amt": 5100.0,
+      "n_gifts": 5
+    }
+  },
+  "by_bucket": {
+    "arab_or_muslim": {
+      "amt": 7126411.47,
+      "pct": 69.4,
+      "n_gifts": 9120
+    },
+    "anglo_white": {
+      "amt": 1623338.57,
+      "pct": 15.8,
+      "n_gifts": 9208
+    },
+    "ambiguous": {
+      "amt": 1218584.35,
+      "pct": 11.9,
+      "n_gifts": 12214
+    },
+    "south_asian": {
+      "amt": 134071.47,
+      "pct": 1.3,
+      "n_gifts": 152
+    },
+    "east_asian": {
+      "amt": 71141.25,
+      "pct": 0.7,
+      "n_gifts": 171
+    },
+    "hispanic_latino": {
+      "amt": 66334.5,
+      "pct": 0.6,
+      "n_gifts": 307
+    },
+    "unknown": {
+      "amt": 18550.0,
+      "pct": 0.2,
+      "n_gifts": 6
+    },
+    "levantine_mena": {
+      "amt": 7000.0,
+      "pct": 0.1,
+      "n_gifts": 2
+    },
+    "african_distinctive": {
+      "amt": 0.0,
+      "pct": 0.0,
+      "n_gifts": 0
+    }
+  }
+}
