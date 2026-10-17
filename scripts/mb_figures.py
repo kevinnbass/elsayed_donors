@@ -71,62 +71,111 @@ def short_org(name: str) -> str:
     return (titled(words) if name.isupper() else name)[:60]
 
 
-# ---- figure 1: big super PAC donors, named or not ---------------------------------------------------------------
-def fig_donors_named() -> tuple[str, int]:
-    threshold = 50 * 1000  # parameter: contributors at or above this total to one PAC
-    recs = [r for r in load("super_pac_receipts") if r["committee"] in ("Fighting for Michigan PAC", "Unity & Justice Fund")]
-    agg = defaultdict(lambda: {"amount": 0.0, "n": 0, "rows": [], "city": "", "state": "", "kind": ""})
+# ---- figure 1: money from Muslim and Arab-advocacy organizations and from people holding roles in them ------------------
+# organization families for the role table (as the roster lanes named them) and the organizations' own gifts
+FAMILY = [(r"^CAIR|Council on American", "CAIR (national and chapters)", "muslim"), (r"ICNA", "ICNA and ICNA Relief", "muslim"),
+          (r"Islamic Relief", "Islamic Relief USA", "muslim"), (r"Emgage", "Emgage", "muslim"), (r"MPower", "MPower Change", "muslim"),
+          (r"USCMO", "U.S. Council of Muslim Organizations", "muslim"), (r"KindHearts", "KindHearts (closed 2006)", "muslim"),
+          (r"Unity & Justice", "Unity & Justice Fund (CAIR Action's super PAC)", "muslim"),
+          (r"IMEU", "IMEU", "arab"), (r"ACMER", "ACMER and its MERIT PAC", "arab"), (r"AAPAC|Arab American Political", "Arab American PAC", "arab")]
+ORG_GIFTS = [(r"^CAIR ACTION", "CAIR Action", "muslim"), (r"^UNITY & JUSTICE FUND", "Unity & Justice Fund", "muslim"),
+             (r"MIDDLE EAST UNDERSTANDING", "IMEU (as amended: IMEU Policy Project)", "arab"),
+             (r"COMMITTEE FOR MIDDLE EAST RIGHTS", "ACMER", "arab")]
+
+
+def fig_islam_money() -> tuple[str, int]:
+    roles = load("donor_org_roles_confirmed")
+    donors = [json.loads(l) for l in open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8")]
+    by_nc = defaultdict(list)
+    for d in donors:
+        by_nc[(" ".join(d["name"].upper().split()), d["city"].upper(), d["state"])].append(d)
+    recs = [r for r in load("super_pac_receipts") if r["committee"] in ("Fighting for Michigan PAC", "Unity & Justice Fund", "ACMER MERIT PAC")]
+    rec_by_nc = defaultdict(list)
     for r in recs:
-        k = (r["committee"], " ".join(r["contributor"].upper().replace(",", ", ").split()), r["entity_type"])
-        a = agg[k]
-        a["amount"] += r["amount"] or 0
-        a["n"] = max(a["n"], r["n_stories_naming_contributor"])
-        a["rows"].append(receipt_id(r))
-        a.update(city=r["city"] or "", state=r["state"] or "", kind=r["entity_type"])
-    big = [(k, v) for k, v in agg.items() if v["amount"] >= threshold]
-    named = sorted([x for x in big if x[1]["n"] > 0], key=lambda x: -x[1]["amount"])
-    unnamed = sorted([x for x in big if x[1]["n"] == 0], key=lambda x: -x[1]["amount"])
-    top = max(v["amount"] for _, v in big)
-    n_stories = len(load("stories"))
-    row_h, top_y, panel_w, label_w = 50, 70, 1100, 470
-    rows = max(len(named), len(unnamed))
-    h_svg = top_y + rows * row_h + 20
-    svg, ids = [f'<svg width="{W - 120}" height="{h_svg}" viewBox="0 0 {W - 120} {h_svg}">'], []
-    for p, (title, items, color) in enumerate((("Named in at least one story", named, BLUE),
-                                               ("Named in none of the stories", unnamed, ORANGE))):
-        x0 = p * (panel_w + 80)
-        svg.append(f'<text x="{x0}" y="34" font-size="26" font-weight="bold" fill="{INK}">{esc(title)} ({len(items)})</text>')
-        for i, ((committee, contributor, kind), v) in enumerate(items):
-            y = top_y + i * row_h
-            label = person(contributor) if kind == "IND" else short_org(contributor)
-            tag = "FFM" if committee.startswith("Fighting") else "U&J"
-            bar = (panel_w - label_w - 230) * v["amount"] / top
-            svg.append(f'<text x="{x0}" y="{y + 22}" font-size="19" fill="{INK}">{esc(label[:44])}</text>'
-                       f'<text x="{x0}" y="{y + 42}" font-size="14" fill="{MUTED}">{esc(tag)} · {esc(v["city"].title())}, {esc(v["state"])}</text>'
-                       f'<rect x="{x0 + label_w}" y="{y + 8}" width="{bar:.1f}" height="28" rx="3" fill="{color}" opacity="0.85"/>'
-                       f'<text x="{x0 + label_w + bar + 10:.1f}" y="{y + 29}" font-size="18" font-weight="bold" fill="{INK}">{money(v["amount"])}</text>')
-            if v["n"]:
-                svg.append(f'<text x="{x0 + panel_w - 20}" y="{y + 29}" font-size="16" fill="{MUTED}" text-anchor="end">'
-                           f'{v["n"]} {"story" if v["n"] == 1 else "stories"}</text>')
-            ids += element("bar", f"{committee}: {contributor}", v["rows"])
+        if r["entity_type"] == "IND":
+            rec_by_nc[(" ".join(r["contributor"].upper().replace(",", ", ").split()).replace(" ,", ","), (r["city"] or "").upper())].append(r)
+    # named in stories: by name in the text, or matched by the claims tables (misspellings, name order) to a story's subject
+    claimed = {(" ".join(r["name_as_filed"].upper().split()), (r["city"] or "").upper()) for r in load("fec_rows")
+               if r["committee"] == "Abdul for U.S. Senate"}
+    fam = {}
+    people = {}
+    for r in roles:
+        f = next(((name, kind) for pat, name, kind in FAMILY if re.search(pat, r["org"])), None)
+        if not f:
+            continue
+        key = (" ".join(r["donor"].upper().split()), r["city"].upper(), r["state"])
+        if key not in people:
+            camp = by_nc.get(key, [])
+            pacs = rec_by_nc.get((" ".join(r["donor"].upper().replace(",", ", ").split()).replace(" ,", ","), r["city"].upper()), [])
+            people[key] = {"amount": sum(d["net"] for d in camp) + sum(p["amount"] or 0 for p in pacs),
+                           "named": r["n_stories_naming_donor"] > 0 or (key[0], key[1]) in claimed, "name": r["donor"],
+                           "rows": [f"D:{d['last_norm']}|{d['first_norm']}|{d['suffix']}|{d['zip5']}|{d['house']}" for d in camp]
+                                   + [receipt_id(p) for p in pacs]}
+        fam.setdefault(f, set()).add(key)
+    org_rows = []
+    for pat, label, kind in ORG_GIFTS:
+        rs = [r for r in recs if r["entity_type"] != "IND" and re.search(pat, r["contributor"].upper())
+              and not r["contributor"].upper().startswith(r["committee"].upper())]      # not a committee's own transfers
+        if rs:
+            to = sorted({r["committee"] for r in rs})
+            org_rows.append((label, kind, sum(r["amount"] or 0 for r in rs), to, [receipt_id(r) for r in rs]))
+    fam_rows = sorted(((name, kind, keys) for (name, kind), keys in fam.items()), key=lambda x: (x[1] != "muslim", -sum(people[k]["amount"] for k in x[2])))
+    top = max([o[2] for o in org_rows] + [sum(people[k]["amount"] for k in keys) for _, _, keys in fam_rows])
+    row_h, label_w, x_bar = 58, 640, 660
+    bar_w = W - 120 - x_bar - 420
+    h_svg = 60 + (len(org_rows) + len(fam_rows)) * row_h + 130
+    svg, ids, y = [f'<svg width="{W - 120}" height="{h_svg}" viewBox="0 0 {W - 120} {h_svg}">'], [], 40
+    svg.append(f'<text x="0" y="{y}" font-size="24" font-weight="bold" fill="{INK}">Organizations, gifts of their own</text>')
+    y += 24
+    for label, kind, amt, to, rows in org_rows:
+        w = bar_w * amt / top
+        dest = " and ".join("FFM" if t.startswith("Fighting") else "U&J" if t.startswith("Unity") else "MERIT" for t in to)
+        svg.append(f'<text x="0" y="{y + 30}" font-size="19" fill="{INK}">{esc(label)}</text>'
+                   f'<rect x="{x_bar}" y="{y + 10}" width="{w:.1f}" height="30" rx="3" fill="{BLUE if kind == "muslim" else PURPLE}"/>'
+                   f'<text x="{x_bar + w + 10:.1f}" y="{y + 32}" font-size="18" font-weight="bold" fill="{INK}">{money(amt)} to {esc(dest)}</text>')
+        ids += element("org bar", label, rows)
+        y += row_h
+    y += 36
+    svg.append(f'<text x="0" y="{y}" font-size="24" font-weight="bold" fill="{INK}">People with documented roles, by organization (campaign and super PAC gifts)</text>')
+    y += 24
+    for name, kind, keys in fam_rows:
+        named = [k for k in keys if people[k]["named"]]
+        unnamed = [k for k in keys if not people[k]["named"]]
+        a_n, a_u = sum(people[k]["amount"] for k in named), sum(people[k]["amount"] for k in unnamed)
+        w_n, w_u = bar_w * a_n / top, bar_w * a_u / top
+        svg.append(f'<text x="0" y="{y + 30}" font-size="19" fill="{INK}">{esc(name)}</text>'
+                   f'<rect x="{x_bar}" y="{y + 10}" width="{w_n:.1f}" height="30" fill="{BLUE if kind == "muslim" else PURPLE}"/>'
+                   f'<rect x="{x_bar + w_n:.1f}" y="{y + 10}" width="{w_u:.1f}" height="30" fill="{ORANGE}"/>'
+                   f'<text x="{x_bar + w_n + w_u + 10:.1f}" y="{y + 32}" font-size="18" font-weight="bold" fill="{INK}">{money(a_n + a_u)}</text>'
+                   f'<text x="{W - 120}" y="{y + 32}" font-size="17" fill="{MUTED}" text-anchor="end">'
+                   f'{len(keys)} {"person" if len(keys) == 1 else "people"}, {len(named)} named in stories</text>')
+        big = max(keys, key=lambda k: people[k]["amount"])
+        note_from = 10 * 1000  # parameter: only rows this large get a "from one person" note
+        if people[big]["amount"] > 0.5 * (a_n + a_u) and len(keys) > 1 and a_n + a_u >= note_from:
+            svg.append(f'<text x="{x_bar}" y="{y + 60}" font-size="15" fill="{MUTED}">of which {money(people[big]["amount"])} from one person, '
+                       f'{esc(person(people[big]["name"]))}</text>')
+            y += 22
+        ids += element("role bar", name, [r for k in keys for r in people[k]["rows"]])
+        y += row_h
     svg.append("</svg>")
-    total_un = sum(v["amount"] for _, v in unnamed)
+    all_people = set().union(*[keys for _, _, keys in fam_rows])
+    total = sum(people[k]["amount"] for k in all_people)
+    n_named = sum(people[k]["named"] for k in all_people)
     doc = shell(
-        f"{len(unnamed)} of the {len(big)} largest donors to the pro-El-Sayed super PACs appear in no story",
-        "Who funded Fighting for Michigan and Unity & Justice",
-        f"Every contributor who gave {money(threshold)} or more to either PAC, by total given. Left: named in at least one of "
-        f"the {n_stories:,} stories captured; right: never named. The unnamed group gave {money(total_un)}.",
-        legend([(BLUE, "named in at least one story"), (ORANGE, "named in none"), (GRAY, "FFM = Fighting for Michigan PAC, U&J = Unity & Justice Fund")])
+        f"People holding roles in Muslim and Arab-advocacy groups gave {money(total)}; stories named {n_named} of {len(all_people)}",
+        "Money from organizations named in the coverage and from people holding roles in them",
+        "Top: what the organizations gave to the campaign and the pro-El-Sayed super PACs. Bottom: what people documented as their "
+        "officers, directors or staff gave, split by whether any captured story named them.",
+        legend([(BLUE, "Muslim organization"), (PURPLE, "Arab or Palestinian advocacy group"), (ORANGE, "people no story named")])
         + "\n".join(svg) + cite(ids),
-        "<b>Source:</b> the PACs' FEC receipts (OpenFEC e-file and processed data, reports through Aug 31, 2026, as amended "
-        "through Oct 17, 2026). <b>Named</b> means the contributor's first and last name, side by side, or the organization's "
-        "name appears in a captured story; a donor reported under a nickname or another name form counts as unnamed. A contributor "
-        "filed under two names or two cities is shown twice; the Unity &amp; Justice gift under Tayeb Jukaku's name, filed from "
-        "Tracy, CA, is not confirmed as his. IMEU Policy Project is the donor name the PAC's Oct 17 amendments give for gifts first "
-        "reported from the Institute for Middle East Understanding, Inc. <b>Not shown:</b> smaller contributors, and American "
-        "Priorities, which also spent for El-Sayed but backs other candidates.",
-        W, h_svg + 400)
-    return doc, h_svg + 400
+        "<b>Source:</b> FEC filings of Abdul for U.S. Senate (net of refunds, through Sep 30, 2026) and of Fighting for Michigan PAC, "
+        "Unity &amp; Justice Fund and MERIT PAC (through Aug 31, as amended through Oct 17); roles from the organizations' Form 990s, "
+        "own pages and registries, each confirmed by the donor's own FEC employer entry or by an identity review on two attributes. "
+        "<b>Not additive:</b> Unity &amp; Justice's gift to Fighting for Michigan includes money it received from CAIR Action, and a "
+        "person with roles in two groups appears in both rows. <b>Not shown:</b> donors whose roles could not be confirmed, and "
+        "organizations whose identity could not be documented.",
+        W, h_svg + 330)
+    return doc, h_svg + 330
 
 
 # ---- figure 2: how Jukaku's super PAC money was described -----------------------------------------------------------
@@ -379,7 +428,7 @@ def fig_cair() -> tuple[str, int]:
     return doc, h_svg + 420
 
 
-FIGS = {"e1-super-pac-donors-named": fig_donors_named, "e2-jukaku-money-in-the-coverage": fig_jukaku,
+FIGS = {"e1-money-from-muslim-and-arab-advocacy-roles": fig_islam_money, "e2-jukaku-money-in-the-coverage": fig_jukaku,
         "e3-what-held-up": fig_verdicts, "e4-cair-donor-figure": fig_cair}
 
 if __name__ == "__main__":

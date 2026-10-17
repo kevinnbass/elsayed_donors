@@ -24,7 +24,8 @@ known = {f"T{t['tie_id']}" for t in load("ties")} | {f"C{c['claim_id']}" for c i
 known |= {f"R:{CODE[r['committee']]}:{r['transaction_id']}" for r in load("super_pac_receipts")}
 known |= {f"R:{CODE[r['committee']]}:{r['transaction_id']}" for r in load("fec_rows") if r["committee"] in CODE}
 known |= {f"F:{r['fec_file_number']}:{r['transaction_id']}" for r in load("fec_rows") if r["committee"] not in CODE}
-ID = re.compile(r"\b(?:T[0-9a-f]{12}|C[0-9a-f]{16}-\d+|R:[A-Z]{3}:\S+|F:\d+:\S+|[0-9a-f]{12,16})\b")
+known |= {f"D:{d['last_norm']}|{d['first_norm']}|{d['suffix']}|{d['zip5']}|{d['house']}" for d in map(json.loads, open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8"))}
+ID = re.compile(r"\b(?:T[0-9a-f]{12}|C[0-9a-f]{16}-\d+|R:[A-Z]{3}:\S+|F:\d+:\S+|D:[A-Z ]+\|\S*|[0-9a-f]{12,16})\b")
 
 problems = []
 code = (ROOT / "scripts" / "mb_figures.py").read_text(encoding="utf-8").splitlines()
