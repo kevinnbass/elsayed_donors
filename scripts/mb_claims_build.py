@@ -3,7 +3,7 @@
 Usage: python scripts/mb_claims_build.py <mb_claims_dir> <out_dir>
   <mb_claims_dir>: raw_dl/ (archived article html/txt/json, one per captured URL), extract_v2/*/ and
       extract_v3/*/claims.jsonl (claims extracted from each relevant article), screen.jsonl (from mb_claims_screen.py)
-  <out_dir>: stories, claims, links, entities, ties, fec_rows as .jsonl + .csv
+  <out_dir>: stories, claims, links, entities, ties, fec_rows, super_pac_receipts as .jsonl + .csv
 
 Other inputs
   analysis/private/mb_subject_map.json  how each subject as written resolves to one or more entities (curated)
@@ -129,6 +129,22 @@ for f in sorted(glob.glob(str(MB / "extract_v2" / "*" / "claims.jsonl")) + glob.
             a = json.loads(line)
             extracted[a["h"]] = a
 
+# how each URL was found (the discovery lists kept in the corpus folder)
+DISCOVERY = [("urls_round1.txt", "search round 1"), ("corpus_candidates.txt", "search round 1 candidates"),
+             ("evidence_urls.txt", "link cited by a captured story (round 1)"),
+             ("snowball_round2_curl.txt", "link inside a captured story (round 2)"),
+             ("search_round3_urls.txt", "search round 3")]
+found_via = defaultdict(list)
+for fname, label in DISCOVERY:
+    if (MB / fname).exists():
+        for u in open(MB / fname, encoding="utf-8"):
+            if u.strip():
+                found_via[u.strip()].append(label)
+if (MB / "search_round3.tsv").exists():
+    for row in csv.DictReader(open(MB / "search_round3.tsv", encoding="utf-8"), delimiter="\t"):
+        if row.get("url"):
+            found_via[row["url"].strip()].append(f"query: {row.get('query')}")
+
 stories, claims, links = [], [], []
 for h, m in sorted(meta.items(), key=lambda kv: kv[1]["url"]):
     a = extracted.get(h)
@@ -144,7 +160,8 @@ for h, m in sorted(meta.items(), key=lambda kv: kv[1]["url"]):
         "outlet": (a or {}).get("outlet") or m.get("site") or urlsplit(m["url"]).netloc.removeprefix("www."),
         "outlet_kind": (a or {}).get("outlet_kind"), "published": (a or {}).get("published") or (m.get("published") or "")[:10] or None,
         "author": (a or {}).get("author") or m.get("author"), "headline": (a or {}).get("headline") or m.get("headline"),
-        "disposition": disposition, "in_scope": (a or {}).get("in_scope"), "scope_reason": (a or {}).get("scope_reason"),
+        "disposition": disposition, "found_via": "; ".join(dict.fromkeys(found_via.get(m["url"], []))) or "unrecorded",
+        "in_scope": (a or {}).get("in_scope"), "scope_reason": (a or {}).get("scope_reason"),
         "is_original_reporting": (a or {}).get("is_original_reporting"), "relies_on": "; ".join((a or {}).get("relies_on") or []),
         "campaign_response_quoted": (a or {}).get("campaign_response_quoted"), "n_claims": len((a or {}).get("claims") or []),
         "n_links": len(m.get("links", [])), "capture_status": m.get("status"), "http_code": m.get("http_code"),
@@ -185,8 +202,8 @@ for d in donors:
     by_name[(d["last_norm"].replace(" ", ""), d["first_norm"].split(" ")[0] if d["first_norm"] else "")].append(d)
 
 COMMITTEE = {"ffm_A": "Fighting for Michigan PAC", "unity_A": "Unity & Justice Fund", "merit_A": "ACMER MERIT PAC",
-             "cairaction_A": "CAIR Action PAC"}
-pac_by_person, pac_by_org = defaultdict(list), defaultdict(list)
+             "cairaction_A": "CAIR Action PAC", "amprio_A": "American Priorities"}
+pac_by_person, pac_by_org, pac_all = defaultdict(list), defaultdict(list), []
 for f in sorted(glob.glob(str(MB.parent / "openfec_pacs_dl" / "rows" / "*_A.json"))):
     j = json.load(open(f))
     committee = COMMITTEE[Path(f).stem]
@@ -202,7 +219,9 @@ for f in sorted(glob.glob(str(MB.parent / "openfec_pacs_dl" / "rows" / "*_A.json
                "amount": r.get("contribution_receipt_amount"), "contributor": (r.get("contributor_name") or "").rstrip(", "),
                "city": r.get("contributor_city"), "state": r.get("contributor_state"),
                "occupation": r.get("contributor_occupation"), "employer": r.get("contributor_employer"),
-               "file_number": r.get("file_number"), "transaction_id": tid}
+               "file_number": r.get("file_number"), "transaction_id": tid, "entity_type": r.get("entity_type"),
+               "aggregate_ytd": r.get("contributor_aggregate_ytd")}
+        pac_all.append(row)
         if r.get("entity_type") == "IND":
             pac_by_person[norm_name(r.get("contributor_name") or "")].append(row)
         else:
@@ -302,6 +321,45 @@ for n, e in entities.items():
                          "fec_file_number": p["file_number"], "transaction_id": p["transaction_id"]})
 fec_rows.sort(key=lambda r: (r["entity"], r["committee"], r["date"]))
 
+# ---- every receipt of the super PACs backing El-Sayed, with the stories (if any) that name the contributor ----
+texts = {Path(t).stem: open(t, encoding="utf-8", errors="replace").read() for t in glob.glob(str(MB / "raw_dl" / "*.txt"))}
+lower = {h: t.lower() for h, t in texts.items()}
+_named: dict = {}
+
+
+def stories_naming(row: dict) -> list[str]:
+    key = (row["entity_type"], row["contributor"].upper())
+    if key not in _named:
+        _named[key] = _stories_naming(row)
+    return _named[key]
+
+
+def _stories_naming(row: dict) -> list[str]:
+    if row["entity_type"] == "IND":
+        last, first = norm_name(row["contributor"])
+        if not last or not first:
+            return []
+        f_, l_ = re.escape(first), re.escape(last)
+        # adjacent, either order, allowing a middle name or initial and a hyphenated last name ("Tayeb Jukaku", "Jukaku Tayeb")
+        pats = [re.compile(rf"\b{f_}\W+(?:\w+\.?\W+)?{l_}\b|\b{l_},?\W+{f_}\b", re.I)]
+    else:
+        words = [w for w in re.findall(r"[A-Za-z&]+", row["contributor"]) if w.upper() not in ("INC", "LLC", "THE", "PAC")][:4]
+        pats = [re.compile(r"\b" + r"\W+".join(map(re.escape, words)) + r"\b", re.I)] if words else []
+    first_word = (norm_name(row["contributor"])[0] if row["entity_type"] == "IND" else "").lower()
+    return sorted(h for h, t in texts.items()
+                  if pats and (not first_word or first_word in lower[h]) and all(p.search(t) for p in pats))
+
+
+receipts = []
+for row in sorted(pac_all, key=lambda r: (r["committee"], -(r["amount"] or 0))):
+    named = stories_naming(row)
+    receipts.append({**row, "n_stories_naming_contributor": len(named), "story_ids": " ".join(named[:25])})
+same = defaultdict(int)
+for r in receipts:
+    same[(r["committee"], r["contributor"].upper(), r["date"], r["amount"])] += 1
+for r in receipts:
+    r["duplicate_suspected"] = same[(r["committee"], r["contributor"].upper(), r["date"], r["amount"])] > 1
+
 # ---- ties: one row per distinct (entity, link, counterparty or recipient) -------------------------
 verdicts = {}
 if VERDICTS.exists():
@@ -363,7 +421,7 @@ def dump(name: str, rows: list[dict]) -> None:
 
 
 dump("stories", stories); dump("claims", claims); dump("links", links); dump("entities", ent_rows); dump("ties", tie_rows)
-dump("fec_rows", fec_rows)
+dump("fec_rows", fec_rows); dump("super_pac_receipts", receipts)
 disp = defaultdict(int)
 for s in stories:
     disp[s["disposition"]] += 1

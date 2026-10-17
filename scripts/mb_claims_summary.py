@@ -44,5 +44,28 @@ for t in ties:
     if t["verdict"] in ("contradicted", "about_someone_else"):
         lines.append(f"- **{t['entity']}**, {t['link_type']} {t['counterparty_or_recipient']} ({t['n_stories']} stories): "
                      f"{t['verdict']}. {(t.get('adjudication') or t.get('verdict_reason') or '').strip()}")
+# super PAC contributors of $50,000 or more whom no captured story names (by adjacent first + last name, or org name)
+rec = load("super_pac_receipts")
+agg = defaultdict(lambda: {"amount": 0.0, "n_stories": 0, "rows": 0})
+for r in rec:
+    k = (r["committee"], " ".join(r["contributor"].upper().split()), r["entity_type"])
+    a = agg[k]
+    a["amount"] += r["amount"] or 0
+    a["rows"] += 1
+    a["n_stories"] = max(a["n_stories"], r["n_stories_naming_contributor"])
+    a.update({"city": r["city"], "state": r["state"], "occupation": r["occupation"], "employer": r["employer"]})
+unnamed = [{"committee": k[0], "contributor": k[1], "entity_type": k[2], **v} for k, v in agg.items()
+           if v["amount"] >= 50000 and v["n_stories"] == 0]
+unnamed.sort(key=lambda u: (u["committee"], -u["amount"]))
+with (OUT / "super_pac_donors_unnamed_in_stories.jsonl").open("w", encoding="utf-8") as f:
+    for u in unnamed:
+        f.write(json.dumps(u, ensure_ascii=False) + "\n")
+lines += ["", "## Super PAC contributors of $50,000+ named in no captured story", "",
+          "Name search is a screen (adjacent first and last name, or the organization's name), not proof of absence: a donor "
+          "reported under another name form (e.g. a nickname) appears here too. Not every American Priorities donor gave "
+          "for El-Sayed's race; the PAC is listed because stories tie its spending to him.", "",
+          "| committee | contributor | city | occupation / employer | total |", "|---|---|---|---|---|"]
+lines += [f"| {u['committee']} | {u['contributor']} | {u['city']}, {u['state']} | {u['occupation']} / {u['employer']} | ${u['amount']:,.0f} |"
+          for u in unnamed]
 (OUT / "SUMMARY.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 print(f"wrote {OUT / 'SUMMARY.md'}: {len(ties)} ties")

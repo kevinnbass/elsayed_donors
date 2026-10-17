@@ -14,6 +14,7 @@ A review that agrees leaves the verdict as is; a disagreement stands as `dispute
 """
 from __future__ import annotations
 
+import csv
 import glob
 import hashlib
 import json
@@ -93,6 +94,21 @@ with (PRIVATE / "mb_adjudication_todo.jsonl").open("w", encoding="utf-8") as out
 with (PRIVATE / "mb_sources.jsonl").open("w", encoding="utf-8") as out:
     for s in sources:
         out.write(json.dumps(s, ensure_ascii=False) + "\n")
+
+
+def flat(rows: list[dict], name: str) -> None:
+    """CSV twin of a JSONL table; nested fields are written as JSON text."""
+    fields = list(dict.fromkeys(k for r in rows for k in r))
+    with (PRIVATE / f"{name}.csv").open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=fields)
+        w.writeheader()
+        for r in rows:
+            w.writerow({k: json.dumps(v, ensure_ascii=False) if isinstance(v, (list, dict)) else v for k, v in r.items()})
+
+
+flat(sorted(final.values(), key=lambda f: f["tie_id"]), "mb_verdicts")
+flat(sources, "mb_sources")
+flat(list(adj.values()), "mb_adjudications")
 status = {}
 for f in final.values():
     status[f["status"]] = status.get(f["status"], 0) + 1
