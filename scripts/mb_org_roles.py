@@ -8,6 +8,9 @@ Usage: python scripts/mb_org_roles.py <out_dir> [<rosters.jsonl> ...]
     {"org", "person", "role", "years", "city", "state", "source_url", "sha256", "quote"}. Donors whose name matches are
     written as candidates; a match is confirmed only by a second attribute (city/state, employer, occupation, or a
     record tying the two), never on the name alone.
+  Step 3, when analysis/private/org_rosters/identity_{packet,review}.jsonl exist (the identity review of the candidates):
+    writes <out_dir>/donor_org_roles_confirmed.jsonl/.csv, one row per donor record and organization with the role,
+    how it was confirmed, the evidence, dollars by committee and how many captured stories name the donor.
 Writes <out_dir>/donor_org_roles.jsonl/.csv. Roles are stated plainly (no characterization of the organization).
 """
 from __future__ import annotations
@@ -34,7 +37,7 @@ ORGS = {
     "Islamic Relief USA": r"ISLAMIC RELIEF|\bIRUSA\b",
     "Life for Relief and Development": r"LIFE FOR RELIEF",
     "Emgage / Emgage Action": r"\bEMGAGE\b",
-    "MPower Change": r"MPOWER",
+    "MPower Change": r"\bMPOWER\b",
     "IMEU": r"\bIMEU\b|INSTITUTE FOR MIDDLE EAST UNDERSTANDING",
     "ACMER / MERIT PAC": r"\bACMER\b|AMERICAN COMMITTEE FOR MIDDLE EAST RIGHTS|MERIT PAC",
     "Unity & Justice Fund": r"UNITY (&|AND) JUSTICE",
@@ -202,3 +205,72 @@ by_org = defaultdict(int)
 for r in out:
     by_org[r["org"]] += 1
 print(f"self-reported employer rows {len(rows)} -> donors x orgs {len(out)}: {dict(sorted(by_org.items(), key=lambda kv: -kv[1]))}")
+
+
+# ---- step 3: confirmed roles (self-reported, or roster listing + identity review) ----------------------------------
+import glob  # noqa: E402
+
+REV = ROOT / "analysis" / "private" / "org_rosters"
+if (REV / "identity_review.jsonl").exists():
+    packet = {json.loads(l)["pair_id"]: json.loads(l) for l in open(REV / "identity_packet.jsonl", encoding="utf-8")}
+    review = [json.loads(l) for l in open(REV / "identity_review.jsonl", encoding="utf-8")]
+    family = lambda o: "CAIR California (one combined filing for its chapters)" if o.startswith("CAIR California") else o
+    conf = {}
+
+    def add(name, city, state, org, role, committee, amount, basis, evidence):
+        k = (" ".join(name.upper().split()), (city or "").upper(), family(org))
+        e = conf.setdefault(k, {"donor": name, "city": city, "state": state, "org": family(org), "roles": set(),
+                                "basis": set(), "amount_by_committee": {}, "evidence": []})
+        e["roles"].add(role)
+        e["basis"].add(basis)
+        e["amount_by_committee"][committee] = round(amount or 0, 2)
+        e["evidence"] += evidence
+
+    for r in out:
+        for committee, amt in r["total_by_committee"].items():
+            add(r["donor"], r["city"], r["state"], r["org"], r["role_as_filed"], committee, amt,
+                "self-reported employer on the donor's own FEC filing", [{"source": r["sources"][:300]}])
+    for m in matches:
+        if m["status"].startswith("confirmed"):
+            add(m["donor"], m["city"], m["state"], m["org"], m["role"], m["committee"], m["amount"],
+                "self-reported employer + organization record", [{"url": m["source_url"], "sha256": m["sha256"], "quote": m["quote"]}])
+    for v in review:
+        if v["verdict"] == "same_person":
+            p = packet[v["pair_id"]]
+            add(p["donor"], p["donor_city"], p["donor_state"], p["org"], v.get("role_confirmed") or p["listings"][0]["role"],
+                p["committee"], p["amount"], "organization record + identity review (two attributes)",
+                [{"url": e.get("url"), "sha256": e.get("sha256"), "quote": e.get("quote")} for e in v.get("evidence") or []]
+                + [{"url": li["source_url"], "sha256": li["sha256"], "quote": li["quote"]} for li in p["listings"][:3]])
+    corpus = Path("/mnt/data/projects/elsayed/mb_claims/raw_dl")
+    texts = [open(t, encoding="utf-8", errors="replace").read() for t in glob.glob(str(corpus / "*.txt"))] if corpus.exists() else []
+    lower = [t.lower() for t in texts]
+
+    def n_stories(name: str) -> int:
+        last, _, first = name.partition(",")
+        first = (first.strip().split() or [""])[0]
+        last = last.strip()
+        if not first or not last:
+            return 0
+        pat = re.compile(rf"\b{re.escape(first)}\W+(?:\w+\.?\W+)?{re.escape(last)}\b|\b{re.escape(last)},?\W+{re.escape(first)}\b", re.I)
+        return sum(1 for t, lo in zip(texts, lower) if last.lower() in lo and pat.search(t))
+
+    rows3 = []
+    for e in conf.values():
+        rows3.append({**{k: v for k, v in e.items() if k not in ("roles", "basis", "evidence")},
+                      "roles": "; ".join(sorted(e["roles"])), "basis": "; ".join(sorted(e["basis"])),
+                      "campaign_net": e["amount_by_committee"].get("Abdul for U.S. Senate", 0.0),
+                      "n_stories_naming_donor": n_stories(e["donor"]), "evidence": e["evidence"][:6]})
+    rows3.sort(key=lambda r: (r["org"], -r["campaign_net"]))
+    with (OUT / "donor_org_roles_confirmed.jsonl").open("w", encoding="utf-8") as f:
+        for r in rows3:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    with (OUT / "donor_org_roles_confirmed.csv").open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows3[0]))
+        w.writeheader()
+        for r in rows3:
+            w.writerow({k: json.dumps(v, ensure_ascii=False) if isinstance(v, (dict, list)) else v for k, v in r.items()})
+    people = {(r["donor"].upper(), r["city"].upper()) for r in rows3}
+    print(f"confirmed roles: {len(rows3)} donor-record x organization rows, {len(people)} donor records, "
+          f"campaign net ${sum({(r['donor'].upper(), r['city'].upper()): r['campaign_net'] for r in rows3}.values()):,.0f}; "
+          f"named in no captured story: {len({(r['donor'].upper(), r['city'].upper()) for r in rows3 if not r['n_stories_naming_donor']})} donor records"
+          f"; unresolved candidates {sum(1 for v in review if v['verdict'] == 'unresolved')}")

@@ -112,6 +112,18 @@ def screen(ds: list[dict]) -> list[dict]:
 
 
 hits = screen(donors)
+# identity review of the candidates (one verdict per donor x record pair), when it exists
+REVIEW = RECORDS.parent / "identity_review.jsonl"
+if REVIEW.exists():
+    import hashlib
+    verdicts = {json.loads(l)["pair_id"]: json.loads(l) for l in open(REVIEW, encoding="utf-8") if l.strip()}
+    for h in hits:
+        pid = hashlib.sha1(f"{h['donor']}|{h['donor_city']}|{h['donor_state']}|{h['record_person']}|{h['record_sha256']}".encode()).hexdigest()[:12]
+        v = verdicts.get(pid)
+        h["identity_verdict"] = v["verdict"] if v else "not reviewed"
+        h["identity_reason"] = v.get("reason") if v else None
+        h["status"] = {"same_person": "same person: finding", "different_person": "different person",
+                       "unresolved": "unresolved name match: not a finding"}.get(h["identity_verdict"], h["status"])
 # control on the name stage: every listed person, entered as a donor in "Last, First" form, must come back
 ctl_people = [r for r in records if len(name_parts(r["person"])[0]) and "," not in r["person"]][:200]
 ctl = screen([{"name": f"{r['person'].split()[-1]}, {r['person'].split()[0]}", "city": "", "state": "", "committee": "CONTROL",
@@ -129,4 +141,5 @@ print(f"records {len(records)} | donors screened {len(donors)} (campaign {sum(d[
       f"super PAC {sum(d['committee'] != 'Abdul for U.S. Senate' for d in donors)}) | name candidates {len(hits)} "
       f"({len({(h['donor'], h['donor_city']) for h in hits})} donors) | same state as the record {sum(1 for h in hits if h['state_match'])}"
       f"\nby record category: {dict(Counter(h['record_category'] for h in hits))}"
+      f"\nidentity review: {dict(Counter(h.get('identity_verdict', 'not reviewed') for h in hits))}"
       f"\ncontrol (name stage): {len(caught)}/{len({(r['person'].split()[-1], r['person'].split()[0]) for r in ctl_people})} listed people entered as donors came back as candidates")
