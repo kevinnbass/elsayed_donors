@@ -1,712 +1,1248 @@
 {
-  "top20_nppes_confirmed_physicians": [
+  "basis": "net of refunds and reattributions (scripts/top_donors.py)",
+  "n_nppes_confirmed_physicians_at_cap": 86,
+  "nppes_confirmed_physicians_at_cap": [
     {
-      "rank": 1,
-      "name": "Issa, Said",
-      "state": "MI",
-      "amt": 14500.0,
-      "n_gifts": 5,
-      "occupations": [
-        "Dentist",
-        "Gee"
-      ],
-      "employers": [
-        "Gee",
-        "Shashi Krishnan, DDS"
-      ],
-      "npi": "1003840844",
-      "taxonomy": "207W00000X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 2,
-      "name": "Ahmed, Muzammil",
-      "state": "MI",
-      "amt": 11600.0,
-      "n_gifts": 8,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Michigan Healthcare professionals"
-      ],
-      "npi": "1689649873",
-      "taxonomy": "208800000X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 3,
-      "name": "Hussein, Maen",
-      "state": "FL",
-      "amt": 10500.0,
-      "n_gifts": 4,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "FCS"
-      ],
-      "npi": "1356332506",
-      "taxonomy": "207RH0000X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 4,
-      "name": "Elnabtity, Mohamed",
-      "state": "MI",
-      "amt": 9500.0,
-      "n_gifts": 5,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Self Employed"
-      ],
-      "npi": "1255385910",
-      "taxonomy": "207T00000X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 5,
       "name": "Peracha-Riyaz, Manal",
       "state": "MI",
-      "amt": 8000.0,
-      "n_gifts": 4,
-      "occupations": [
-        "Ophthalmologist"
-      ],
-      "employers": [
-        "Eye Surgeons Associates"
-      ],
+      "zip5": "48168",
+      "net": 8000.0,
+      "occupation": "Ophthalmologist",
+      "fec_says_physician": true,
       "npi": "1588907299",
-      "taxonomy": "207W00000X",
-      "nppes_verdict": "confirmed_physician"
+      "taxonomy": [
+        "207W00000X"
+      ],
+      "donors_sharing_name_in_state": 1
     },
     {
-      "rank": 6,
-      "name": "Rizk, Maged",
-      "state": "MI",
-      "amt": 8000.0,
-      "n_gifts": 4,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Maged Rizk md pllc"
-      ],
-      "npi": "1609891753",
-      "taxonomy": "207RI0011X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 7,
-      "name": "Sajjad, Syed",
-      "state": "PA",
-      "amt": 8000.0,
-      "n_gifts": 5,
-      "occupations": [
-        "Physician",
-        "Retired"
-      ],
-      "employers": [
-        "Not Employed",
-        "Self Employed"
-      ],
-      "npi": "1962596130",
-      "taxonomy": "207R00000X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 8,
-      "name": "Abaza, Fadia",
-      "state": "OH",
-      "amt": 7500.0,
-      "n_gifts": 6,
-      "occupations": [
-        "Not Employed"
-      ],
-      "employers": [
-        "Not Employed"
-      ],
-      "npi": "1013913243",
-      "taxonomy": "208000000X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 9,
-      "name": "Hamzavi, Iltefat",
-      "state": "MI",
-      "amt": 7500.0,
-      "n_gifts": 9,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Medical Associates"
-      ],
-      "npi": "1538117866",
-      "taxonomy": "207NS0135X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 10,
       "name": "Mossa-Basha, Ahmad",
       "state": "IN",
-      "amt": 7500.0,
-      "n_gifts": 8,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Community Hospital"
-      ],
+      "zip5": "46037",
+      "net": 7500.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
       "npi": "1306263306",
-      "taxonomy": "207Q00000X",
-      "nppes_verdict": "confirmed_physician"
+      "taxonomy": [
+        "207Q00000X"
+      ],
+      "donors_sharing_name_in_state": 1
     },
     {
-      "rank": 11,
-      "name": "Ali, Salman",
-      "state": "MD",
-      "amt": 7500.0,
-      "n_gifts": 4,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Self Employed"
-      ],
-      "npi": "1659474872",
-      "taxonomy": "207W00000X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 12,
       "name": "Safadi, Rami",
       "state": "MI",
-      "amt": 7485.0,
-      "n_gifts": 19,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "McLaren"
-      ],
+      "zip5": "48642",
+      "net": 7485.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
       "npi": "1720005606",
-      "taxonomy": "2085R0204X",
-      "nppes_verdict": "confirmed_physician"
+      "taxonomy": [
+        "2085R0204X"
+      ],
+      "donors_sharing_name_in_state": 1
     },
     {
-      "rank": 13,
       "name": "Shahrour, Mohamad",
       "state": "FL",
-      "amt": 7450.0,
-      "n_gifts": 9,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Self Employed"
-      ],
+      "zip5": "33647",
+      "net": 7450.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
       "npi": "1689913758",
-      "taxonomy": "207R00000X",
-      "nppes_verdict": "confirmed_physician"
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
     },
     {
-      "rank": 14,
-      "name": "Alwattar, Basil",
-      "state": "CA",
-      "amt": 7315.0,
-      "n_gifts": 4,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "SEBMG"
-      ],
-      "npi": "1700081502",
-      "taxonomy": "207XX0005X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 15,
       "name": "Obeid, Mohammed",
       "state": "MI",
-      "amt": 7100.0,
-      "n_gifts": 3,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Warrenfield Medical Center"
-      ],
+      "zip5": "48322",
+      "net": 7100.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
       "npi": "1457383911",
-      "taxonomy": "207R00000X",
-      "nppes_verdict": "confirmed_physician"
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
     },
     {
-      "rank": 16,
-      "name": "Khalil, Rafia",
-      "state": "MI",
-      "amt": 7020.26,
-      "n_gifts": 3,
-      "occupations": [
-        "Consultant"
-      ],
-      "employers": [
-        "BRG"
-      ],
-      "npi": "1114907912",
-      "taxonomy": "207RR0500X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 17,
       "name": "Jurvetson, Karla",
       "state": "CA",
-      "amt": 7009.0,
-      "n_gifts": 4,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Self Employed"
-      ],
+      "zip5": "94022",
+      "net": 7009.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
       "npi": "1053752386",
-      "taxonomy": "2084P0800X",
-      "nppes_verdict": "confirmed_physician"
+      "taxonomy": [
+        "2084P0800X"
+      ],
+      "donors_sharing_name_in_state": 1
     },
     {
-      "rank": 18,
-      "name": "Ali, Reehan",
+      "name": "Ahmed, Ayesha",
+      "state": "IL",
+      "zip5": "60202",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1104825108",
+      "taxonomy": [
+        "207L00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Ahmed, Haseeb",
+      "state": "KS",
+      "zip5": "66223",
+      "net": 7000.0,
+      "occupation": "Business Owner",
+      "fec_says_physician": false,
+      "npi": "1972701571",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Ahmed, Muzammil",
       "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 3,
-      "occupations": [
-        "Physician"
+      "zip5": "48187",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1689649873",
+      "taxonomy": [
+        "208800000X"
       ],
-      "employers": [
-        "Botsford Medical Imaging PC"
-      ],
-      "npi": "1619289501",
-      "taxonomy": "2085R0202X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 19,
-      "name": "Baig, Nadeem",
-      "state": "NJ",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Allied Digestive Halth"
-      ],
-      "npi": "1770682668",
-      "taxonomy": "207RG0100X",
-      "nppes_verdict": "confirmed_physician"
-    },
-    {
-      "rank": 20,
-      "name": "Chowdhary, Sultan",
-      "state": "TX",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "occupations": [
-        "Physician"
-      ],
-      "employers": [
-        "Cancer center"
-      ],
-      "npi": "1033114459",
-      "taxonomy": "207RH0003X",
-      "nppes_verdict": "confirmed_physician"
-    }
-  ],
-  "top20_health_systems_by_dollars": [
-    {
-      "employer": "UNIVERSITY OF MICHIGAN",
-      "amt": 64494.91,
-      "n_gifts": 231,
-      "n_names": 69
-    },
-    {
-      "employer": "HENRY FORD HEALTH",
-      "amt": 56638.2,
-      "n_gifts": 62,
-      "n_names": 27
-    },
-    {
-      "employer": "COREWELL HEALTH",
-      "amt": 41010.0,
-      "n_gifts": 77,
-      "n_names": 29
-    },
-    {
-      "employer": "WAYNE STATE UNIVERSITY",
-      "amt": 32697.76,
-      "n_gifts": 69,
-      "n_names": 20
-    },
-    {
-      "employer": "PROMEDICA",
-      "amt": 23030.3,
-      "n_gifts": 38,
-      "n_names": 10
-    },
-    {
-      "employer": "TPMG",
-      "amt": 22720.0,
-      "n_gifts": 25,
-      "n_names": 7
-    },
-    {
-      "employer": "PFIZER",
-      "amt": 17500.0,
-      "n_gifts": 6,
-      "n_names": 3
-    },
-    {
-      "employer": "MEMORIAL HEALTHCARE",
-      "amt": 16250.0,
-      "n_gifts": 9,
-      "n_names": 5
-    },
-    {
-      "employer": "MCLAREN",
-      "amt": 15035.0,
-      "n_gifts": 28,
-      "n_names": 7
-    },
-    {
-      "employer": "KAISER PERMANENTE",
-      "amt": 14578.0,
-      "n_gifts": 13,
-      "n_names": 5
-    },
-    {
-      "employer": "HENRY FORD",
-      "amt": 14372.0,
-      "n_gifts": 21,
-      "n_names": 13
-    },
-    {
-      "employer": "SEBMF",
-      "amt": 14130.0,
-      "n_gifts": 5,
-      "n_names": 1
-    },
-    {
-      "employer": "ASCENSION",
-      "amt": 12250.0,
-      "n_gifts": 13,
-      "n_names": 4
-    },
-    {
-      "employer": "SUTTER WEST BAY MEDICAL GROUP",
-      "amt": 10930.0,
-      "n_gifts": 5,
-      "n_names": 2
-    },
-    {
-      "employer": "MERCY HEALTH",
-      "amt": 10600.0,
-      "n_gifts": 12,
-      "n_names": 8
-    },
-    {
-      "employer": "HENRY FORD HOSPITAL",
-      "amt": 10210.0,
-      "n_gifts": 14,
-      "n_names": 9
-    },
-    {
-      "employer": "HOSPITAL",
-      "amt": 9420.0,
-      "n_gifts": 27,
-      "n_names": 15
-    },
-    {
-      "employer": "TRINITY HEALTH",
-      "amt": 8259.28,
-      "n_gifts": 31,
-      "n_names": 12
-    },
-    {
-      "employer": "UW HEALTH",
-      "amt": 8000.0,
-      "n_gifts": 3,
-      "n_names": 2
-    },
-    {
-      "employer": "COREWELL",
-      "amt": 7630.0,
-      "n_gifts": 14,
-      "n_names": 6
-    }
-  ],
-  "top20_donors_employed_at_a_system": [
-    {
-      "name": "Ezzeddine, Dina",
-      "state": "CA",
-      "amt": 14130.0,
-      "n_gifts": 5,
-      "employers": [
-        "SEBMF"
-      ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": false
-    },
-    {
-      "name": "Almadani, Sameh",
-      "state": "MI",
-      "amt": 7530.3,
-      "n_gifts": 14,
-      "employers": [
-        "Promedica"
-      ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": false
-    },
-    {
-      "name": "Mossa-Basha, Ahmad",
-      "state": "IN",
-      "amt": 7500.0,
-      "n_gifts": 8,
-      "employers": [
-        "Community Hospital"
-      ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": true
-    },
-    {
-      "name": "Aslam, Aishah",
-      "state": "MI",
-      "amt": 7500.0,
-      "n_gifts": 6,
-      "employers": [
-        "Ascension"
-      ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": false
-    },
-    {
-      "name": "Safadi, Rami",
-      "state": "MI",
-      "amt": 7485.0,
-      "n_gifts": 19,
-      "employers": [
-        "McLaren"
-      ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": true
-    },
-    {
-      "name": "Alwattar, Basil",
-      "state": "CA",
-      "amt": 7315.0,
-      "n_gifts": 4,
-      "employers": [
-        "SEBMG"
-      ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": true
-    },
-    {
-      "name": "Abumustafa, Naser",
-      "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "Henry Ford college"
-      ],
-      "occupations": [
-        "Associate Dean"
-      ],
-      "nppes_physician": false
-    },
-    {
-      "name": "Elbanna, Ashraf",
-      "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 4,
-      "employers": [
-        "Memorial Healthcare"
-      ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": true
-    },
-    {
-      "name": "Eldawy, Tarek",
-      "state": "FL",
-      "amt": 7000.0,
-      "n_gifts": 3,
-      "employers": [
-        "ASH hospital"
-      ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": true
-    },
-    {
-      "name": "Hasan, Zenah",
-      "state": "NY",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "Pfizer"
-      ],
-      "occupations": [
-        "Marketing"
-      ],
-      "nppes_physician": false
-    },
-    {
-      "name": "Issawi, Ahmad",
-      "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "Iha Trinity health"
-      ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": true
-    },
-    {
-      "name": "Siddiqui, Suleman",
-      "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 4,
-      "employers": [
-        "trinity"
-      ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": true
+      "donors_sharing_name_in_state": 1
     },
     {
       "name": "Al-Ameri, Hazim",
       "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "Corewell Health"
+      "zip5": "48167",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1508065848",
+      "taxonomy": [
+        "207R00000X"
       ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": true
+      "donors_sharing_name_in_state": 1
     },
     {
-      "name": "Zakaria, Hesham",
-      "state": "CA",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "Sutter West Bay Medical Group"
+      "name": "Alam, Suhail",
+      "state": "AZ",
+      "zip5": "85253",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1316922818",
+      "taxonomy": [
+        "207WX0107X"
       ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": false
+      "donors_sharing_name_in_state": 1
     },
     {
       "name": "Alghanem, Husam",
       "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "Henry Ford Health"
+      "zip5": "48103",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1972035020",
+      "taxonomy": [
+        "207L00000X"
       ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": true
+      "donors_sharing_name_in_state": 1
     },
     {
-      "name": "Kurdi, Ramy",
-      "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "Memorial healthcare"
+      "name": "Ali, Moiz",
+      "state": "TX",
+      "zip5": "75063",
+      "net": 7000.0,
+      "occupation": "Not Employed",
+      "fec_says_physician": false,
+      "npi": "1174803357",
+      "taxonomy": [
+        "207R00000X"
       ],
-      "occupations": [
-        "Physician"
-      ],
-      "nppes_physician": true
+      "donors_sharing_name_in_state": 1
     },
     {
-      "name": "Hamad, Judy",
+      "name": "Ali, Reehan",
       "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "University of Indiana hospitals"
+      "zip5": "48375",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1619289501",
+      "taxonomy": [
+        "2085R0202X"
       ],
-      "occupations": [
-        "Physician"
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Alkeswani, Amena",
+      "state": "AL",
+      "zip5": "35244",
+      "net": 7000.0,
+      "occupation": "Dermatologist",
+      "fec_says_physician": true,
+      "npi": "1962023556",
+      "taxonomy": [
+        "207N00000X"
       ],
-      "nppes_physician": false
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Almoshelli, Bader",
+      "state": "IL",
+      "zip5": "60137",
+      "net": 7000.0,
+      "occupation": "Lawyer",
+      "fec_says_physician": false,
+      "npi": "1699090340",
+      "taxonomy": [
+        "208100000X"
+      ],
+      "donors_sharing_name_in_state": 1
     },
     {
       "name": "Alnajjar, Raed",
       "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "Henry Ford Health"
+      "zip5": "48302",
+      "net": 7000.0,
+      "occupation": "Cardiac Surgeon",
+      "fec_says_physician": true,
+      "npi": "1215107982",
+      "taxonomy": [
+        "208600000X"
       ],
-      "occupations": [
-        "Cardiac Surgeon"
-      ],
-      "nppes_physician": true
+      "donors_sharing_name_in_state": 1
     },
     {
-      "name": "Saadeh, Yamaan",
+      "name": "Alo, Mohammed",
+      "state": "OH",
+      "zip5": "43617",
+      "net": 7000.0,
+      "occupation": "Cardiologist",
+      "fec_says_physician": true,
+      "npi": "1447499462",
+      "taxonomy": [
+        "207RC0000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Alo, Sinan",
+      "state": "OH",
+      "zip5": "43560",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1689972168",
+      "taxonomy": [
+        "207RI0011X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Alwattar, Basil",
+      "state": "CA",
+      "zip5": "94611",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1700081502",
+      "taxonomy": [
+        "207XX0005X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Arman, Mohammed",
       "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "University of Michigan"
+      "zip5": "48025",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1043304116",
+      "taxonomy": [
+        "207RG0100X"
       ],
-      "occupations": [
-        "Resident"
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Awad, Omar",
+      "state": "TX",
+      "zip5": "75248",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1831393594",
+      "taxonomy": [
+        "207RC0200X"
       ],
-      "nppes_physician": true
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Baig, Asad",
+      "state": "NY",
+      "zip5": "11791",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1780061788",
+      "taxonomy": [
+        "2085R0202X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Baig, Nadeem",
+      "state": "NJ",
+      "zip5": "08816",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1770682668",
+      "taxonomy": [
+        "207RG0100X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Basha, Maysaa",
+      "state": "MI",
+      "zip5": "48302",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1073781571",
+      "taxonomy": [
+        "2084N0400X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Chowdhary, Sultan",
+      "state": "TX",
+      "zip5": "75093",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1033114459",
+      "taxonomy": [
+        "207RH0003X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Elbanna, Ashraf",
+      "state": "MI",
+      "zip5": "48302",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1710208947",
+      "taxonomy": [
+        "207X00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Eldawy, Tarek",
+      "state": "FL",
+      "zip5": "32514",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1669416459",
+      "taxonomy": [
+        "207RH0003X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Elgouhari, Hesham",
+      "state": "TX",
+      "zip5": "75002",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1104096726",
+      "taxonomy": [
+        "207RI0008X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Elhady, Dalya",
+      "state": "TX",
+      "zip5": "75094",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1871970814",
+      "taxonomy": [
+        "207LP2900X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Elsiesy, Hussien",
+      "state": "TX",
+      "zip5": "75062",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1265450811",
+      "taxonomy": [
+        "207RG0100X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Eltahawy, Hazem",
+      "state": "MI",
+      "zip5": "48009",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1255378253",
+      "taxonomy": [
+        "207T00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Hakmeh, Wael",
+      "state": "MI",
+      "zip5": "48322",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1801091970",
+      "taxonomy": [
+        "207P00000X"
+      ],
+      "donors_sharing_name_in_state": 1
     },
     {
       "name": "Hamad, Abdualrahman",
       "state": "MI",
-      "amt": 7000.0,
-      "n_gifts": 2,
-      "employers": [
-        "Henry Ford Health"
+      "zip5": "48098",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1386087443",
+      "taxonomy": [
+        "207WX0107X"
       ],
-      "occupations": [
-        "Physician"
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Hameed, Ajmal",
+      "state": "FL",
+      "zip5": "32224",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1285628388",
+      "taxonomy": [
+        "207RG0100X"
       ],
-      "nppes_physician": true
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Hamoui, Nabeel",
+      "state": "FL",
+      "zip5": "34613",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1497911762",
+      "taxonomy": [
+        "2085R0202X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Hamzavi, Fasahat",
+      "state": "MI",
+      "zip5": "48098",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1295780989",
+      "taxonomy": [
+        "207ND0101X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Hamzavi, Iltefat",
+      "state": "MI",
+      "zip5": "48168",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1538117866",
+      "taxonomy": [
+        "207NS0135X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Husain, Nadeem",
+      "state": "AZ",
+      "zip5": "85284",
+      "net": 7000.0,
+      "occupation": "Cardiologist",
+      "fec_says_physician": true,
+      "npi": "1154406775",
+      "taxonomy": [
+        "207RC0000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Husain, Sohail",
+      "state": "MA",
+      "zip5": "01810",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1720285356",
+      "taxonomy": [
+        "207XS0106X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Hussain, Yusra",
+      "state": "CA",
+      "zip5": "94301",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1003951013",
+      "taxonomy": [
+        "207RG0300X"
+      ],
+      "donors_sharing_name_in_state": 2
+    },
+    {
+      "name": "Hussein, Maen",
+      "state": "FL",
+      "zip5": "34785",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1356332506",
+      "taxonomy": [
+        "207RH0000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Issa, Said",
+      "state": "MI",
+      "zip5": "48108",
+      "net": 7000.0,
+      "occupation": "Dentist",
+      "fec_says_physician": false,
+      "npi": "1003840844",
+      "taxonomy": [
+        "207W00000X"
+      ],
+      "donors_sharing_name_in_state": 2
+    },
+    {
+      "name": "Issawi, Ahmad",
+      "state": "MI",
+      "zip5": "48105",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1215248125",
+      "taxonomy": [
+        "207T00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Jondy, Mohammad",
+      "state": "MI",
+      "zip5": "48433",
+      "net": 7000.0,
+      "occupation": "Not Employed",
+      "fec_says_physician": false,
+      "npi": "1912312489",
+      "taxonomy": [
+        "207Q00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Karim, Syed",
+      "state": "IL",
+      "zip5": "60540",
+      "net": 7000.0,
+      "occupation": "Physcian",
+      "fec_says_physician": true,
+      "npi": "1497853634",
+      "taxonomy": [
+        "207P00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Katranji, Abdalmajid",
+      "state": "MI",
+      "zip5": "48823",
+      "net": 7000.0,
+      "occupation": "Surgeon",
+      "fec_says_physician": true,
+      "npi": "1952408932",
+      "taxonomy": [
+        "2086S0105X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Kaukab, Zahida",
+      "state": "OH",
+      "zip5": "45040",
+      "net": 7000.0,
+      "occupation": "Not Employed",
+      "fec_says_physician": false,
+      "npi": "1679557599",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Kenawy, Aymen",
+      "state": "FL",
+      "zip5": "32411",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1770780603",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Khalil, Rafia",
+      "state": "MI",
+      "zip5": "48059",
+      "net": 7000.0,
+      "occupation": "Consultant",
+      "fec_says_physician": false,
+      "npi": "1114907912",
+      "taxonomy": [
+        "207RR0500X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Khan, Khadija",
+      "state": "MA",
+      "zip5": "02445",
+      "net": 7000.0,
+      "occupation": "Not Employed",
+      "fec_says_physician": false,
+      "npi": "1144202573",
+      "taxonomy": [
+        "207L00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Khorfan, Omar",
+      "state": "MI",
+      "zip5": "48302",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1720345036",
+      "taxonomy": [
+        "207RC0200X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Kurdi, Ramy",
+      "state": "MI",
+      "zip5": "48302",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1649426172",
+      "taxonomy": [
+        "207X00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Lal, Anup",
+      "state": "MI",
+      "zip5": "48059",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1184735300",
+      "taxonomy": [
+        "207RH0003X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Levy, Phillip",
+      "state": "MI",
+      "zip5": "48323",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1063473478",
+      "taxonomy": [
+        "207PE0004X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Lu, Yee",
+      "state": "MI",
+      "zip5": "48167",
+      "net": 7000.0,
+      "occupation": "Retired",
+      "fec_says_physician": false,
+      "npi": "1205080710",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Mahmoud, Ahmed",
+      "state": "TX",
+      "zip5": "78681",
+      "net": 7000.0,
+      "occupation": "President",
+      "fec_says_physician": false,
+      "npi": "1043238553",
+      "taxonomy": [
+        "208100000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Makhiawala, Rima",
+      "state": "MI",
+      "zip5": "48188",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1871794487",
+      "taxonomy": [
+        "207V00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Medhkour, Miriam",
+      "state": "OH",
+      "zip5": "43560",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1346653631",
+      "taxonomy": [
+        "207Q00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Mohiuddin, Jawaad",
+      "state": "PA",
+      "zip5": "19342",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1861667990",
+      "taxonomy": [
+        "2085R0202X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Mohsin, Ayeza",
+      "state": "IL",
+      "zip5": "60540",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1619235264",
+      "taxonomy": [
+        "208M00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Mossa-Basha, Mahmud",
+      "state": "NC",
+      "zip5": "27560",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1215139274",
+      "taxonomy": [
+        "2085N0700X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Mustafa, Reem",
+      "state": "KS",
+      "zip5": "66211",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1659504009",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Nasir, Mohsen",
+      "state": "MI",
+      "zip5": "48302",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1528287240",
+      "taxonomy": [
+        "207K00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Nguyen, Eliza",
+      "state": "CA",
+      "zip5": "95136",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1447838990",
+      "taxonomy": [
+        "207V00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Peracha, Zuhair",
+      "state": "MI",
+      "zip5": "48168",
+      "net": 7000.0,
+      "occupation": "Ophthalmologist",
+      "fec_says_physician": true,
+      "npi": "1790075620",
+      "taxonomy": [
+        "207W00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Rasheed, Haroon",
+      "state": "TX",
+      "zip5": "75093",
+      "net": 7000.0,
+      "occupation": "Businessman",
+      "fec_says_physician": false,
+      "npi": "1285639096",
+      "taxonomy": [
+        "207L00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Razzak, Mannan",
+      "state": "NJ",
+      "zip5": "07424",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1083640627",
+      "taxonomy": [
+        "208000000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Razzak, Nadia",
+      "state": "NJ",
+      "zip5": "07424",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1710167184",
+      "taxonomy": [
+        "208000000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Rizk, Maged",
+      "state": "MI",
+      "zip5": "48433",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1609891753",
+      "taxonomy": [
+        "207RI0011X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Saadeh, Yamaan",
+      "state": "MI",
+      "zip5": "48105",
+      "net": 7000.0,
+      "occupation": "Resident",
+      "fec_says_physician": false,
+      "npi": "1184014763",
+      "taxonomy": [
+        "207T00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Sajjad, Syed",
+      "state": "PA",
+      "zip5": "18977",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1962596130",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 2
+    },
+    {
+      "name": "Sattar, Hamid",
+      "state": "MI",
+      "zip5": "48126",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1598879496",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Sattar, Joanna",
+      "state": "MI",
+      "zip5": "48126",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1639389323",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Scanlon, Madeline",
+      "state": "NY",
+      "zip5": "11560",
+      "net": 7000.0,
+      "occupation": "Project Manager",
+      "fec_says_physician": false,
+      "npi": "1588195069",
+      "taxonomy": [
+        "207LP2900X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Shahbandar, Lena",
+      "state": "IL",
+      "zip5": "60527",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1811071822",
+      "taxonomy": [
+        "208100000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Siddiqui, Suleman",
+      "state": "MI",
+      "zip5": "48187",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1972570745",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Sumar, Riyaz",
+      "state": "AZ",
+      "zip5": "85253",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1144212721",
+      "taxonomy": [
+        "207RI0011X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Syed, Saba",
+      "state": "IL",
+      "zip5": "60610",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1609193804",
+      "taxonomy": [
+        "2084P0800X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Syed, Sameer",
+      "state": "TX",
+      "zip5": "75072",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1083933089",
+      "taxonomy": [
+        "207LP2900X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Tayeb, Jukaku",
+      "state": "MI",
+      "zip5": "48315",
+      "net": 7000.0,
+      "occupation": "Nephrologist",
+      "fec_says_physician": true,
+      "npi": "1912909540",
+      "taxonomy": [
+        "207RN0300X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Turk, Aijaz",
+      "state": "MI",
+      "zip5": "49002",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1689636367",
+      "taxonomy": [
+        "207RG0100X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Vasan, Ashwin",
+      "state": "NY",
+      "zip5": "11217",
+      "net": 7000.0,
+      "occupation": "Professor",
+      "fec_says_physician": false,
+      "npi": "1225337413",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Yaqub, Aaliya",
+      "state": "CA",
+      "zip5": "94027",
+      "net": 7000.0,
+      "occupation": "Physician executive",
+      "fec_says_physician": true,
+      "npi": "1407100522",
+      "taxonomy": [
+        "207R00000X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Zahurullah, Fazlur",
+      "state": "IL",
+      "zip5": "61107",
+      "net": 7000.0,
+      "occupation": "Physician",
+      "fec_says_physician": true,
+      "npi": "1720068695",
+      "taxonomy": [
+        "207YX0007X"
+      ],
+      "donors_sharing_name_in_state": 1
+    },
+    {
+      "name": "Ziegler, Daniel",
+      "state": "CA",
+      "zip5": "94103",
+      "net": 7000.0,
+      "occupation": "MacHine Learning Researcher",
+      "fec_says_physician": false,
+      "npi": "1346366564",
+      "taxonomy": [
+        "207P00000X"
+      ],
+      "donors_sharing_name_in_state": 1
     }
-  ]
+  ],
+  "top20_health_employers": [
+    {
+      "employer": "Henry Ford Health",
+      "label": "HENRY FORD HEALTH",
+      "net": 57638.2,
+      "n_donors": 27
+    },
+    {
+      "employer": "Corewell Health",
+      "label": "COREWELL HEALTH",
+      "net": 41010.0,
+      "n_donors": 29
+    },
+    {
+      "employer": "University of Michigan",
+      "label": "UNIVERSITY OF MICHIGAN",
+      "net": 33684.31,
+      "n_donors": 24
+    },
+    {
+      "employer": "TPMG",
+      "label": "TPMG",
+      "net": 22720.0,
+      "n_donors": 7
+    },
+    {
+      "employer": "Promedica",
+      "label": "PROMEDICA",
+      "net": 22522.61,
+      "n_donors": 10
+    },
+    {
+      "employer": "Wayne State University",
+      "label": "WAYNE STATE UNIVERSITY",
+      "net": 21050.0,
+      "n_donors": 7
+    },
+    {
+      "employer": "Mercy",
+      "label": "MERCY",
+      "net": 16900.0,
+      "n_donors": 5
+    },
+    {
+      "employer": "Memorial Healthcare",
+      "label": "MEMORIAL HEALTHCARE",
+      "net": 16250.0,
+      "n_donors": 5
+    },
+    {
+      "employer": "VA",
+      "label": "VA",
+      "net": 15080.0,
+      "n_donors": 7
+    },
+    {
+      "employer": "McLaren",
+      "label": "MCLAREN",
+      "net": 15035.0,
+      "n_donors": 7
+    },
+    {
+      "employer": "Eye Surgeons Associates",
+      "label": "EYE SURGEONS ASSOCIATES",
+      "net": 15000.0,
+      "n_donors": 2
+    },
+    {
+      "employer": "Kaiser Permanente",
+      "label": "KAISER PERMANENTE",
+      "net": 14578.0,
+      "n_donors": 5
+    },
+    {
+      "employer": "Henry Ford",
+      "label": "HENRY FORD",
+      "net": 14100.0,
+      "n_donors": 11
+    },
+    {
+      "employer": "Basha Diagnostics",
+      "label": "BASHA DIAGNOSTICS",
+      "net": 14000.0,
+      "n_donors": 2
+    },
+    {
+      "employer": "IHA",
+      "label": "IHA",
+      "net": 13320.0,
+      "n_donors": 7
+    },
+    {
+      "employer": "Ascension",
+      "label": "ASCENSION",
+      "net": 11750.0,
+      "n_donors": 4
+    },
+    {
+      "employer": "Insight Health",
+      "label": "INSIGHT HEALTH",
+      "net": 11000.0,
+      "n_donors": 2
+    },
+    {
+      "employer": "Sutter West Bay Medical Group",
+      "label": "SUTTER WEST BAY MEDICAL GROUP",
+      "net": 10930.0,
+      "n_donors": 2
+    },
+    {
+      "employer": "Mercy Health",
+      "label": "MERCY HEALTH",
+      "net": 10600.0,
+      "n_donors": 8
+    },
+    {
+      "employer": "University of Washington",
+      "label": "UNIVERSITY OF WASHINGTON",
+      "net": 10500.0,
+      "n_donors": 2
+    }
+  ],
+  "henry_ford_labels_combined": 86270.7,
+  "corewell_labels_combined": 53215.0
 }

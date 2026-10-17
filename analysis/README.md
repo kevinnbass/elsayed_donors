@@ -9,7 +9,10 @@ for C00902668 (not `indiv26`, which still ends at Q1 2026).
 | `roster_summary.json` | $ totals by filing |
 | `q1_amendment_delta.json` | FEC-2005719 vs indiv26 file 1996846 |
 | `filings_2025_most_recent.json` | 2025 H1/Q3/YE e-file paths |
-| `nppes_donor_matches.jsonl` | name+state donor rollup + NPPES verdict |
+| `nppes_donor_matches.jsonl` | name+state donor rollup + NPPES verdict (gross $) |
+| `donors_net.jsonl` | one row per donor (name+suffix+ZIP), net of refunds and reattributions, with the committee-aggregate check |
+| `top_donors.json` / `TOP100_and_by_sector.txt` | donors at the $7,000 maximum, random top 100, per-sector lists |
+| `top20_physicians_and_systems.json` / `TOP20.txt` | NPPES physicians at the maximum, top 20 employers of health-care donors (net) |
 | `healthcare_share_nppes.json` | first-pass share (mixed homonyms in floor — superseded) |
 | `healthcare_share_nppes_tight.json` | **use this** — mixed homonyms excluded from floor |
 | `healthcare_share_nppes.md` | human summary |

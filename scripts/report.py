@@ -1,4 +1,4 @@
-"""Print El-Sayed named-itemized shares and top-20 lists from local analysis files."""
+"""Print El-Sayed named-itemized shares and the physician / health-employer lists from local files."""
 from __future__ import annotations
 
 import json
@@ -12,9 +12,12 @@ def main() -> int:
     summary = json.loads((ANALYSIS / "roster_summary.json").read_text(encoding="utf-8"))
     tight = json.loads((ANALYSIS / "healthcare_share_nppes_tight.json").read_text(encoding="utf-8"))
     top = json.loads((ANALYSIS / "top20_physicians_and_systems.json").read_text(encoding="utf-8"))
+    donors = json.loads((ANALYSIS / "top_donors.json").read_text(encoding="utf-8"))
 
     print("Named itemized:", f"${summary['amt']:,.2f}", f"({summary['n']} gifts)")
     print("Form 3 itemized gap:", summary.get("gap_vs_form3_itemized"))
+    print("Individual net of refunds and reattributions:", f"${donors['individual_net_total']:,.2f}",
+          f"({donors['n_individual_donors']:,} donors, {donors['n_at_cap']} at the $7,000 maximum)")
     print(
         "NPPES-confirmed MD floor:",
         f"${tight['nppes_confirmed_physician_floor_dollars']:,.2f}",
@@ -26,15 +29,13 @@ def main() -> int:
         f"({tight['upper_bound_pct']}%)",
     )
     print()
-    print("=== Top 20 physician donors ===")
-    for r in top["top20_nppes_confirmed_physicians"]:
-        occs = [o for o in (r.get("occupations") or []) if o and o.strip().lower() not in {"gee", "none"}]
-        occ = occs[0] if occs else "—"
-        print(f"{r['name']} — ${r['amt']:,.0f} — {occ}")
+    print(f"=== NPPES-confirmed physicians at the $7,000 maximum ({top['n_nppes_confirmed_physicians_at_cap']}) ===")
+    for r in top["nppes_confirmed_physicians_at_cap"]:
+        print(f"{r['name']} — ${r['net']:,.0f} — {r['occupation'] or '—'}")
     print()
-    print("=== Top 20 health-system employers ===")
-    for r in top["top20_health_systems_by_dollars"]:
-        print(f"{r['employer'].title()} — ${r['amt']:,.0f}")
+    print("=== Top 20 employers of health-care donors (net) ===")
+    for r in top["top20_health_employers"]:
+        print(f"{r['employer']} — ${r['net']:,.0f}")
     return 0
 
 

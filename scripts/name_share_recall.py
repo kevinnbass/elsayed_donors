@@ -154,6 +154,37 @@ def recall_bucket(name: str) -> str | None:
     return None
 
 
+def full_bucket(name: str) -> str:
+    b = nw.bucket(name)
+    if b == "ambiguous":
+        b = recall_bucket(name) or b
+    return b
+
+
+def donor_tiers() -> dict:
+    """Arab-or-Muslim-named share of donors (net totals, analysis/donors_net.jsonl) by tier."""
+    donors = [json.loads(line) for line in (ROOT / "analysis" / "donors_net.jsonl").open(encoding="utf-8")]
+    top = json.loads((ROOT / "analysis" / "top_donors.json").read_text(encoding="utf-8"))
+    sample = {(d["last_norm"], d["first_norm"], d["suffix"], d["zip5"])
+              for d in top["top100_random_from_cap"]["donors"]}
+    tiers = {
+        "all_donors": donors,
+        "at_7000_max": [d for d in donors if d["net"] >= 6999.995],
+        "random_top100": [d for d in donors if (d["last_norm"], d["first_norm"], d["suffix"], d["zip5"]) in sample],
+    }
+    out = {}
+    for k, ds in tiers.items():
+        am = [d for d in ds if full_bucket(d["name"]) in ("arab_or_muslim", "levantine_mena")]
+        out[k] = {
+            "n_donors": len(ds),
+            "n_arab_or_muslim": len(am),
+            "pct_of_donors": round(100.0 * len(am) / len(ds), 1),
+            "pct_of_net_dollars": round(100.0 * sum(d["net"] for d in am) / sum(d["net"] for d in ds), 1),
+            "tier_pct_of_all_net": round(100.0 * sum(d["net"] for d in ds) / sum(d["net"] for d in donors), 1),
+        }
+    return out
+
+
 def main() -> None:
     gift = defaultdict(lambda: {"n": 0, "amt": 0.0})
     recovered = defaultdict(lambda: {"n": 0, "amt": 0.0})
@@ -212,6 +243,7 @@ def main() -> None:
             for k, v in sorted(gift.items(), key=lambda kv: -kv[1]["amt"])
         },
     }
+    out["by_donor_tier"] = donor_tiers()
     dest = ROOT / "analysis" / "name_share_recall.json"
     dest.write_text(json.dumps(out, indent=2), encoding="utf-8")
     print(json.dumps({k: out[k] for k in out if k != "by_bucket"}, indent=2))

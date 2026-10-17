@@ -9,52 +9,94 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ROSTER = ROOT / "analysis" / "roster_named_itemized.jsonl"
 
-# First matching rule wins.
+# Occupation rules, first match wins. Short tokens are whole words (IT, RN, MD, DO, ...):
+# substring matches put "Nonprofit" in tech and "Contractor" in media. Physician status
+# comes from the occupation only, never the employer (the employer fallback below is
+# health-care staff). Rules revised Oct 16, 2026; see README "Sector rules".
+PHYSICIAN = re.compile(
+    r"PHYSICIANS?\b|PHYSCIAN|PHYSICAN|PHYSICAIN|PHYAICIAN|PHYASIXIAN|PHYSIXIAN|\bDOCTOR\b|"
+    r"SURGEON|\bM\.? ?D\b|\bD\.O\b|\bDO\b|CARDIOLOG|ONCOLOG|PEDIATRICIAN|PSYCHIATR|ANESTHESI|"
+    r"RADIOLOG|NEUROLOG|DERMATOLOG|HOSPITALIST|INTENSIVIST|INTERNIST|PATHOLOGIST|OB.?GYN|"
+    r"ORTHOPA?ED|OPHTHALM|NEPHROLOG|RHEUMATOL|GASTROENTER|PULMONOLOG|ENDOCRIN|UROLOG|"
+    r"NEONATOL|NEUROSURG|(INTERNAL|FAMILY|EMERGENCY) MEDICINE", re.I)
+# a physician word in these titles names someone else's job
+NOT_PHYSICIAN = re.compile(
+    r"ASSISTANT|PHYSICIAN ASSOCIATE|TECHNOLOGIST|TECHNICIAN|\bTECH\b|SOCIAL WORK|\bNURS|SCRIBE|"
+    r"BILLER|BILLING|DENTIST|DENTAL|ORTHODONT|PHARM|CHIROPRACT|NATUROPATH|VETERIN|PSYCHOLOG", re.I)
+NOT_EMPLOYED = re.compile(
+    r"NOT[ -]EMPLOYED|UNEMPLOYED|RETIRED|^NONE$|^N/?A$|HOME ?MAKER|STAY AT HOME|"
+    r"STUDENTS?$|DISABLED", re.I)
+HEALTH_STAFF_OCC = re.compile(
+    r"HEALTH ?CARE|\bMEDICAL\b|\bHOSPITALS?\b|CLINICAL|PUBLIC HEALTH|EPIDEMIOLOG|\bCMO\b|"
+    r"CHIEF MEDICAL|RADIOLOG|SONOGRAPH|PHLEBOTOM", re.I)
+HEALTH_EMPLOYER = re.compile(
+    r"HEALTH ?CARE|\bHEALTH\b|\bMEDICAL\b|\bMEDICINE\b|\bHOSPITALS?\b|\bCLINICS?\b|"
+    r"KAISER|PERMANENTE|\bTPMG\b|COREWELL|BEAUMONT|MCLAREN|PROMEDICA|ASCENSION|"
+    r"CARDIOLOG|ONCOLOG|DERMATOLOG|RADIOLOG|PEDIATRIC|ORTHOPA?ED|PHYSICIANS\b|SURGERY|SURGICAL", re.I)
+
+HC_PHYS = "Healthcare — physician / surgeon / specialist"
+HC_CLIN = "Healthcare — other clinician (dentist, pharmacist, nurse, etc.)"
+HC_STAFF = "Healthcare — hospital / system / 'healthcare' staff"
+NOT_EMP = "Not employed / retired / student"
+
 RULES: list[tuple[str, re.Pattern[str]]] = [
-    ("Healthcare — physician / surgeon / specialist", re.compile(
-        r"PHYSICIAN|DOCTOR|SURGEON|MD\b|D\.?O\.?\b|CARDIOLOG|ONCOLOG|PEDIATRICIAN|"
-        r"PSYCHIATR|ANESTHESI|RADIOLOG|NEUROLOG|DERMATOLOG|HOSPITALIST|INTENSIVIST|"
-        r"PATHOLOGIST|OB.?GYN|ORTHOPED|OPHTHALM|NEPHROLOG|RHEUMATOL|GASTROENTER|"
-        r"PULMONOLOG|ENDOCRIN|UROLOG|NEONATOL|NEUROSURG", re.I)),
-    ("Healthcare — other clinician (dentist, pharmacist, nurse, etc.)", re.compile(
-        r"DENTIST|DDS|DMD|PHARMACIST|PHARMD|NURSE|RN\b|LPN|NP\b|CRNA|"
-        r"NURSE PRACTITIONER|PHYSICIAN ASSISTANT|PA-C|PSYCHOLOGIST|THERAPIST|"
-        r"CHIROPRACT|OPTOMETR|SOCIAL WORKER", re.I)),
-    ("Healthcare — hospital / system / 'healthcare' staff", re.compile(
-        r"HEALTHCARE|HEALTH CARE|MEDICAL|HOSPITAL|CLINICAL|PUBLIC HEALTH|"
-        r"EPIDEMIOLOG|CMO\b|CHIEF MEDICAL", re.I)),
-    ("Not employed / retired / student", re.compile(
-        r"NOT EMPLOYED|UNEMPLOYED|RETIRED|NONE|N/?A\b|HOMEMAKER|STUDENT|"
-        r"DISABLED|NOT EMPLOYED", re.I)),
-    ("Law", re.compile(r"ATTORNEY|LAWYER|LEGAL|COUNSEL|JUDGE|LAW PROFESSOR|PARALEGAL", re.I)),
+    (HC_CLIN, re.compile(
+        r"DENTIST|DENTAL|\bDDS\b|\bDMD\b|ORTHODONT|PHARMACIST|PHARM\.?D|\bNURS(E|ES|ING)\b|"
+        r"\bR\.?N\b|\bLPN\b|\bNP\b|\bDNP\b|CRNA|PHYS\w* ASSISTANT|PHYSICIAN ASSOCIATE|\bPA-?C\b|"
+        r"PSYCHOLOGIST|PSYCHOANALYST|THERAPIST|CHIROPRACT|OPTOMETR|SOCIAL WORK|VETERINAR|"
+        r"NATUROPATH|(MENTAL HEALTH|\bMH|ADDICTION) COUNSELOR|\bLPC\b|MIDWIFE|PARAMEDIC|"
+        r"\bEMT\b|DIETITIAN|AUDIOLOG", re.I)),
+    (HC_STAFF, HEALTH_STAFF_OCC),
+    (NOT_EMP, NOT_EMPLOYED),
+    ("Law", re.compile(
+        r"ATTORNEY|LAWYER|LEGAL|\bCOUNSEL\b|JUDGE|LAW PROFESSOR|PARALEGAL|\bLAW\b(?! ENFORCEMENT)", re.I)),
     ("Tech / engineering", re.compile(
-        r"ENGINEER|SOFTWARE|PROGRAMMER|DEVELOPER|DATA SCIEN|PRODUCT MANAGER|"
-        r"TECHNOLOG|IT\b|COMPUTER|SRE\b|DEVOPS", re.I)),
+        r"ENGINEER|SOFTWARE|PROGRAMMER|DEVELOPER|DATA SCIEN|PRODUCT MANAGER|TECHNOLOG|\bIT\b|"
+        r"COMPUTER|\bSRE\b|DEVOPS|\bSWE\b|MACHINE LEARNING|\bAI\b|TECHNICAL STAFF|"
+        r"TECHNICAL PROGRAM|\bTPM\b", re.I)),
     ("Education / academic", re.compile(
         r"PROFESSOR|TEACHER|EDUCATOR|LECTURER|ACADEMIC|UNIVERSITY|FACULTY|"
-        r"PRINCIPAL|SCHOOL", re.I)),
+        r"^(ASSISTANT |VICE |SCHOOL )?PRINCIPAL$|SCHOOL PRINCIPAL|\bSCHOOLS?\b|\bDEAN\b|"
+        r"LIBRARIAN|(GUIDANCE|SCHOOL) COUNSELOR|\bTUTOR", re.I)),
     ("Finance / investing", re.compile(
-        r"FINANCE|INVEST|BANKER|ANALYST|ACCOUNTANT|CPA\b|HEDGE|PRIVATE EQUITY|"
-        r"VENTURE|WEALTH|TRADER|CFO\b", re.I)),
+        r"FINANCE|FINANCIAL|INVEST|BANKER|BANKING|\bANALYSTS?\b|ACCOUNTANT|\bCPA\b|HEDGE|"
+        r"PRIVATE EQUITY|VENTURE|WEALTH|TRADER|\bCFO\b|UNDERWRITER|CAPITAL MARKETS|ASSET MANA|"
+        r"ACTUAR|\bAUDIT", re.I)),
     ("Business owner / executive / consultant (non-health)", re.compile(
-        r"CEO|FOUNDER|OWNER|PRESIDENT|EXECUTIVE|CONSULTANT|ENTREPRENEUR|"
-        r"MANAGING DIR|PARTNER|DIRECTOR|MANAGER|SELF EMPLOYED|SELF-EMPLOYED", re.I)),
+        r"\bCEO\b|FOUNDER|\bOWNER\b|PRESIDENT|EXECUTIVE|CONSULT|CONSLUTANT|ENTREPRENEUR|ENTREPENEUR|"
+        r"MANAGING DIR|\bPARTNERS?\b|DIRECTOR|MANAGER|MANAGEMENT|SELF[ -]EMPLOY|BUSINESS|"
+        r"CHAIRMAN|\bCOO\b|\bCTO\b|\bCIO\b|CHIEF \w+ OFFICER|MANAGING MEMBER|\bHR\b|"
+        r"HUMAN RESOURCES|ADVISOR|STRATEGIST", re.I)),
     ("Government / politics / nonprofit", re.compile(
-        r"GOVERNMENT|PUBLIC SERV|CIVIL SERV|ORGANIZER|ACTIVIST|NONPROFIT|"
-        r"NON-PROFIT|POLICY|CAMPAIGN|UNION|ORGANIZER", re.I)),
+        r"GOVERNMENT|\bGOVT\b|PUBLIC SERV|CIVIL SERV|ORGANIZER|ACTIVIST|NON-?PROFIT|NON PROFIT|"
+        r"POLICY|CAMPAIGN|UNION (ORGANIZER|STAFF|REP)|POLICE|LAW ENFORCEMENT|FIREFIGHTER|LEGISLAT|COUNCIL MEMBER|"
+        r"FUNDRAIS|ADVOCATE|PATENT EXAMINER|POSTAL|RURAL CARRIER", re.I)),
     ("Media / arts / other professional", re.compile(
-        r"WRITER|JOURNALIST|ARTIST|ACTOR|ACTRESS|DESIGNER|ARCHITECT|"
-        r"MARKETING|SALES|REAL ESTATE|FARMER", re.I)),
+        r"\b(SCREEN|COPY|SPEECH|GHOST)?WRITERS?\b|JOURNALIST|ARTIST|\bACTOR\b|\bACTRESS\b|"
+        r"DESIGNER|ARCHITECT|MARKETING|\bSALES\b|SALES(MAN|WOMAN|PERSON)|REAL ?ESTATE|REALTOR|"
+        r"FARMER|MUSICIAN|FILMMAKER|PRODUCER|PODCAST|AUTHOR|COMPOSER|PUBLISHER|PHOTOGRAPH|"
+        r"\bEDITOR\b|REPORTER|COMEDIAN", re.I)),
 ]
+
+NO_OCCUPATION = {"", "NULL", "INFORMATION REQUESTED", "INFO REQUESTED", "REQUESTED",
+                 "NONE OF YOUR BUSINESS"}
+# occupation and employer typed into each other's boxes ("Sutter" / "Physician")
+SWAPPED_TITLE = re.compile(r"PHYSICIANS?|DOCTOR|SURGEON|M\.? ?D\.?|NURSE|R\.?N\.?|DENTIST|PHARMACIST", re.I)
 
 
 def sector(occ: str, emp: str) -> str:
-    blob = f"{occ} {emp}"
+    o = (occ or "").strip()
+    if o.upper() in NO_OCCUPATION:
+        return HC_STAFF if HEALTH_EMPLOYER.search(emp or "") else "Blank / unknown occupation"
+    if PHYSICIAN.search(o) and not NOT_PHYSICIAN.search(o):
+        return HC_PHYS
     for name, pat in RULES:
-        if pat.search(occ or "") or (name.startswith("Healthcare") and pat.search(emp or "")):
+        if name == NOT_EMP and HEALTH_EMPLOYER.search(emp or "") and not pat.search(o):
+            return HC_STAFF  # employer fallback: anyone working for a health employer
+        if pat.search(o):
             return name
-    if not (occ or "").strip() or (occ or "").strip() in {"", "NULL", "NONE"}:
-        return "Blank / unknown occupation"
+    if SWAPPED_TITLE.fullmatch((emp or "").strip()):
+        return sector(emp, o)
     return "Other / unclassified"
 
 

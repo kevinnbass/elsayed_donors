@@ -25,20 +25,34 @@ Named itemized money only unless noted. Unitemized gifts have no names or jobs.
 
 ## Ranked occupation sectors (share of the $10.26M named)
 
-1. **Healthcare — 28.4% ($2.92M)** — physicians $2.40M · other clinicians $0.40M · hospital/staff $0.12M
-2. **Not employed / retired / homemaker — 25.3% ($2.60M)** — “Not Employed” $2.13M · retired $0.33M · homemaker $0.11M (tighter cut without students: **$2.58M**)
-3. **Business owners / executives / consultants — 13.7% ($1.41M)**
-4. **Unclassified / other titles — 12.3% ($1.26M)**
-5. **Tech / engineering — 6.3% ($644k)**
-6. **Law — 5.0% ($508k)**
-7. **Finance — 3.5% ($358k)**
-8. **Media / sales / real estate / arts — 3.0% ($305k)**
-9. **Education — 2.2% ($226k)**
-10. **Government / politics / nonprofit — 0.2%**
+1. **Healthcare — 28.8% ($2.95M)** — physicians $2.38M · other clinicians $0.41M · hospital/staff $0.17M
+2. **Not employed / retired / homemaker — 25.5% ($2.62M)** — “Not Employed” $2.13M · retired $0.33M · homemaker $0.13M (tighter cut without students: **$2.60M**)
+3. **Business owners / executives / consultants — 16.4% ($1.69M)**
+4. **Tech / engineering — 6.5% ($670k)**
+5. **Unclassified / other titles — 6.3% ($645k)**
+6. **Law — 5.0% ($511k)**
+7. **Finance — 3.9% ($398k)**
+8. **Media / sales / real estate / arts — 3.8% ($394k)**
+9. **Education — 2.3% ($241k)**
+10. **Government / politics / nonprofit — 0.8% ($77k)**
+11. **No occupation given (“Information Requested”, blank) — 0.7% ($74k)**
 
 NPPES-confirmed MDs (unique last+first+state, taxonomy 207/208): **20%** floor / **27%** upper bound of named money.
 
+Sector shares are of gross named receipts (reconciles to Form 3). Refunds and reattributions are 0.7% of that, so netting cannot move any share by more than 0.7 points.
+
 Machine-readable: `analysis/sector_breakdown.json`
+
+### Sector rules (Oct 16, 2026)
+
+The first rules matched short tokens inside words and applied physician titles to employer names, so “Nonprofit” counted as tech (`IT`), “Contractor” as media (`ACTOR`), anyone at an employer containing “Eastern”/“Northern” as a nurse (`RN`), “Engineer, AMD” and “Graduate Student, University of Toledo” as physicians (`MD`, `DO`), “Physician Assistant” as a physician and “Hospitality” as hospital staff. `scripts/sector_breakdown.py` now:
+
+- matches short tokens as whole words;
+- decides physician from the occupation only (assistants, technologists, dentists, pharmacists excluded); an employer can only place someone in hospital/system staff, and never overrides “Not employed / Retired”;
+- reads the employer box when it holds the title and the occupation box does not (“Sutter” / “Physician”);
+- adds titles the rules missed (physician misspellings, musician, realtor, police, nonprofit, COO/CTO, …), which takes unclassified from 12.3% to 6.3%.
+
+$830k of $10.27M changed sector. Healthcare 28.4% → 28.8%; physicians $2.40M → $2.38M. Spot checks are in `tests/test_totals.py::test_sector_rules`.
 
 ## Name-token shares of the $10.26M named
 
@@ -53,7 +67,7 @@ Headline cut is **Arab or Muslim**, not Muslim-only. Pakistani / Persian / Turki
 | Clearly Anglo / White-coded surname | $1,241,507 | 12.1% |
 | Ambiguous leftover (not counted as non-white) | $2,136,620 | 20.8% |
 
-A first-pass **Muslim-only** list was 49%. After recall (Rasheed, Zaidi, Abdulhak, ABU- prefixes, …) that same Muslim-only cut was 63.1%. Adding Arab Christian / Levantine surnames moves the headline to **64.7%**. Top-20 donor lists are ~85% Arab-or-Muslim-named because the top is concentrated; those top 100 people are only ~9% of all named dollars.
+A first-pass **Muslim-only** list was 49%. After recall (Rasheed, Zaidi, Abdulhak, ABU- prefixes, …) that same Muslim-only cut was 63.1%. Adding Arab Christian / Levantine surnames moves the headline to **64.7%**. The 446 donors at the $7,000 maximum are 86% Arab-or-Muslim-named because the top is concentrated, but they hold only 31% of named dollars (net); the base-wide share is not a top-donor artifact (`name_share_recall.json` → `by_donor_tier`).
 
 The non-white figure is the Arab-or-Muslim figure plus:
 
@@ -80,31 +94,36 @@ Remaining ambiguity is 12,214 mostly small gifts (avg ~$100) — Western given n
 
 `figures/elsayed_ledger.html` — self-contained interactive dashboard (open in any browser): monthly deadline dynamics, gift-size vs dollar shares, donor concentration, geography, sectors, employers, and the name-token cuts with a ≈2% U.S.-population reference. Aggregates feeding it: `analysis/figure_aggregates.json` (re-run `python scripts/figure_aggregates.py`).
 
-## Top-20 lists (copy-paste)
+## Donor lists (copy-paste)
 
-- Physicians and health-system employers: [`analysis/TOP20.txt`](analysis/TOP20.txt)
-- Not employed / retired / homemaker: [`analysis/TOP20_not_employed.txt`](analysis/TOP20_not_employed.txt)
-- **Overall and every sector, net:** [`analysis/TOP20_overall_and_by_sector.txt`](analysis/TOP20_overall_and_by_sector.txt)
+Every list is **net of refunds and reattributions**. The limit is $7,000 per person ($3,500 primary + $3,500 general) and **446 donors gave it**, so a ranked top 20 or top 100 is a tie; the lists show everyone at the maximum instead.
 
-`python scripts/report.py` reprints the physician and system lists from local files.
+- **Top 100 and every sector:** [`analysis/TOP100_and_by_sector.txt`](analysis/TOP100_and_by_sector.txt) — 100 drawn at random from the 446 (fixed seed, re-runnable), the 24 still above $7,000, then each sector's donors at the maximum (or its top 20 where fewer than 20 reached it)
+- Physicians and health employers: [`analysis/TOP20.txt`](analysis/TOP20.txt) — all 86 NPPES-confirmed physicians at the maximum (71 whose FEC occupation also says physician, 15 name-match only), and the top 20 employers of health-care donors
+- Not employed / retired / homemaker: [`analysis/TOP20_not_employed.txt`](analysis/TOP20_not_employed.txt) — all 101 at the maximum
+
+`python scripts/report.py` reprints the physician and employer lists from local files.
 
 ### Net donor totals (Oct 16, 2026)
 
-The two lists above add up gross Schedule A gifts. That overstates the people at the top: an excess gift stays on Schedule A while its fix is a refund (SB20A) or a memo reattribution to a spouse. Netted, nobody on either list is above $8,050 — e.g. Issa, Said $14,500 → $7,000 (plus a different Said Issa at another Ann Arbor address, $2,000), Barakat, Abdul $14,000 → $7,000.
+The first physician and not-employed lists added up gross Schedule A gifts. That overstated the people at the top: an excess gift stays on Schedule A while its fix is a refund (SB20A) or a memo reattribution to a spouse. Issa, Said showed $14,500; net he is $7,000 (plus a different Said Issa at another Ann Arbor address, $2,000). Barakat, Abdul $14,000 → $7,000. The dashboard's "78 donors above $7,000, max $14.5k" was the same artifact: net, it is 24, max $10.5k.
 
-`scripts/top_donors.py` ranks donors net of refunds and reattributions, keyed by name + ZIP (same name at another ZIP is not merged):
+`scripts/top_donors.py` builds per-donor net totals (`analysis/donors_net.jsonl`), keyed by name + suffix + ZIP (same name at another ZIP is not merged):
 
-- The limit is $7,000 per person ($3,500 primary + $3,500 general). **446 donors are at or above it**, so an overall "top 20" is a 446-way tie; the file lists every one of them by sector instead.
-- 24 stand above $7,000 in the committee's own running totals as of the Jul 15 report (refunds of an excess can come in a later report).
+- net = itemized gifts + the committee's memo reattributions/redesignations − SB20A refunds. 8,528 donors, $10,195,699.46.
+- 24 donors stand above $7,000 in the committee's own running totals as of the Jul 15 report (refunds of an excess can come in a later report).
 - Check against the committee's own per-donor aggregate: 5,514 exact, 2,992 within $200 (early gifts under the itemization line), 22 differ (mostly one person the committee keeps as two records).
 - Sector = the occupation carrying most of a donor's dollars, using the `sector_breakdown.py` rules.
+- Top 100: the 446 at or above $7,000 are ordered by sha256 of `elsayed-top100-2026-10-16|last|first|suffix|zip5` and the first 100 taken.
 
-Machine-readable: `analysis/top_donors.json`.
+Run order after a data change: `top_donors.py` → `format_top20.py`, `top20_not_employed.py`, `figure_aggregates.py`, `name_share_recall.py`. Per-donor figures in the dashboard (donor counts, size brackets, concentration, employers) use net totals; gift-level figures (months, gift sizes, states, sectors) use the roster as filed.
+
+Machine-readable: `analysis/top_donors.json`, `analysis/donors_net.jsonl`.
 
 ## Layout
 
 ```
-analysis/          totals, NPPES matches, top-20 lists, sector ranking
+analysis/          totals, NPPES matches, net donor totals and lists, sector ranking
 data/filings/      most-recent F3 .csv / .fec (the named-roster source)
 scripts/           report.py (no database) + archived rematch scripts
 ```

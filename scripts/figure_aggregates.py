@@ -2,8 +2,11 @@
 
 Feeds the "El-Sayed Ledger" figures: monthly totals, gift-size and
 donor-total brackets, state totals, top disclosed employers, and
-per-donor concentration stats. Donor key is last+first+state, same as
-the NPPES match. Writes analysis/figure_aggregates.json.
+per-donor concentration stats. Gift-level figures use the roster as filed.
+Per-donor figures (donor counts, brackets, concentration, employers) use
+net totals from analysis/donors_net.jsonl (scripts/top_donors.py): refunds
+and reattributions applied, donor key last+first+suffix+ZIP5.
+Writes analysis/figure_aggregates.json.
 """
 import collections
 import json
@@ -49,21 +52,23 @@ states_out = sorted(
     [{"state": k, "amt": round(v[0], 2), "n": v[1]} for k, v in states.items()],
     key=lambda x: -x["amt"])
 
-donors = collections.defaultdict(lambda: [0.0, 0])
-for r in rows:
-    key = (r["last_norm"], r["first_norm"], (r.get("state") or "").upper())
-    donors[key][0] += r["amt"]
-    donors[key][1] += 1
-totals = [v[0] for v in donors.values()]
-gift_counts = [v[1] for v in donors.values()]
+grand_gross = sum(r["amt"] for r in rows)
+with open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8") as f:
+    donors = [json.loads(line) for line in f]
+totals = [d["net"] for d in donors]
+gift_counts = [d["n_gifts"] for d in donors]
 totals_sorted = sorted(totals, reverse=True)
 grand = sum(totals)
 donor_out = {
+    "basis": "net of refunds and reattributions",
+    "net_total": round(grand, 2),
     "n_named_donors": len(donors),
     "median_donor_total": round(statistics.median(totals), 2),
     "mean_donor_total": round(grand / len(donors), 2),
     "repeat_donor_pct": round(sum(1 for c in gift_counts if c > 1) / len(donors) * 100, 1),
-    "gifts_from_repeat_pct": round(sum(c for c in gift_counts if c > 1) / len(rows) * 100, 1),
+    "gifts_from_repeat_pct": round(sum(c for c in gift_counts if c > 1) / sum(gift_counts) * 100, 1),
+    "donors_over_3500": sum(1 for t in totals if t > 3500),
+    "amt_over_3500": round(sum(t for t in totals if t > 3500), 2),
     "donors_3500_plus": sum(1 for t in totals if t >= 3500),
     "donors_7000_plus": sum(1 for t in totals if t >= 7000),
     "donors_over_7000": sum(1 for t in totals if t > 7000),
@@ -74,8 +79,9 @@ donor_out = {
     "mean_gift": round(sum(r["amt"] for r in rows) / len(rows), 2),
 }
 
+# the $7,000 maximum (primary + general) gets its own bar; 24 donors above it await refunds
 dbrackets = [(0, 100, "$1-100"), (100, 500, "$101-500"), (500, 1000, "$501-1k"),
-             (1000, 3500, "$1k-3.5k"), (3500, 7000, "$3.5k-7k"), (7000, 10**9, "$7k+")]
+             (1000, 3500, "$1k-3.5k"), (3500, 6999.995, "$3.5k-7k"), (6999.995, 10**9, "$7k max")]
 db = {label: [0.0, 0] for _, _, label in dbrackets}
 for t in totals:
     if t <= 0:
@@ -88,25 +94,25 @@ for t in totals:
 donor_size_out = [{"bracket": label, "amt": round(v[0], 2), "n": v[1]} for label, v in db.items()]
 
 SKIP = {"NOT EMPLOYED", "RETIRED", "SELF", "SELF-EMPLOYED", "SELF EMPLOYED", "NONE",
-        "N/A", "NA", "HOMEMAKER", "UNEMPLOYED", "STUDENT", ""}
-emp = collections.defaultdict(lambda: [0.0, 0, set()])
-for r in rows:
-    e = (r.get("employer") or "").strip().upper()
-    if e in SKIP:
-        continue
-    emp[e][0] += r["amt"]
-    emp[e][1] += 1
-    emp[e][2].add((r["last_norm"], r["first_norm"], (r.get("state") or "").upper()))
+        "N/A", "NA", "HOMEMAKER", "UNEMPLOYED", "STUDENT", "", "INFORMATION REQUESTED"}
+# a donor's net is split across their employer labels by gross share
+emp = collections.defaultdict(lambda: [0.0, set()])
+for d in donors:
+    gross = {e.strip().upper(): a for e, a in d["employers_gross"].items()
+             if e.strip().upper() not in SKIP and a > 0}
+    tot = sum(gross.values())
+    for e, a in gross.items():
+        emp[e][0] += d["net"] * a / tot
+        emp[e][1].add((d["last_norm"], d["first_norm"], d["suffix"], d["zip5"]))
 emp_out = sorted(
-    [{"employer": k, "amt": round(v[0], 2), "n_gifts": v[1], "n_donors": len(v[2])}
-     for k, v in emp.items()],
+    [{"employer": k, "amt": round(v[0], 2), "n_donors": len(v[1])} for k, v in emp.items()],
     key=lambda x: -x["amt"])[:30]
 
 out = {
     "monthly": monthly_out,
     "gift_size": size_out,
     "states": states_out[:15],
-    "mi_share_pct": round(states["MI"][0] / grand * 100, 1),
+    "mi_share_pct": round(states["MI"][0] / grand_gross * 100, 1),
     "n_states": len(states),
     "donors": donor_out,
     "donor_size": donor_size_out,

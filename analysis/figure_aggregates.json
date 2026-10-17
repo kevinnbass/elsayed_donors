@@ -198,232 +198,206 @@
  "mi_share_pct": 32.2,
  "n_states": 55,
  "donors": {
-  "n_named_donors": 8457,
+  "basis": "net of refunds and reattributions",
+  "net_total": 10195699.46,
+  "n_named_donors": 8528,
   "median_donor_total": 500.0,
-  "mean_donor_total": 1213.84,
-  "repeat_donor_pct": 54.3,
-  "gifts_from_repeat_pct": 87.6,
-  "donors_3500_plus": 1015,
-  "donors_7000_plus": 444,
-  "donors_over_7000": 78,
-  "max_donor_total": 14500.0,
-  "top100_pct_of_named": 8.7,
-  "top1000_pct_of_named": 55.0,
+  "mean_donor_total": 1195.56,
+  "repeat_donor_pct": 53.7,
+  "gifts_from_repeat_pct": 87.4,
+  "donors_over_3500": 732,
+  "amt_over_3500": 4540050.85,
+  "donors_3500_plus": 1029,
+  "donors_7000_plus": 446,
+  "donors_over_7000": 24,
+  "max_donor_total": 10500.0,
+  "top100_pct_of_named": 7.0,
+  "top1000_pct_of_named": 53.7,
   "median_gift": 50.0,
   "mean_gift": 329.23
  },
  "donor_size": [
   {
    "bracket": "$1-100",
-   "amt": 59911.55,
-   "n": 860
+   "amt": 60344.53,
+   "n": 866
   },
   {
    "bracket": "$101-500",
-   "amt": 1339348.32,
-   "n": 4167
+   "amt": 1350244.51,
+   "n": 4196
   },
   {
    "bracket": "$501-1k",
-   "amt": 1140163.2,
-   "n": 1354
+   "amt": 1139560.36,
+   "n": 1351
   },
   {
    "bracket": "$1k-3.5k",
-   "amt": 3059781.42,
-   "n": 1354
+   "amt": 3105682.21,
+   "n": 1370
   },
   {
    "bracket": "$3.5k-7k",
-   "amt": 3922882.84,
-   "n": 643
+   "amt": 1401992.05,
+   "n": 286
   },
   {
-   "bracket": "$7k+",
-   "amt": 743344.28,
-   "n": 78
+   "bracket": "$7k max",
+   "amt": 3138058.8,
+   "n": 446
   }
  ],
  "top_employers": [
   {
    "employer": "UNIVERSITY OF MICHIGAN",
    "amt": 64494.91,
-   "n_gifts": 231,
    "n_donors": 69
   },
   {
    "employer": "HENRY FORD HEALTH",
-   "amt": 56638.2,
-   "n_gifts": 62,
+   "amt": 57638.2,
    "n_donors": 27
-  },
-  {
-   "employer": "INFORMATION REQUESTED",
-   "amt": 53902.5,
-   "n_gifts": 45,
-   "n_donors": 37
-  },
-  {
-   "employer": "APPLE",
-   "amt": 51475.0,
-   "n_gifts": 39,
-   "n_donors": 20
   },
   {
    "employer": "GOOGLE",
    "amt": 48045.0,
-   "n_gifts": 46,
    "n_donors": 28
+  },
+  {
+   "employer": "APPLE",
+   "amt": 47225.0,
+   "n_donors": 20
   },
   {
    "employer": "MICROSOFT",
    "amt": 41505.0,
-   "n_gifts": 57,
    "n_donors": 18
   },
   {
    "employer": "COREWELL HEALTH",
    "amt": 41010.0,
-   "n_gifts": 77,
    "n_donors": 29
   },
   {
    "employer": "NVIDIA",
    "amt": 33250.0,
-   "n_gifts": 22,
    "n_donors": 8
   },
   {
    "employer": "WAYNE STATE UNIVERSITY",
-   "amt": 32697.76,
-   "n_gifts": 69,
+   "amt": 31247.76,
    "n_donors": 20
-  },
-  {
-   "employer": "ACCESS",
-   "amt": 25200.0,
-   "n_gifts": 14,
-   "n_donors": 6
-  },
-  {
-   "employer": "PROMEDICA",
-   "amt": 23030.3,
-   "n_gifts": 38,
-   "n_donors": 10
   },
   {
    "employer": "TPMG",
    "amt": 22720.0,
-   "n_gifts": 25,
    "n_donors": 7
+  },
+  {
+   "employer": "PROMEDICA",
+   "amt": 22522.61,
+   "n_donors": 10
+  },
+  {
+   "employer": "ACCESS",
+   "amt": 22200.0,
+   "n_donors": 6
   },
   {
    "employer": "DREAMPAK",
    "amt": 20050.0,
-   "n_gifts": 10,
    "n_donors": 4
   },
   {
    "employer": "MERCY",
    "amt": 17900.0,
-   "n_gifts": 21,
-   "n_donors": 5
+   "n_donors": 6
   },
   {
    "employer": "PFIZER",
    "amt": 17500.0,
-   "n_gifts": 6,
    "n_donors": 3
   },
   {
    "employer": "MEMORIAL HEALTHCARE",
    "amt": 16250.0,
-   "n_gifts": 9,
    "n_donors": 5
-  },
-  {
-   "employer": "BASHA DIAGNOSTICS",
-   "amt": 16000.0,
-   "n_gifts": 8,
-   "n_donors": 2
   },
   {
    "employer": "CROOKED MEDIA",
    "amt": 15750.0,
-   "n_gifts": 7,
    "n_donors": 4
   },
   {
    "employer": "VA",
    "amt": 15430.0,
-   "n_gifts": 17,
    "n_donors": 8
-  },
-  {
-   "employer": "HIPPOCRATIC AI",
-   "amt": 15400.0,
-   "n_gifts": 10,
-   "n_donors": 2
   },
   {
    "employer": "AMAZON",
    "amt": 15300.0,
-   "n_gifts": 19,
    "n_donors": 13
   },
   {
    "employer": "MCLAREN",
    "amt": 15035.0,
-   "n_gifts": 28,
    "n_donors": 7
   },
   {
    "employer": "EYE SURGEONS ASSOCIATES",
    "amt": 15000.0,
-   "n_gifts": 6,
    "n_donors": 2
   },
   {
    "employer": "KAISER PERMANENTE",
    "amt": 14578.0,
-   "n_gifts": 13,
    "n_donors": 5
   },
   {
    "employer": "HENRY FORD",
    "amt": 14372.0,
-   "n_gifts": 21,
    "n_donors": 13
   },
   {
    "employer": "YALE UNIVERSITY",
    "amt": 14250.0,
-   "n_gifts": 9,
    "n_donors": 3
   },
   {
-   "employer": "SEBMF",
-   "amt": 14130.0,
-   "n_gifts": 5,
-   "n_donors": 1
-  },
-  {
-   "employer": "MERIDIAN MEDIA",
+   "employer": "BASHA DIAGNOSTICS",
    "amt": 14000.0,
-   "n_gifts": 3,
-   "n_donors": 1
+   "n_donors": 2
   },
   {
    "employer": "LAHC",
    "amt": 14000.0,
-   "n_gifts": 10,
    "n_donors": 6
   },
   {
-   "employer": "BAM",
+   "employer": "ANTHROPIC",
    "amt": 14000.0,
-   "n_gifts": 4,
-   "n_donors": 1
+   "n_donors": 2
+  },
+  {
+   "employer": "GLOBAL EDUCATIONAL EXCELLENCE",
+   "amt": 13500.0,
+   "n_donors": 5
+  },
+  {
+   "employer": "IHA",
+   "amt": 13320.0,
+   "n_donors": 7
+  },
+  {
+   "employer": "ASCENSION",
+   "amt": 11750.0,
+   "n_donors": 4
+  },
+  {
+   "employer": "USPTO",
+   "amt": 11175.0,
+   "n_donors": 3
   }
  ]
 }

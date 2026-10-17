@@ -13,10 +13,15 @@ is NOT merged (identity unproven); it is reported next to the donor instead.
 
 Control: the committee's own cycle-to-date aggregate (Schedule A column 22) on each
 donor's last receipt, less refunds dated after it, must equal the computed net.
+
+Top 100: everyone at or above the $7,000 maximum is tied, so the 100 are drawn from them
+at random. The draw orders the pool by sha256(SEED|last|first|suffix|ZIP5), so anyone can
+re-run it and get the same 100, and it does not depend on file order.
 """
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import re
 import sys
@@ -27,13 +32,16 @@ ROOT = Path(__file__).resolve().parents[1]
 FILINGS = ROOT / "data" / "filings"
 ROSTER = ROOT / "analysis" / "roster_named_itemized.jsonl"
 OUT_JSON = ROOT / "analysis" / "top_donors.json"
-OUT_TXT = ROOT / "analysis" / "TOP20_overall_and_by_sector.txt"
+OUT_TXT = ROOT / "analysis" / "TOP100_and_by_sector.txt"
+OUT_ALL = ROOT / "analysis" / "donors_net.jsonl"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from sector_breakdown import sector  # noqa: E402
 
 CAP = 7000.0
 N_TOP = 20
+N_SAMPLE = 100
+SEED = "elsayed-top100-2026-10-16"
 
 # FEC 8.5 Schedule A / B columns (0-based)
 TRAN, ENTITY, LAST, FIRST, SUFFIX, STREET1, CITY, STATE, ZIP, ELEC, DATE, AMT, AGGR, EMP, OCC = (
@@ -83,10 +91,16 @@ def render_txt(out: dict) -> str:
         "Net of refunds and of the committee's reattributions to a spouse or household member.",
         "One person may give at most $7,000 ($3,500 primary + $3,500 general).",
         "",
-        "Overall",
-        f"{n_cap} donors gave $7,000 or more, so an overall top 20 is a {n_cap}-way tie.",
-        "Every one of them is listed under their sector below.",
-        f"{out['n_over_cap']} stand above $7,000 in the committee's own running totals as of the Jul 15 report",
+        "Overall top 100",
+        f"{n_cap} donors gave $7,000 or more, so any overall top 20 or top 100 is a {n_cap}-way tie.",
+        f"These 100 are drawn at random from the {n_cap} (seed \"{SEED}\"; see scripts/top_donors.py).",
+        "Every one of them is listed under their sector further down.",
+        "",
+    ]
+    lines += [line(r) for r in out["top100_random_from_cap"]["donors"]]
+    lines += [
+        "",
+        f"Above $7,000: {out['n_over_cap']} donors, per the committee's own running totals as of the Jul 15 report",
         "(an excess has 60 days to be refunded; refunds after Jul 15 are in later reports):",
         "",
     ]
@@ -183,6 +197,9 @@ def main() -> None:
         others = [o for o in by_name_state[(k[0], k[1], k[2], d["state"])] if o != k]
         rows.append({
             "name": d["name"],
+            "last_norm": k[0],
+            "first_norm": k[1],
+            "suffix": k[2],
             "city": d["city"],
             "state": d["state"],
             "zip5": k[3],
@@ -193,6 +210,7 @@ def main() -> None:
             "n_gifts": d["n_gifts"],
             "occupation": max(d["occs"], key=d["occs"].get) if d["occs"] else "",
             "employer": max(d["emps"], key=d["emps"].get) if d["emps"] else "",
+            "employers_gross": {e: round(a, 2) for e, a in d["emps"].items()},
             "sector": sec,
             "committee_aggregate": committee,
             "committee_check": check,
@@ -210,6 +228,12 @@ def main() -> None:
     for r in rows:
         checks[r["committee_check"]] += 1
     differs = [r for r in rows if r["committee_check"] == "differs"]
+
+    def draw_key(r: dict) -> str:
+        return hashlib.sha256(
+            f"{SEED}|{r['last_norm']}|{r['first_norm']}|{r['suffix']}|{r['zip5']}".encode()).hexdigest()
+
+    sample = sorted(sorted(maxed, key=draw_key)[:N_SAMPLE], key=lambda r: r["name"])
 
     sectors = defaultdict(list)
     for r in rows:
@@ -237,13 +261,20 @@ def main() -> None:
         "unmatched_refunds": unmatched_refunds,
         "control_committee_aggregate": dict(checks),
         "control_differs_rows": differs,
-        "overall_top20": rows[:N_TOP],
-        "overall_top20_cut_is_tie": rows[N_TOP - 1]["net"] == rows[N_TOP]["net"],
+        "top100_random_from_cap": {
+            "seed": SEED,
+            "rule": "order the at-or-above-$7,000 pool by sha256(seed|last|first|suffix|zip5); take 100",
+            "pool": len(maxed),
+            "donors": sample,
+        },
         "donors_at_cap": maxed,
         "sectors": sector_out,
     }
     OUT_JSON.write_text(json.dumps(out, indent=2), encoding="utf-8")
     OUT_TXT.write_text(render_txt(out), encoding="utf-8")
+    with OUT_ALL.open("w", encoding="utf-8") as f:
+        for r in rows:
+            f.write(json.dumps(r) + "\n")
 
     print(f"individual donors {len(rows):,}  net ${total_net:,.2f}  (ORG rows excluded ${org_amt:,.2f})")
     print(f"at $7,000 cap: {len(maxed)}   over cap: {len(over)}   unmatched refunds: {len(unmatched_refunds)}")

@@ -88,5 +88,28 @@
       "pct": 0.0,
       "n_gifts": 0
     }
+  },
+  "by_donor_tier": {
+    "all_donors": {
+      "n_donors": 8528,
+      "n_arab_or_muslim": 3661,
+      "pct_of_donors": 42.9,
+      "pct_of_net_dollars": 69.4,
+      "tier_pct_of_all_net": 100.0
+    },
+    "at_7000_max": {
+      "n_donors": 446,
+      "n_arab_or_muslim": 382,
+      "pct_of_donors": 85.7,
+      "pct_of_net_dollars": 85.6,
+      "tier_pct_of_all_net": 30.8
+    },
+    "random_top100": {
+      "n_donors": 100,
+      "n_arab_or_muslim": 88,
+      "pct_of_donors": 88.0,
+      "pct_of_net_dollars": 88.1,
+      "tier_pct_of_all_net": 6.9
+    }
   }
 }

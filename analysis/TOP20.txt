@@ -1,47 +1,121 @@
-Top 20 physician donors (NPPES-confirmed MD/DO NPI, named itemized $)
-Issa, Said is a shaky name match: FEC occupation is dentist.
+NPPES-confirmed physicians at the $7,000 maximum (net of refunds and reattributions)
+86 gave the maximum, so a top 20 would be an arbitrary cut; all are listed.
+NPPES-confirmed = last+first+state matches only physician NPIs. That is inference, not identity.
+"*" marks a name shared by another donor in the same state.
 
-Issa, Said — $14,500 — Dentist
-Ahmed, Muzammil — $11,600 — Physician
-Hussein, Maen — $10,500 — Physician
-Elnabtity, Mohamed — $9,500 — Physician
+FEC occupation also says physician (71):
+
 Peracha-Riyaz, Manal — $8,000 — Ophthalmologist
-Rizk, Maged — $8,000 — Physician
-Sajjad, Syed — $8,000 — Physician
-Abaza, Fadia — $7,500 — Not Employed
-Hamzavi, Iltefat — $7,500 — Physician
 Mossa-Basha, Ahmad — $7,500 — Physician
-Ali, Salman — $7,500 — Physician
 Safadi, Rami — $7,485 — Physician
 Shahrour, Mohamad — $7,450 — Physician
-Alwattar, Basil — $7,315 — Physician
 Obeid, Mohammed — $7,100 — Physician
-Khalil, Rafia — $7,020 — Consultant
 Jurvetson, Karla — $7,009 — Physician
+Ahmed, Ayesha — $7,000 — Physician
+Ahmed, Muzammil — $7,000 — Physician
+Al-Ameri, Hazim — $7,000 — Physician
+Alam, Suhail — $7,000 — Physician
+Alghanem, Husam — $7,000 — Physician
 Ali, Reehan — $7,000 — Physician
+Alkeswani, Amena — $7,000 — Dermatologist
+Alnajjar, Raed — $7,000 — Cardiac Surgeon
+Alo, Mohammed — $7,000 — Cardiologist
+Alo, Sinan — $7,000 — Physician
+Alwattar, Basil — $7,000 — Physician
+Arman, Mohammed — $7,000 — Physician
+Awad, Omar — $7,000 — Physician
+Baig, Asad — $7,000 — Physician
 Baig, Nadeem — $7,000 — Physician
+Basha, Maysaa — $7,000 — Physician
 Chowdhary, Sultan — $7,000 — Physician
+Elbanna, Ashraf — $7,000 — Physician
+Eldawy, Tarek — $7,000 — Physician
+Elgouhari, Hesham — $7,000 — Physician
+Elhady, Dalya — $7,000 — Physician
+Elsiesy, Hussien — $7,000 — Physician
+Eltahawy, Hazem — $7,000 — Physician
+Hakmeh, Wael — $7,000 — Physician
+Hamad, Abdualrahman — $7,000 — Physician
+Hameed, Ajmal — $7,000 — Physician
+Hamoui, Nabeel — $7,000 — Physician
+Hamzavi, Fasahat — $7,000 — Physician
+Hamzavi, Iltefat — $7,000 — Physician
+Husain, Nadeem — $7,000 — Cardiologist
+Husain, Sohail — $7,000 — Physician
+Hussain, Yusra — $7,000 — Physician *
+Hussein, Maen — $7,000 — Physician
+Issawi, Ahmad — $7,000 — Physician
+Karim, Syed — $7,000 — Physcian
+Katranji, Abdalmajid — $7,000 — Surgeon
+Kenawy, Aymen — $7,000 — Physician
+Khorfan, Omar — $7,000 — Physician
+Kurdi, Ramy — $7,000 — Physician
+Lal, Anup — $7,000 — Physician
+Levy, Phillip — $7,000 — Physician
+Makhiawala, Rima — $7,000 — Physician
+Medhkour, Miriam — $7,000 — Physician
+Mohiuddin, Jawaad — $7,000 — Physician
+Mohsin, Ayeza — $7,000 — Physician
+Mossa-Basha, Mahmud — $7,000 — Physician
+Mustafa, Reem — $7,000 — Physician
+Nasir, Mohsen — $7,000 — Physician
+Nguyen, Eliza — $7,000 — Physician
+Peracha, Zuhair — $7,000 — Ophthalmologist
+Razzak, Mannan — $7,000 — Physician
+Razzak, Nadia — $7,000 — Physician
+Rizk, Maged — $7,000 — Physician
+Sajjad, Syed — $7,000 — Physician *
+Sattar, Hamid — $7,000 — Physician
+Sattar, Joanna — $7,000 — Physician
+Shahbandar, Lena — $7,000 — Physician
+Siddiqui, Suleman — $7,000 — Physician
+Sumar, Riyaz — $7,000 — Physician
+Syed, Saba — $7,000 — Physician
+Syed, Sameer — $7,000 — Physician
+Tayeb, Jukaku — $7,000 — Nephrologist
+Turk, Aijaz — $7,000 — Physician
+Yaqub, Aaliya — $7,000 — Physician executive
+Zahurullah, Fazlur — $7,000 — Physician
 
-Top 20 health-system employers (dollars from anyone who listed that employer)
-Henry Ford is split across three labels (~$81k combined). Corewell + Corewell Health ~$49k.
+Name match only — FEC occupation is something else, may be a different person (15):
 
-University of Michigan — $64,495
-Henry Ford Health — $56,638
-Corewell Health — $41,010
-Wayne State University — $32,698
-ProMedica — $23,030
-TPMG — $22,720
-Pfizer — $17,500
-Memorial Healthcare — $16,250
-McLaren — $15,035
-Kaiser Permanente — $14,578
-Henry Ford — $14,372
-SEBMF — $14,130
-Ascension — $12,250
-Sutter West Bay Medical Group — $10,930
-Mercy Health — $10,600
-Henry Ford Hospital — $10,210
-Hospital (generic label) — $9,420
-Trinity Health — $8,259
-UW Health — $8,000
-Corewell — $7,630
+Ahmed, Haseeb — $7,000 — Business Owner
+Ali, Moiz — $7,000 — Not Employed
+Almoshelli, Bader — $7,000 — Lawyer
+Issa, Said — $7,000 — Dentist *
+Jondy, Mohammad — $7,000 — Not Employed
+Kaukab, Zahida — $7,000 — Not Employed
+Khalil, Rafia — $7,000 — Consultant
+Khan, Khadija — $7,000 — Not Employed
+Lu, Yee — $7,000 — Retired
+Mahmoud, Ahmed — $7,000 — President
+Rasheed, Haroon — $7,000 — Businessman
+Saadeh, Yamaan — $7,000 — Resident
+Scanlon, Madeline — $7,000 — Project Manager
+Vasan, Ashwin — $7,000 — Professor
+Ziegler, Daniel — $7,000 — MacHine Learning Researcher
+
+Top 20 employers of health-care donors (net $ from physicians, other clinicians and
+health staff who listed that employer)
+Label variants are not merged: Henry Ford labels combined $86,271; Corewell labels combined $53,215.
+
+Henry Ford Health — $57,638 — 27 donors
+Corewell Health — $41,010 — 29 donors
+University of Michigan — $33,684 — 24 donors
+TPMG — $22,720 — 7 donors
+Promedica — $22,523 — 10 donors
+Wayne State University — $21,050 — 7 donors
+Mercy — $16,900 — 5 donors
+Memorial Healthcare — $16,250 — 5 donors
+VA — $15,080 — 7 donors
+McLaren — $15,035 — 7 donors
+Eye Surgeons Associates — $15,000 — 2 donors
+Kaiser Permanente — $14,578 — 5 donors
+Henry Ford — $14,100 — 11 donors
+Basha Diagnostics — $14,000 — 2 donors
+IHA — $13,320 — 7 donors
+Ascension — $11,750 — 4 donors
+Insight Health — $11,000 — 2 donors
+Sutter West Bay Medical Group — $10,930 — 2 donors
+Mercy Health — $10,600 — 8 donors
+University of Washington — $10,500 — 2 donors

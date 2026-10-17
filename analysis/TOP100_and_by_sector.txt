@@ -2,10 +2,113 @@ Top donors, overall and by occupation sector (named itemized $, Jan 1 2025 – J
 Net of refunds and of the committee's reattributions to a spouse or household member.
 One person may give at most $7,000 ($3,500 primary + $3,500 general).
 
-Overall
-446 donors gave $7,000 or more, so an overall top 20 is a 446-way tie.
-Every one of them is listed under their sector below.
-24 stand above $7,000 in the committee's own running totals as of the Jul 15 report
+Overall top 100
+446 donors gave $7,000 or more, so any overall top 20 or top 100 is a 446-way tie.
+These 100 are drawn at random from the 446 (seed "elsayed-top100-2026-10-16"; see scripts/top_donors.py).
+Every one of them is listed under their sector further down.
+
+Abdel-Saheb, Ahmed — $7,000 — Finance
+Abu Atieh, Bilal — $8,000 — Pharmacist
+Abumustafa, Naser — $7,000 — Associate Dean
+Ahmed, Haseeb — $7,000 — Business Owner
+Ahsan, Agha — $7,000 — Engineer
+Aijazuddin, Imran — $7,000 — Startup Founder
+Akeel, Shereef — $8,500 — Attorney
+Alam, Shakeeb — $7,000 — Investor
+Alhinnawi, Hend — $7,000 — CEO
+Alkeswani, Amena — $7,000 — Dermatologist
+Alvi, Rehan — $7,000 — Investor
+Awad, Ibrahim — $7,000 — Attorney
+Awad, Omar — $7,000 — Physician
+Baig, Mirza — $7,000 — Investor
+Barakat, Adel — $7,000 — Asset Manarge
+Basha, Feras — $7,000 — Radiology
+Basha, Samar — $7,000 — Homemaker
+Bawa, Waseem — $7,000 — Not Employed
+Chanda, Nasser — $7,000 — CEO
+Connell, William — $7,000 — Not Employed
+Craig, Ian — $7,000 — Not Employed
+Dadabhoy, Abdul — $7,000 — COO
+Davoodi, Mohammed — $7,000 — CEO
+El-Sayed, Mohamed — $7,750 — Professor
+Elfstrom, Bruce — $7,000 — Expedition Consultant And Leader And R
+Elmasry, Tarek — $7,000 — Consultant
+Elmasry, Zayn — $7,000 — Analyst
+Elsiesy, Hussien — $7,000 — Physician
+Ezzeddine, Dina — $7,000 — Physician
+Ezzedine, Bilal — $7,000 — Attorney
+Faraj, Batool — $7,000 — Not Employed
+Farha, Mufid — $7,000 — CEO
+Favreau, Jon — $7,000 — Podcaster
+Halwani, Dina — $7,000 — Information Requested
+Hamadah, Muna — $7,000 — Author
+Hasan, Ed — $7,000 — Founder
+Husain, Nadeem — $7,000 — Cardiologist
+Husain, Sohail — $7,000 — Physician
+Hussein, Julia — $7,000 — Director
+Hussein, Louay — $7,000 — President of Operations
+Inam, Habiba — $7,000 — Not Employed
+Islam, Saqib — $7,000 — CEO
+Issa, Mahmoud — $7,000 — Business Owner
+Jaffer, Amin — $7,000 — Dentist
+Jondy, Abdelmajid — $7,000 — Not Employed
+Jukaku, Aisha — $7,000 — Not Employed
+Katranji, Abdalmajid — $7,000 — Surgeon
+Kenawy, Iman — $7,000 — Physician
+Khalaf, Mohd — $7,000 — Dentist
+Khalil, Rafia — $7,000 — Consultant
+Khan, Sohail — $7,000 — Businessman
+Khatib, Muhammad — $7,000 — Sales
+Khatri, Rehana — $7,000 — Not Employed
+Khauami, Shahrzad — $7,000 — Founder
+Khawaja, Omar — $7,000 — Attorney
+Langhorne, Samar — $7,000 — Advocate
+Lu, Yee — $7,000 — Retired
+Maali, Sheri — $7,000 — Not Employed
+Madha, Ali — $7,000 — COO
+Malik, Mona — $7,000 — President
+Mir, Aimen — $7,000 — Govt employee
+Mohiuddin, Ashfaq — $7,000 — Executive
+Mohiuddin, Jawaad — $7,000 — Physician
+Mohiuddin, Meraj — $7,000 — Physician
+Mohiuddin, Sohaib — $7,000 — Physician
+Mosa-Basha, Dana — $7,000 — Marketing Director
+Mossa-Basha, Mahmud — $7,000 — Physician
+Nafal, Bayan — $7,000 — Information Requested
+Nasr, Khaled — $7,000 — GP & COO
+Nathoo, Kirsty — $7,000 — Partner Emerita
+Noorulla, Ayesha — $7,000 — Not Employed
+Omar, Ammad — $7,000 — Company Owner
+Peracha-Riyaz, Manal — $8,000 — Ophthalmologist
+Perez, Eric — $7,000 — Properety Director
+Ragland, Marguerite — $7,000 — Retired
+Razvi, Masooma — $7,000 — Pharmacist
+Sabea, Racha — $7,000 — Homemaker
+Saeed, Faraz — $7,000 — Self Employed
+Safadi, Rami — $7,485 — Physician
+Saghir, Rudah — $7,000 — Not Employed
+Sajjad, Syed — $7,000 — Physician
+Sandozi, Nadia — $7,000 — Dentist
+Scanlon, Leila — $7,000 — Analyst
+Scanlon, Madeline — $7,000 — Project Manager
+Scanlon, Richard — $7,000 — Venture Capital
+Shameem, Shuaib — $7,000 — Equipment Operator
+Shetty, Sanjay — $7,000 — Not Employed
+Siddiqui, Suleman — $7,000 — Physician
+Sideeka, Irshad — $7,000 — Real Estate Investments
+Syed, Rizwan — $7,000 — Not Employed
+Syed, Sajid — $7,000 — Not Employed
+Syed, Shajee — $7,000 — Accountant
+Tameez, Mustafa — $7,000 — Managing Director
+Tayeb, Jukaku — $7,000 — Nephrologist
+Woolverton, Kate — $7,000 — Software Engineer
+Zahurullah, Fazlur — $7,000 — Physician
+Zaidat, Osama — $7,000 — Dentist
+Zaidi, Nazar — $7,000 — Engineer
+Zakaria, Azam — $7,000 — Business
+Zakaria, Hesham — $7,000 — Physician
+
+Above $7,000: 24 donors, per the committee's own running totals as of the Jul 15 report
 (an excess has 60 days to be refunded; refunds after Jul 15 are in later reports):
 
 Syed, Shehla — $10,500 — Attorney
@@ -35,8 +138,8 @@ Jurvetson, Karla — $7,009 — Physician
 
 By sector (the occupation carrying most of a donor's dollars)
 
-Not employed / retired / student — 2,947 donors — $2.59M — 100 at the $7,000 maximum
-All 100 at the maximum (above $7,000 first, then A–Z):
+Not employed / retired / student — 2,948 donors — $2.61M — 101 at the $7,000 maximum
+All 101 at the maximum (above $7,000 first, then A–Z):
 Kokoris, Lyndsey — $8,050 — Not Employed
 Hilaly, Fariha — $8,000 — Not Employed
 Barakat, Amani — $7,250 — Not Employed
@@ -57,6 +160,7 @@ Alo, Ghada — $7,000 — Retired
 Alvi, Rubina — $7,000 — Not Employed
 Arain, Aida — $7,000 — Homemaker
 Auerbach, Steve — $7,000 — Not Employed
+Awad, Isra — $7,000 — Stay At Home Mother
 Barakat, Abdul — $7,000 — Not Employed
 Barakat, Mohammed — $7,000 — Retired
 Barghouti, Nasser — $7,000 — Not Employed
@@ -138,7 +242,7 @@ Wachtel, George — $7,000 — Retired
 Wasim, Mahjabeen — $7,000 — Not Employed
 Zakaria, Nihala — $7,000 — Homemaker
 
-Healthcare — physician / surgeon / specialist — 1,411 donors — $2.39M — 99 at the $7,000 maximum
+Healthcare — physician / surgeon / specialist — 1,392 donors — $2.38M — 99 at the $7,000 maximum
 All 99 at the maximum (above $7,000 first, then A–Z):
 Peracha-Riyaz, Manal — $8,000 — Ophthalmologist
 Mossa-Basha, Ahmad — $7,500 — Physician
@@ -195,6 +299,7 @@ Hussein, Maen — $7,000 — Physician
 Ibrahimi, Sadia — $7,000 — Dermatology
 Issawi, Ahmad — $7,000 — Physician
 Javed, Muhammad — $7,000 — Cardiologist
+Karim, Syed — $7,000 — Physcian
 Katranji, Abdalmajid — $7,000 — Surgeon
 Kenawy, Aymen — $7,000 — Physician
 Kenawy, Iman — $7,000 — Physician
@@ -237,15 +342,15 @@ Tayeb, Jukaku — $7,000 — Nephrologist
 Turk, Aijaz — $7,000 — Physician
 Yaqub, Aaliya — $7,000 — Physician executive
 Zahurullah, Fazlur — $7,000 — Physician
-Zaidi, Nazar — $7,000 — Engineer
 Zakaria, Hesham — $7,000 — Physician
 
-Business owner / executive / consultant (non-health) — 881 donors — $1.37M — 73 at the $7,000 maximum
-All 73 at the maximum (above $7,000 first, then A–Z):
+Business owner / executive / consultant (non-health) — 1,022 donors — $1.64M — 93 at the $7,000 maximum
+All 93 at the maximum (above $7,000 first, then A–Z):
 Clifford, David — $8,300 — Sr Director
 Afzal, Syed — $8,000 — President
 Nahas, Amro — $7,750 — Managing Director
 Abunasra, Sami — $7,025 — CEO
+Abdeen, Eyas — $7,000 — Principal Program Managerr
 Abrahim, Zeinab — $7,000 — Business manager
 Ahmad, Basalat — $7,000 — CEO
 Ahmed, Haseeb — $7,000 — Business Owner
@@ -253,8 +358,8 @@ Ahmed, Usman — $7,000 — CEO
 Aijazuddin, Imran — $7,000 — Startup Founder
 Alhinnawi, Hend — $7,000 — CEO
 Ali, Hamza — $7,000 — Self Employed
+Ali, Mavra — $7,000 — Human Resources
 Aljumaily, Anas — $7,000 — CEO
-Azhar, Rehan — $7,000 — president
 Barakat, Nidal — $7,000 — Self Employed
 Battat, Shireif — $7,000 — Account Executive
 Campo, Joel — $7,000 — Social media director
@@ -262,6 +367,7 @@ Chakrabarti, Saikat — $7,000 — President
 Chanda, Nasser — $7,000 — CEO
 Chaudhry, Farrukh — $7,000 — Managing Partner
 Connell, Zehan — $7,000 — Small Business Owner
+Dadabhoy, Abdul — $7,000 — COO
 Daoud, Zeina — $7,000 — Manager
 Dari, Ahmad — $7,000 — President
 Davoodi, Mohammed — $7,000 — CEO
@@ -272,8 +378,10 @@ Elfstrom, Katharine — $7,000 — Expedition Consultant
 Elmasry, Tarek — $7,000 — Consultant
 Farha, Mufid — $7,000 — CEO
 Freij, Maha — $7,000 — CEO
+Gamay, Tarick — $7,000 — Chief Sales Officer
 Habayeb, Michelle — $7,000 — Director of Training
-Hartle, Tom — $7,000 — Founder
+Haddad, Maya — $7,000 — Brand Strategist
+Harajli, Lina — $7,000 — COO
 Hasan, Ed — $7,000 — Founder
 Hashmi, Osama — $7,000 — CEO
 Hussein, Julia — $7,000 — Director
@@ -284,7 +392,12 @@ Jawad, Ali — $7,000 — Business Owner
 Jubran, Ahmad — $7,000 — Senior Director
 Kazi, Zubair — $7,000 — Business Director
 Khalil, Rafia — $7,000 — Consultant
+Khan, Nazar — $7,000 — CTO
+Khan, Sohail — $7,000 — Businessman
+Khatri, Saleem — $7,000 — Managing Member
 Khauami, Shahrzad — $7,000 — Founder
+Langhorne, William — $7,000 — Chairman
+Madha, Ali — $7,000 — COO
 Mahmoud, Ahmed — $7,000 — President
 Malik, Mona — $7,000 — President
 Marleen, Mohamed — $7,000 — CEO
@@ -293,7 +406,10 @@ Mohiuddin, Ashfaq — $7,000 — Executive
 Mohiuddin, Syed — $7,000 — Consultant
 Mosa-Basha, Dana — $7,000 — Marketing Director
 Muallem, Ariege — $7,000 — Buiness Owner
+Musheinesh, Abdul — $7,000 — Entrepeneur
+Nafal, Khaled — $7,000 — Self Employee
 Nafal, Marwan — $7,000 — Self Employed
+Nasr, Khaled — $7,000 — GP & COO
 Nathoo, Amir — $7,000 — CEO
 Nathoo, Kirsty — $7,000 — Partner Emerita
 Omar, Ammad — $7,000 — Company Owner
@@ -305,82 +421,27 @@ Rahman, Saifaldin — $7,000 — Managing Partner
 Rahman, Shahriar — $7,000 — Chief Executive Officer
 Rahman, Ziaur — $7,000 — CEO
 Ramadan, Zead — $7,000 — Executive Director
+Rasheed, Haroon — $7,000 — Businessman
+Rehman, Aamir — $7,000 — Conslutant
 Saeed, Faraz — $7,000 — Self Employed
 Sarafa, Rami — $7,000 — CEO
 Sayed, Ali — $7,000 — CEO
 Scanlon, Madeline — $7,000 — Project Manager
 Shehadi, Mike — $7,000 — President/CEO
-Tabassum, Chowdhury — $7,000 — Manager
-Tameez, Mustafa — $7,000 — Managing Director
-Tawakol, Omar — $7,000 — CEO
-Turfah, Shadia — $7,000 — President
-Zakaria, Shaukat — $7,000 — CEO
-
-Other / unclassified — 1,116 donors — $1.30M — 60 at the $7,000 maximum
-All 60 at the maximum (above $7,000 first, then A–Z):
-Abdo, David — $7,000 — Inspector
-Abdul-Hadi, Rawan — $7,000 — Secretary
-Abdul-Razzak, Nour — $7,000 — Researcher
-Abu Raddad, Maryam — $7,000 — Information Requested
-Abumustafa, Naser — $7,000 — Associate Dean
-Ahmed, Arshia — $7,000 — Arshia Ahmed
-Ali, Mavra — $7,000 — Human Resources
-Awad, Isra — $7,000 — Stay At Home Mother
-Barakat, Adel — $7,000 — Asset Manarge
-Barakat, Faten — $7,000 — Information Requested
-Connell, Liam — $7,000 — Swe
-Dadabhoy, Abdul — $7,000 — COO
-Dakhlallah, Yasmin — $7,000 — Retail
-Favreau, Jon — $7,000 — Podcaster
-Haddad, Maya — $7,000 — Brand Strategist
-Haggerty, Ben — $7,000 — Musician
-Halwani, Dina — $7,000 — Information Requested
-Hamadah, Muna — $7,000 — Author
-Harajli, Lina — $7,000 — COO
-Hashem, Ahmad — $7,000 — Managememt
-Hosein, Haseeb — $7,000 — Police Officer
-Hussein, Zade — $7,000 — Dishwasher
-Jukaku, Hatifa — $7,000 — Realtor
-Jukaku, Mohamed — $7,000 — Sr. Technical Product Specialist
-Kamp, Carol — $7,000 — Rural Carrier
-Karim, Syed — $7,000 — Physcian
-Kaukab, Muhammad — $7,000 — Realtor
-Khan, Nazar — $7,000 — CTO
-Khan, Sohail — $7,000 — Businessman
-Khatri, Saleem — $7,000 — Managing Member
-Langhorne, Samar — $7,000 — Advocate
-Langhorne, William — $7,000 — Chairman
-Leike, Jan — $7,000 — Member of Technical Staff
-Madha, Ali — $7,000 — COO
-Mahmoud, Tariq — $7,000 — Head of International
-Mir, Aimen — $7,000 — Govt employee
-Mizrahy, Edo — $7,000 — Filmmaker
-Musheinesh, Abdul — $7,000 — Entrepeneur
-Musheinesh, Aicheh — $7,000 — Secretary
-Nafal, Bayan — $7,000 — Information Requested
-Nafal, Khaled — $7,000 — Self Employee
-Nasr, Khaled — $7,000 — GP & COO
-Nasr, Kristina — $7,000 — Information Requested
-Nawaz, Talha — $7,000 — Patent Examiner
-Pennington, Kenneth — $7,000 — Middle Seat
-Rasheed, Haroon — $7,000 — Businessman
-Rehman, Aamir — $7,000 — Conslutant
-Saadeh, Yamaan — $7,000 — Resident
-Saunders, William — $7,000 — AI Researcher
-Shameem, Shuaib — $7,000 — Equipment Operator
-Skloff, Michael — $7,000 — Musician
 Soltan, Mohamed — $7,000 — Senior strategic advisor
 Spriggs, JD — $7,000 — Consulting Team Lead
+Tabassum, Chowdhury — $7,000 — Manager
+Tameez, Mustafa — $7,000 — Managing Director
 Tameez, Selma — $7,000 — Outreach Strategist
+Tawakol, Omar — $7,000 — CEO
+Turfah, Shadia — $7,000 — President
 Vlock, Julia — $7,000 — Business
-Wachtel, Alexandra — $7,000 — Information Requested
 West, Benjamin — $7,000 — CTO
-Zaidi, Zenaib — $7,000 — Information Requested
 Zakaria, Azam — $7,000 — Business
-Ziegler, Daniel — $7,000 — MacHine Learning Researcher
+Zakaria, Shaukat — $7,000 — CEO
 
-Tech / engineering — 645 donors — $630k — 20 at the $7,000 maximum
-All 20 at the maximum (above $7,000 first, then A–Z):
+Tech / engineering — 634 donors — $656k — 25 at the $7,000 maximum
+All 25 at the maximum (above $7,000 first, then A–Z):
 Abuzaakouk, Ahmad — $7,500 — IT
 Saifee, Quaid — $7,059 — IT
 Abdala, Omar — $7,000 — Engineer
@@ -389,20 +450,48 @@ Abusuad, Mohammad — $7,000 — Engineer
 Ahsan, Agha — $7,000 — Engineer
 Ali, Hyder — $7,000 — Software Sales
 Attaras, Musaab — $7,000 — Director of Software
+Connell, Liam — $7,000 — Swe
 Godil, Saad — $7,000 — Engineer
 Jukaku, Yousuf — $7,000 — Software Developer
 Kabakibo, Aiman — $7,000 — Engineering Management
 Khalil, Mian — $7,000 — Engineer
 Khan, Faraz — $7,000 — developer
+Leike, Jan — $7,000 — Member of Technical Staff
 Mirza, Nadir — $7,000 — Supply Quality Engineer
 Mohamed, Mohamef — $7,000 — Engineer
 Molla, Shahedolla — $7,000 — Engineer
 Moustafa, Marwan — $7,000 — Software Engineer
 Saifan, Ismael — $7,000 — Engineer
+Saunders, William — $7,000 — AI Researcher
 Shah, Jennah — $7,000 — Software Engineer
 Woolverton, Kate — $7,000 — Software Engineer
+Zaidi, Nazar — $7,000 — Engineer
+Ziegler, Daniel — $7,000 — MacHine Learning Researcher
 
-Law — 370 donors — $495k — 26 at the $7,000 maximum
+Other / unclassified — 781 donors — $644k — 12 at the $7,000 maximum
+Abdo, David — $7,000 — Inspector
+Abdul-Hadi, Rawan — $7,000 — Secretary
+Abdul-Razzak, Nour — $7,000 — Researcher
+Dakhlallah, Yasmin — $7,000 — Retail
+Hashem, Ahmad — $7,000 — Managememt
+Hussein, Zade — $7,000 — Dishwasher
+Jukaku, Mohamed — $7,000 — Sr. Technical Product Specialist
+Mahmoud, Tariq — $7,000 — Head of International
+Musheinesh, Aicheh — $7,000 — Secretary
+Pennington, Kenneth — $7,000 — Middle Seat
+Saadeh, Yamaan — $7,000 — Resident
+Shameem, Shuaib — $7,000 — Equipment Operator
+Mokhtarzada, Yahya — $6,950 — Rocket Money
+Vanbelle, Brandon — $6,850 — Material Handler
+Issa, Hayat — $6,250 — Administrator
+Akbar, Shazia — $5,000 — Registered Agent
+Alhasbani, Ibrahim — $5,000 — Cei
+Issa, Amjad — $5,000 — Member
+Razvi, Syed — $5,000 — Private
+Rosa, Juan — $5,000 — Procurement Leader
+(more donors tied at $5,000)
+
+Law — 365 donors — $497k — 26 at the $7,000 maximum
 All 26 at the maximum (above $7,000 first, then A–Z):
 Syed, Shehla — $10,500 — Attorney
 Akeel, Shereef — $8,500 — Attorney
@@ -431,36 +520,37 @@ Rasheed, Nabeela — $7,000 — Attorney
 Shabana, Ramy — $7,000 — Attorney
 Taylor, Ilonka — $7,000 — Attorney
 
-Healthcare — other clinician (dentist, pharmacist, nurse, etc.) — 298 donors — $380k — 19 at the $7,000 maximum
-Abu Atieh, Bilal — $8,000 — Pharmacist
-El-Sayed, Mohamed — $7,750 — Professor
-Ahmed, Asim — $7,000 — Registered Nurse
-Ahmed, Fawzia — $7,000 — Dentist
-Chowdhury, Shabnaj — $7,000 — Clinical Social Worker
-Connell, Ciara — $7,000 — Therapist
-Fakhoury, Manal — $7,000 — Pharmacist
-Fetouh, Rania — $7,000 — Dentist
-Ghayasuddin, Sheikh — $7,000 — Chiropractor
-Issa, Said — $7,000 — Dentist
-Jaffer, Amin — $7,000 — Dentist
-Jandali, Rami — $7,000 — Dentist
-Kazmi, Ayesha — $7,000 — Social Worker
-Khalaf, Mohd — $7,000 — Dentist
-Khan, Nadeem — $7,000 — Dentist
-Musheinesh, Dina — $7,000 — Dentist
-Razvi, Masooma — $7,000 — Pharmacist
-Sandozi, Nadia — $7,000 — Dentist
-Zaidat, Osama — $7,000 — Dentist
-Klein, Caitlin — $6,750 — Nurse Practitioner
+Media / arts / other professional — 315 donors — $400k — 19 at the $7,000 maximum
+Abdo, David — $7,000 — Real estate
+Alaqrabawi, Abduallah — $7,000 — Real Estate
+Cheema, Irshad — $7,000 — Retail Sales
+Favreau, Jon — $7,000 — Podcaster
+Haggerty, Ben — $7,000 — Musician
+Hamadah, Muna — $7,000 — Author
+Hasan, Zenah — $7,000 — Marketing
+Jukaku, Hatifa — $7,000 — Realtor
+Kaukab, Muhammad — $7,000 — Realtor
+Khan, Amir — $7,000 — Real Estate
+Khatib, Muhammad — $7,000 — Sales
+Mizrahy, Edo — $7,000 — Filmmaker
+Nafal, Mohamad — $7,000 — Real Estate
+Nafal, Roua — $7,000 — Real Estate
+Nafal, Wafa — $7,000 — Designer
+Sardar, Faris — $7,000 — Real Estate
+Siam, Maz — $7,000 — Sales
+Skloff, Michael — $7,000 — Musician
+Zia, Kamran — $7,000 — Sales
+Patterson, Margot — $6,965 — Writer
 
-Finance / investing — 205 donors — $350k — 27 at the $7,000 maximum
-All 27 at the maximum (above $7,000 first, then A–Z):
+Finance / investing — 236 donors — $390k — 28 at the $7,000 maximum
+All 28 at the maximum (above $7,000 first, then A–Z):
 Abdel-Saheb, Ahmed — $7,000 — Finance
 Abuzaakouk, Anas — $7,000 — Finance
 Alam, Shakeeb — $7,000 — Investor
 Alam-Carey, Peter — $7,000 — Director Of Finance
 Alvi, Rehan — $7,000 — Investor
 Baig, Mirza — $7,000 — Investor
+Barakat, Adel — $7,000 — Asset Manarge
 Dudum, Lea — $7,000 — Finance
 Elmasry, Zayn — $7,000 — Analyst
 Fakhoury, Wisam — $7,000 — Director of Finance
@@ -483,35 +573,35 @@ Zafar, Kashif — $7,000 — Investment Banking
 Zia, Raheel — $7,000 — Investment Management
 Zughayer, Islam — $7,000 — Banker
 
-Media / arts / other professional — 258 donors — $306k — 13 at the $7,000 maximum
-Abdo, David — $7,000 — Real estate
-Alaqrabawi, Abduallah — $7,000 — Real Estate
-Cheema, Irshad — $7,000 — Retail Sales
-Gamay, Tarick — $7,000 — Chief Sales Officer
-Hasan, Zenah — $7,000 — Marketing
-Khan, Amir — $7,000 — Real Estate
-Khatib, Muhammad — $7,000 — Sales
-Nafal, Mohamad — $7,000 — Real Estate
-Nafal, Roua — $7,000 — Real Estate
-Nafal, Wafa — $7,000 — Designer
-Sardar, Faris — $7,000 — Real Estate
-Siam, Maz — $7,000 — Sales
-Zia, Kamran — $7,000 — Sales
-Patterson, Margot — $6,965 — Writer
-Bullock, Rachel — $5,000 — Artist
-Maaytah, Ammar — $5,000 — Sales
-Tayyen, Anasie — $5,000 — Journalist
-Shihadeh, Samer — $4,750 — Sales
-Salem, Nadine — $4,000 — Marketing
-Obeid, Haytham — $3,850 — Contractor
+Healthcare — other clinician (dentist, pharmacist, nurse, etc.) — 303 donors — $389k — 19 at the $7,000 maximum
+Abu Atieh, Bilal — $8,000 — Pharmacist
+Ahmed, Asim — $7,000 — Registered Nurse
+Ahmed, Fawzia — $7,000 — Dentist
+Chowdhury, Shabnaj — $7,000 — Clinical Social Worker
+Connell, Ciara — $7,000 — Therapist
+Cukier, Caroline — $7,000 — Certified Nursing Assistant
+Fakhoury, Manal — $7,000 — Pharmacist
+Fetouh, Rania — $7,000 — Dentist
+Ghayasuddin, Sheikh — $7,000 — Chiropractor
+Issa, Said — $7,000 — Dentist
+Jaffer, Amin — $7,000 — Dentist
+Jandali, Rami — $7,000 — Dentist
+Kazmi, Ayesha — $7,000 — Social Worker
+Khalaf, Mohd — $7,000 — Dentist
+Khan, Nadeem — $7,000 — Dentist
+Musheinesh, Dina — $7,000 — Dentist
+Razvi, Masooma — $7,000 — Pharmacist
+Sandozi, Nadia — $7,000 — Dentist
+Zaidat, Osama — $7,000 — Dentist
+Klein, Caitlin — $6,750 — Nurse Practitioner
 
-Education / academic — 257 donors — $234k — 5 at the $7,000 maximum
-Abdeen, Eyas — $7,000 — Principal Program Managerr
+Education / academic — 264 donors — $248k — 6 at the $7,000 maximum
+El-Sayed, Mohamed — $7,750 — Professor
+Abumustafa, Naser — $7,000 — Associate Dean
 Khalil, Nancy — $7,000 — Faculty
 Rahnama, Sara — $7,000 — Professor
 Sabadia, Aisha — $7,000 — Principal
 Vasan, Ashwin — $7,000 — Professor
-Sanderlin, Josh — $6,000 — Principal Technical Program Manager
 Riaz, Kamran — $5,100 — Professor
 Coolidge, Robert — $5,000 — Professor
 Obeid, Mayse — $5,000 — Teacher
@@ -519,55 +609,77 @@ Sayeed, Dilara — $5,000 — Educator
 Waraich, Dilnaz — $4,750 — Educator
 Kahn, James — $4,550 — Professor
 Barakat, Jamal — $4,300 — Principal
+Khirfan, Gina — $4,000 — Librarian
 Meister, Robert — $4,000 — Professor
 Abbara, Ranim — $3,500 — Educator
 Ahmed, Ruby — $3,500 — Teacher
 An-Nahly, Fawzia — $3,500 — Teacher
 Barhoum, Khalil — $3,500 — Professor
 Sabic-El-Rayess, Amra — $3,500 — Professor
-Sawani, Abrar — $3,500 — Teacher
 (more donors tied at $3,500)
 
-Healthcare — hospital / system / 'healthcare' staff — 116 donors — $124k — 4 at the $7,000 maximum
+Healthcare — hospital / system / 'healthcare' staff — 152 donors — $165k — 6 at the $7,000 maximum
+Ahmed, Arshia — $7,000 — Arshia Ahmed
 Ali, Aliyah — $7,000 — Public Health
-Cukier, Caroline — $7,000 — Certified Nursing Assistant
+Azhar, Rehan — $7,000 — president
+Hartle, Tom — $7,000 — Founder
 Kass-Hout, Taha — $7,000 — CTO
 Riaz, Salman — $7,000 — Healthcare
 Abbassi, Zaied — $5,000 — Medical Biller
 Hilal, Nabil — $4,500 — Management
 Ezzeddine, Farrah — $3,565 — Medical Student
-Ahmed, Sana — $3,500 — Veterinarian
+Afzal, Shakara — $3,500 — Office Manager
 Akhtar, Imran — $3,500 — Healthcare Professional
 Dwaik, Adam — $3,500 — Healthcare Informatics Consultant
+Luppino, Nolan — $3,500 — System Engineer
 Mills, Jamie — $3,500 — Healthcare Consultant
 Rivera, Jessica — $3,500 — Epidemiologist
+Unseld, Paul — $3,500 — Radiologic Technologist
+Denney, Fatima — $3,200 — COO
+Anaim, Jamal — $3,000 — CEO
 Davis, Stephanie — $3,000 — Public Health
-Hadidi, Gehad — $3,000 — Hospitality
 Hussein, Mohamed — $2,500 — Health care development
-Kraus, James — $2,070 — Medical Physicist
-El-Bershawi, Ahmed — $2,000 — Medical Director
-Hararah, Hamzah — $2,000 — Healthcare
-Lakhani, Karim — $2,000 — Hotelier
-Smith, Todd — $2,000 — Veterinarian
 
-Government / politics / nonprofit — 24 donors — $16k — 0 at the $7,000 maximum
+Blank / unknown occupation — 54 donors — $104k — 7 at the $7,000 maximum
+Abu Raddad, Maryam — $7,000 — Information Requested
+Barakat, Faten — $7,000 — Information Requested
+Halwani, Dina — $7,000 — Information Requested
+Nafal, Bayan — $7,000 — Information Requested
+Nasr, Kristina — $7,000 — Information Requested
+Wachtel, Alexandra — $7,000 — Information Requested
+Zaidi, Zenaib — $7,000 — Information Requested
+Brickell, Edie — $5,000 — Information Requested
+Simon, Paul — $5,000 — Information Requested
+Yahya, Ateka — $3,750 — Information Requested
+Abutaa, Dina — $3,500 — Information Requested
+Gaziani, Roshan — $3,500 — Information Requested
+Maali, Mohammed — $2,700 — Information Requested
+Kiblawi, Nada — $2,500 — Information Requested
+Mahmood, Zainab — $2,500 — Information Requested
+Al-Mutawa, Alia — $2,378 — Information Requested
+Alkurdi, Safa — $1,750 — Information Requested
+Dessinger, Ashley — $1,750 — Information Requested
+Kassem, Ranna — $1,500 — Information Requested
+Mohammadi, Michele — $1,500 — Information Requested
+
+Government / politics / nonprofit — 62 donors — $77k — 5 at the $7,000 maximum
+Hosein, Haseeb — $7,000 — Police Officer
+Kamp, Carol — $7,000 — Rural Carrier
+Langhorne, Samar — $7,000 — Advocate
+Mir, Aimen — $7,000 — Govt employee
+Nawaz, Talha — $7,000 — Patent Examiner
+Weinberg, Amy — $3,700 — Fundraiser
 Taha, Nareman — $3,500 — Public Services
+Altschuler, Daniel — $3,450 — Nonprofit
+Ahmed, Aamina — $3,000 — Non Profit
+Costello, Katherine — $2,595 — Fundraiser
+Fawaz, Anthony — $2,500 — Police Sgt.
 Kettler, Molly — $1,547 — Public Servant
 Ayoob, Edward — $1,500 — Government Relations
+Usman, Sameena — $1,500 — Govt Relations
 Lord, Robert — $1,350 — Federal Tax Policy
 Boylan, Lindsey — $1,000 — Government
 Hunt-Hendrix, Leah — $1,000 — Organizer
 Minhas, Uzma — $1,000 — Policy Lead
-Busch, Emily — $560 — Organizer
-Dryburgh, Eric — $500 — Union Organizer
-Flicker, Sarah — $500 — Artist/Activist
-Ross, Ken — $500 — VP Government Relations
-Stephens, Robert — $500 — Organizer
-Arellano, Stephanie — $485 — Organizer
-Pereida, Laurie — $475 — Union Electrician
-Wilson, Jimmie — $350 — Government
-Ali, Shumaya — $250 — Government
-Thornberry, Morgan — $250 — Organizer
-Wallace, Lindsay — $250 — Government - Grants
-Bhatt, Keane — $200 — Policy Aide
-Magnuson, Krista — $150 — Organizer
+Stockdale, Sarah — $1,000 — Nonprofit Administrator
+Yost, Emily — $871 — Nonprofit Fundraiser

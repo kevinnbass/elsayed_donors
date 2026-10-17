@@ -1,146 +1,716 @@
 {
-  "bucket_amt": 2583752.85,
-  "n_names_in_bucket": 2911,
-  "top20": [
+  "basis": "net of refunds and reattributions (scripts/top_donors.py)",
+  "bucket_amt": 2598661.85,
+  "n_donors_in_bucket": 2935,
+  "bucket_net": 2590851.85,
+  "n_at_cap": 101,
+  "at_cap": [
     {
-      "rank": 1,
-      "name": "Barakat, Abdul",
-      "amt": 14000.0,
-      "n_gifts": 5,
-      "occupation": "Not Employed"
-    },
-    {
-      "rank": 2,
-      "name": "Nafal, Adham",
-      "amt": 14000.0,
-      "n_gifts": 3,
-      "occupation": "Not Employed"
-    },
-    {
-      "rank": 3,
-      "name": "Turk, Aisha",
-      "amt": 13000.0,
-      "n_gifts": 4,
-      "occupation": "Homemaker"
-    },
-    {
-      "rank": 4,
-      "name": "Mokhtarzada, Idris",
-      "amt": 10500.0,
-      "n_gifts": 3,
-      "occupation": "Not Employed"
-    },
-    {
-      "rank": 5,
-      "name": "Furrha, Aisha",
-      "amt": 9000.0,
-      "n_gifts": 4,
-      "occupation": "Homemaker"
-    },
-    {
-      "rank": 6,
-      "name": "Mohammadi, Rafiq",
-      "amt": 8500.0,
-      "n_gifts": 4,
-      "occupation": "Not Employed"
-    },
-    {
-      "rank": 7,
       "name": "Kokoris, Lyndsey",
-      "amt": 8050.0,
+      "state": "IL",
+      "net": 8050.0,
       "n_gifts": 32,
       "occupation": "Not Employed"
     },
     {
-      "rank": 8,
       "name": "Hilaly, Fariha",
-      "amt": 8002.0,
+      "state": "CA",
+      "net": 8000.0,
       "n_gifts": 5,
       "occupation": "Not Employed"
     },
     {
-      "rank": 9,
-      "name": "Khan, Sara",
-      "amt": 7532.92,
+      "name": "Barakat, Amani",
+      "state": "CA",
+      "net": 7250.0,
       "n_gifts": 4,
       "occupation": "Not Employed"
     },
     {
-      "rank": 10,
-      "name": "Abaza, Fadia",
-      "amt": 7500.0,
-      "n_gifts": 6,
-      "occupation": "Not Employed"
-    },
-    {
-      "rank": 11,
-      "name": "Moammar, Haifaa",
-      "amt": 7350.0,
-      "n_gifts": 7,
-      "occupation": "Not Employed"
-    },
-    {
-      "rank": 12,
       "name": "Jimenez, Mauricio",
-      "amt": 7250.0,
+      "state": "MI",
+      "net": 7250.0,
       "n_gifts": 48,
       "occupation": "Not Employed"
     },
     {
-      "rank": 13,
-      "name": "Barakat, Amani",
-      "amt": 7250.0,
+      "name": "Khan, Sara",
+      "state": "MI",
+      "net": 7032.92,
       "n_gifts": 4,
       "occupation": "Not Employed"
     },
     {
-      "rank": 14,
-      "name": "Shallal, Marjan",
-      "amt": 7040.0,
-      "n_gifts": 10,
-      "occupation": "Not Employed"
-    },
-    {
-      "rank": 15,
       "name": "Ross, Andy",
-      "amt": 7025.0,
+      "state": "MI",
+      "net": 7025.0,
       "n_gifts": 17,
       "occupation": "Retired"
     },
     {
-      "rank": 16,
-      "name": "Abounassif, Mada",
-      "amt": 7000.0,
+      "name": "Abbasi, Faisal",
+      "state": "NJ",
+      "net": 7000.0,
       "n_gifts": 2,
       "occupation": "Not Employed"
     },
     {
-      "rank": 17,
-      "name": "Arain, Aida",
-      "amt": 7000.0,
+      "name": "Abounassif, Mada",
+      "state": "VA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Adaya, Yasmin",
+      "state": "CA",
+      "net": 7000.0,
       "n_gifts": 2,
       "occupation": "Homemaker"
     },
     {
-      "rank": 18,
-      "name": "Auerbach, Steve",
-      "amt": 7000.0,
-      "n_gifts": 6,
-      "occupation": "Not Employed"
-    },
-    {
-      "rank": 19,
-      "name": "Connell, William",
-      "amt": 7000.0,
+      "name": "Ahmed, Khaja",
+      "state": "WA",
+      "net": 7000.0,
       "n_gifts": 2,
       "occupation": "Not Employed"
     },
     {
-      "rank": 20,
+      "name": "Ahmed, Mansoor",
+      "state": "IL",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Al-Nsour, Maram",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Alam, Sadaf",
+      "state": "AZ",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Alaryan, Sawsan",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Ali, Moiz",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Alo, Abed",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Alo, Ghada",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Alvi, Rubina",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Arain, Aida",
+      "state": "MA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Homemaker"
+    },
+    {
+      "name": "Auerbach, Steve",
+      "state": "NY",
+      "net": 7000.0,
+      "n_gifts": 6,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Awad, Isra",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 4,
+      "occupation": "Stay At Home Mother"
+    },
+    {
+      "name": "Barakat, Abdul",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 5,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Barakat, Mohammed",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Barghouti, Nasser",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 3,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Basha, Samar",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Homemaker"
+    },
+    {
+      "name": "Bawa, Waseem",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Chulamorkodt, Komwanee",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Homemaker"
+    },
+    {
+      "name": "Connell, Francesca",
+      "state": "IL",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Connell, William",
+      "state": "IL",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Craig, Ian",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Craig, Meki",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 3,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "El-Abbadi, Alyaa",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Elmasry, Susan",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Eltilib, Eyman",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Homemaker"
+    },
+    {
+      "name": "Ezzeddine, Jena",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Faraj, Batool",
+      "state": "AZ",
+      "net": 7000.0,
+      "n_gifts": 0,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Freij, Roy",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Furrha, Aisha",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 4,
+      "occupation": "Homemaker"
+    },
+    {
       "name": "Furrha, Rushdi",
-      "amt": 7000.0,
+      "state": "MI",
+      "net": 7000.0,
       "n_gifts": 4,
       "occupation": "Not Employed"
+    },
+    {
+      "name": "Godil, Aisha",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 0,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Hasan, Talat",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 1,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Inam, Habiba",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Ismail, Danish",
+      "state": "IL",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Jondy, Abdelmajid",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 6,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Jondy, Mohammad",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 3,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Jukaku, Aisha",
+      "state": "NY",
+      "net": 7000.0,
+      "n_gifts": 3,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Jukaku, Mariam",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 3,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Kandil, Mariam",
+      "state": "VA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Kaukab, Zahida",
+      "state": "OH",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Keener, Cynthia",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Kettanji, Hiba",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Homemaker"
+    },
+    {
+      "name": "Khan, Khadija",
+      "state": "MA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Khatri, Rehana",
+      "state": "FL",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Liu, Allen",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Lu, Yee",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Lynch, Fred",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Maali, Sheri",
+      "state": "IL",
+      "net": 7000.0,
+      "n_gifts": 6,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Majeed, Tariq",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 4,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Malwatte, Kamilka",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Marleen, Mai",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Mazhar, Mohammad",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 3,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Moammar, Haifaa",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 7,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Mohamed, Bothaina",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Mohammadi, Rafiq",
+      "state": "IL",
+      "net": 7000.0,
+      "n_gifts": 4,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Mokhtarzada, Idris",
+      "state": "DC",
+      "net": 7000.0,
+      "n_gifts": 3,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Mosa-Basha, Ismael",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Musheinesh, Yulia",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "N/A"
+    },
+    {
+      "name": "Nafal, Adham",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 3,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Noorulla, Ayesha",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Peracha, Hina",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Peracha, Khadija",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 4,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Qureshi, Mohammad",
+      "state": "NJ",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Ragland, Marguerite",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Ragland, Terry",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Rasheed, Shawar",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Sabea, Racha",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Homemaker"
+    },
+    {
+      "name": "Saddique, Khalid",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Saghir, Rudah",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Saginaw, Lori",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Saginaw, Paul",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Sajjad, Nazish",
+      "state": "PA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Sardar, Karyn",
+      "state": "IL",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Sardar, Zaheer",
+      "state": "FL",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Sarofim, Susan",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Shameem, Ejaz",
+      "state": "IL",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Shamsi, Sameer",
+      "state": "NY",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Shefts, Joelle",
+      "state": "NY",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Shetty, Lakshmi",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 4,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Shetty, Sanjay",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 4,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Siddiqui, Yasmeen",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Silberstein, Steve",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Sophie, Sidra",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Stark, Jalex",
+      "state": "NJ",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Syed, Rabia",
+      "state": "IL",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Syed, Rizwan",
+      "state": "IL",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Syed, Sajid",
+      "state": "NJ",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Tayeb, Faiziya",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Homemaker"
+    },
+    {
+      "name": "Turk, Aisha",
+      "state": "MI",
+      "net": 7000.0,
+      "n_gifts": 4,
+      "occupation": "Homemaker"
+    },
+    {
+      "name": "Wachtel, George",
+      "state": "NY",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Retired"
+    },
+    {
+      "name": "Wasim, Mahjabeen",
+      "state": "CA",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Not Employed"
+    },
+    {
+      "name": "Zakaria, Nihala",
+      "state": "TX",
+      "net": 7000.0,
+      "n_gifts": 2,
+      "occupation": "Homemaker"
     }
   ]
 }
