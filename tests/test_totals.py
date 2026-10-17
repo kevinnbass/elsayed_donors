@@ -38,3 +38,12 @@ def test_top20_has_twenty():
     )
     assert len(top["top20_nppes_confirmed_physicians"]) == 20
     assert len(top["top20_health_systems_by_dollars"]) == 20
+
+
+def test_top_donors_net_reconciles():
+    t = json.loads((ROOT / "analysis" / "top_donors.json").read_text(encoding="utf-8"))
+    # roster IND gross 10,246,881.61 + reattribution memos 10,500.00 - SB20A refunds 61,682.15
+    assert t["individual_net_total"] == 10195699.46
+    assert t["n_at_cap"] == 446
+    assert t["unmatched_refunds"] == []
+    assert all(r["committee_check"] != "differs" for r in t["over_cap"])

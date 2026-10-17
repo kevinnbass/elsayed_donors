@@ -84,8 +84,22 @@ Remaining ambiguity is 12,214 mostly small gifts (avg ~$100) — Western given n
 
 - Physicians and health-system employers: [`analysis/TOP20.txt`](analysis/TOP20.txt)
 - Not employed / retired / homemaker: [`analysis/TOP20_not_employed.txt`](analysis/TOP20_not_employed.txt)
+- **Overall and every sector, net:** [`analysis/TOP20_overall_and_by_sector.txt`](analysis/TOP20_overall_and_by_sector.txt)
 
 `python scripts/report.py` reprints the physician and system lists from local files.
+
+### Net donor totals (Oct 16, 2026)
+
+The two lists above add up gross Schedule A gifts. That overstates the people at the top: an excess gift stays on Schedule A while its fix is a refund (SB20A) or a memo reattribution to a spouse. Netted, nobody on either list is above $8,050 — e.g. Issa, Said $14,500 → $7,000 (plus a different Said Issa at another Ann Arbor address, $2,000), Barakat, Abdul $14,000 → $7,000.
+
+`scripts/top_donors.py` ranks donors net of refunds and reattributions, keyed by name + ZIP (same name at another ZIP is not merged):
+
+- The limit is $7,000 per person ($3,500 primary + $3,500 general). **446 donors are at or above it**, so an overall "top 20" is a 446-way tie; the file lists every one of them by sector instead.
+- 24 stand above $7,000 in the committee's own running totals as of the Jul 15 report (refunds of an excess can come in a later report).
+- Check against the committee's own per-donor aggregate: 5,514 exact, 2,992 within $200 (early gifts under the itemization line), 22 differ (mostly one person the committee keeps as two records).
+- Sector = the occupation carrying most of a donor's dollars, using the `sector_breakdown.py` rules.
+
+Machine-readable: `analysis/top_donors.json`.
 
 ## Layout
 
