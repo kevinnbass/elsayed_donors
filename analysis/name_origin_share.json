@@ -1,0 +1,127 @@
+{
+  "named_itemized_total": 24278061.59,
+  "method": "Arab-or-Muslim-coded share of named dollars from a validated name-origin lexicon (2026-10 pass).",
+  "all": {
+    "amt": 24278061.59,
+    "n_gifts": 104093,
+    "expected_pct": 45.2,
+    "low_pct": 44.4,
+    "high_pct": 45.9,
+    "confident_am_pct": 43.4,
+    "confident_not_am_pct": 54.4,
+    "uncertain_pct": 2.2,
+    "expected_gift_share_pct": 23.9
+  },
+  "by_period": {
+    "through_jul15": {
+      "amt": 10342308.97,
+      "n_gifts": 32167,
+      "expected_pct": 71.2,
+      "low_pct": 70.3,
+      "high_pct": 72.1,
+      "confident_am_pct": 70.3,
+      "confident_not_am_pct": 27.5,
+      "uncertain_pct": 2.2,
+      "expected_gift_share_pct": 34.5
+    },
+    "jul16_sep30": {
+      "amt": 13935752.62,
+      "n_gifts": 71926,
+      "expected_pct": 25.8,
+      "low_pct": 25.2,
+      "high_pct": 26.5,
+      "confident_am_pct": 23.4,
+      "confident_not_am_pct": 74.4,
+      "uncertain_pct": 2.2,
+      "expected_gift_share_pct": 19.1
+    }
+  },
+  "by_state": {
+    "MI": {
+      "amt": 7441825.53,
+      "n_gifts": 40538,
+      "expected_pct": 41.6,
+      "low_pct": 40.9,
+      "high_pct": 42.3,
+      "confident_am_pct": 39.8,
+      "confident_not_am_pct": 58.1,
+      "uncertain_pct": 2.1,
+      "expected_gift_share_pct": 17.3
+    },
+    "outside_MI": {
+      "amt": 16836236.06,
+      "n_gifts": 63555,
+      "expected_pct": 46.7,
+      "low_pct": 46.0,
+      "high_pct": 47.5,
+      "confident_am_pct": 44.9,
+      "confident_not_am_pct": 52.8,
+      "uncertain_pct": 2.3,
+      "expected_gift_share_pct": 28.1
+    }
+  },
+  "by_origin_expected_pct": {
+    "ARABIC": 32.37,
+    "SOUTH_ASIAN_MUSLIM": 10.3,
+    "uncertain residual (non-AM origin)": 1.43,
+    "PERSIAN": 0.56,
+    "TURKISH": 0.27,
+    "AFGHAN_PASHTO": 0.1,
+    "BALKAN_MUSLIM": 0.07
+  },
+  "by_token_expected_pct": {
+    "last_only": 3.96,
+    "both": 39.07,
+    "neither": 1.46,
+    "first_only": 0.68
+  },
+  "non_am_by_origin_expected_pct": {
+    "ENGLISH_CELTIC": 26.01,
+    "GERMANIC": 12.12,
+    "JEWISH": 5.21,
+    "ROMANCE": 2.95,
+    "SLAVIC_BALTIC_HUNGARIAN": 2.0,
+    "AM-origin token, non-AM pair": 1.38,
+    "SOUTH_ASIAN_NON_MUSLIM": 1.32,
+    "HISPANIC_LUSOPHONE": 1.01,
+    "EAST_ASIAN": 0.89,
+    "OTHER_EUROPEAN": 0.51,
+    "UNKNOWN": 0.38,
+    "GREEK": 0.31,
+    "BIBLICAL_PAN_CULTURAL": 0.26,
+    "SOUTHEAST_ASIAN_NON_MUSLIM": 0.18,
+    "ARMENIAN": 0.15,
+    "AFRICAN_NON_MUSLIM": 0.08
+  },
+  "coverage": {
+    "labelled": 99.89,
+    "pair_judged": 3.78,
+    "unlabelled": 0.11
+  },
+  "by_donor_tier": {
+    "all_donors": {
+      "n_donors": 30726,
+      "expected_pct_of_donors": 33.5,
+      "expected_pct_of_net_dollars": 51.2,
+      "tier_pct_of_all_net": 100.0
+    },
+    "at_7000_max": {
+      "n_donors": 644,
+      "expected_pct_of_donors": 76.3,
+      "expected_pct_of_net_dollars": 76.2,
+      "tier_pct_of_all_net": 15.6
+    },
+    "joint_committee_only_donors": {
+      "n_donors": 2072,
+      "expected_pct_of_donors": 75.8,
+      "expected_pct_of_net_dollars": 79.5,
+      "tier_pct_of_all_net": 11.0
+    },
+    "random_top100": {
+      "n_donors": 100,
+      "expected_pct_of_donors": 71.0,
+      "expected_pct_of_net_dollars": 70.8,
+      "tier_pct_of_all_net": 2.4
+    }
+  }
+}

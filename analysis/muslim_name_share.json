@@ -1,40 +1,60 @@
 {
-  "named_itemized_total": 10265431.61,
+  "named_itemized_total": 24278061.59,
   "label": "arab_or_muslim",
   "method": "Token match on FEC name against Arab-or-Muslim name lists: Arabic / Persian / Urdu / Turkish given names and surnames, Abdul-/El-/Al-/Abu- prefixes, AND Levantine/Arab Christian surnames (Haddad, Khoury, Abdo, Chami, Dudum, Boutros, Girgis). Pakistani/Bangladeshi/Persian Muslim names count (Muslim, not necessarily Arab). Levantine Christians count (Arab, not necessarily Muslim). Not a religion or ethnicity census. False positives (Ali, Khan, Shah, Hanna) and false negatives (converts, fully Anglicized names) both exist.",
   "any_name_token": {
-    "amt": 6638796.95,
-    "pct": 64.7,
-    "n_gifts": 8274
+    "amt": 9079642.55,
+    "pct": 37.4,
+    "n_gifts": 16860
   },
   "both_first_and_last": {
-    "amt": 2712774.0,
-    "pct": 26.4,
-    "n_gifts": 2829
+    "amt": 3419489.04,
+    "pct": 14.1,
+    "n_gifts": 5153
   },
   "by_class": {
-    "first_only": {
-      "amt": 1545163.01,
-      "n_gifts": 2421,
-      "pct": 15.1
-    },
-    "no": {
-      "amt": 3626634.66,
-      "n_gifts": 22906,
-      "pct": 35.3
+    "last_only": {
+      "amt": 3313108.12,
+      "n_gifts": 6275,
+      "pct": 13.6
     },
     "both": {
-      "amt": 2712774.0,
-      "n_gifts": 2829,
-      "pct": 26.4
+      "amt": 3419489.04,
+      "n_gifts": 5153,
+      "pct": 14.1
     },
-    "last_only": {
-      "amt": 2380859.94,
-      "n_gifts": 3024,
-      "pct": 23.2
+    "no": {
+      "amt": 15198419.04,
+      "n_gifts": 87233,
+      "pct": 62.6
+    },
+    "first_only": {
+      "amt": 2347045.39,
+      "n_gifts": 5432,
+      "pct": 9.7
     }
   },
   "top20_any": [
+    {
+      "name": "Baig, Mirza",
+      "amt": 18325.0,
+      "class": "last_only"
+    },
+    {
+      "name": "Khan, Amir",
+      "amt": 16750.0,
+      "class": "both"
+    },
+    {
+      "name": "Daoud, Imad",
+      "amt": 16000.0,
+      "class": "both"
+    },
+    {
+      "name": "Khalil, Mohammad",
+      "amt": 14700.0,
+      "class": "both"
+    },
     {
       "name": "Issa, Said",
       "amt": 14500.0,
@@ -46,29 +66,9 @@
       "class": "last_only"
     },
     {
-      "name": "Aljumaily, Anas",
+      "name": "Nathoo, Amir",
       "amt": 14000.0,
-      "class": "both"
-    },
-    {
-      "name": "Barakat, Abdul",
-      "amt": 14000.0,
-      "class": "both"
-    },
-    {
-      "name": "Nafal, Adham",
-      "amt": 14000.0,
-      "class": "both"
-    },
-    {
-      "name": "Barakat, Nidal",
-      "amt": 14000.0,
-      "class": "last_only"
-    },
-    {
-      "name": "Chami, David",
-      "amt": 14000.0,
-      "class": "last_only"
+      "class": "first_only"
     },
     {
       "name": "Dari, Ahmad",
@@ -76,27 +76,12 @@
       "class": "first_only"
     },
     {
-      "name": "Nafal, Mohamad",
-      "amt": 14000.0,
-      "class": "both"
-    },
-    {
-      "name": "Nathoo, Amir",
-      "amt": 14000.0,
-      "class": "first_only"
-    },
-    {
-      "name": "Abdo, David",
+      "name": "Barakat, Nidal",
       "amt": 14000.0,
       "class": "last_only"
     },
     {
-      "name": "Nasr, Khaled",
-      "amt": 14000.0,
-      "class": "both"
-    },
-    {
-      "name": "Ahmad, Mohamad",
+      "name": "Barakat, Abdul",
       "amt": 14000.0,
       "class": "both"
     },
@@ -106,34 +91,49 @@
       "class": "first_only"
     },
     {
+      "name": "Chami, David",
+      "amt": 14000.0,
+      "class": "last_only"
+    },
+    {
+      "name": "Nasr, Khaled",
+      "amt": 14000.0,
+      "class": "both"
+    },
+    {
+      "name": "Abdo, David",
+      "amt": 14000.0,
+      "class": "last_only"
+    },
+    {
+      "name": "Ahmad, Mohamad",
+      "amt": 14000.0,
+      "class": "both"
+    },
+    {
+      "name": "Nafal, Adham",
+      "amt": 14000.0,
+      "class": "both"
+    },
+    {
+      "name": "Nafal, Mohamad",
+      "amt": 14000.0,
+      "class": "both"
+    },
+    {
+      "name": "Aljumaily, Anas",
+      "amt": 14000.0,
+      "class": "both"
+    },
+    {
       "name": "Turk, Aisha",
       "amt": 13000.0,
       "class": "first_only"
     },
     {
-      "name": "Issa, Mohamad",
-      "amt": 12750.0,
+      "name": "Hasan, Syed",
+      "amt": 12955.0,
       "class": "both"
-    },
-    {
-      "name": "Khalil, Mohammad",
-      "amt": 12600.0,
-      "class": "both"
-    },
-    {
-      "name": "Daoud, Imad",
-      "amt": 12000.0,
-      "class": "both"
-    },
-    {
-      "name": "Afzal, Syed",
-      "amt": 12000.0,
-      "class": "first_only"
-    },
-    {
-      "name": "Baig, Mirza",
-      "amt": 11710.0,
-      "class": "last_only"
     }
   ]
 }

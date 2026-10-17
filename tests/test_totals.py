@@ -9,26 +9,29 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_named_itemized_matches_form3():
     summary = json.loads((ROOT / "analysis" / "roster_summary.json").read_text(encoding="utf-8"))
-    assert summary["n"] == 31180
-    assert summary["amt"] == 10265431.61
+    assert summary["n"] == 104093
+    assert summary["amt"] == 24278061.59
     assert summary["gap_vs_form3_itemized"] == 0.0
+    # every report adds up to its own F3 line 11a(i)
+    assert len(summary["by_src"]) == 7
+    assert all(v["gap"] == 0.0 for v in summary["by_src"].values())
 
 
 def test_nppes_floor_present():
     tight = json.loads(
         (ROOT / "analysis" / "healthcare_share_nppes_tight.json").read_text(encoding="utf-8")
     )
-    assert tight["nppes_confirmed_physician_floor_pct"] == 20.08
-    assert tight["named_itemized_total"] == 10265431.61
+    assert tight["nppes_confirmed_physician_floor_pct"] == 14.19
+    assert tight["named_itemized_total"] == 24278061.59
 
 
 def test_name_token_shares():
     mus = json.loads((ROOT / "analysis" / "muslim_name_share.json").read_text(encoding="utf-8"))
     nw = json.loads((ROOT / "analysis" / "nonwhite_name_share.json").read_text(encoding="utf-8"))
-    assert mus["named_itemized_total"] == 10265431.61
+    assert mus["named_itemized_total"] == 24278061.59
     assert mus["label"] == "arab_or_muslim"
-    assert mus["any_name_token"]["pct"] == 64.7
-    assert nw["nonwhite_coded"]["pct"] == 66.9
+    assert mus["any_name_token"]["pct"] == 37.4
+    assert nw["nonwhite_coded"]["pct"] == 39.2
     assert nw["nonwhite_coded"]["pct"] > mus["any_name_token"]["pct"]
 
 
@@ -37,17 +40,19 @@ def test_physician_and_employer_lists():
         (ROOT / "analysis" / "top20_physicians_and_systems.json").read_text(encoding="utf-8")
     )
     phys = top["nppes_confirmed_physicians_at_cap"]
-    assert top["n_nppes_confirmed_physicians_at_cap"] == len(phys) == 86
+    assert top["n_nppes_confirmed_physicians_at_cap"] == len(phys) == 117
     assert all(r["net"] >= 7000 for r in phys)
     assert len(top["top20_health_employers"]) == 20
 
 
 def test_top_donors_net_reconciles():
     t = json.loads((ROOT / "analysis" / "top_donors.json").read_text(encoding="utf-8"))
-    # roster IND gross 10,246,881.61 + reattribution memos 10,500.00 - SB20A refunds 61,682.15
-    assert t["individual_net_total"] == 10195699.46
-    assert t["n_at_cap"] == 446
+    # roster IND gross + reattribution memos + joint-committee shares - SB20A refunds to individuals
+    assert t["individual_net_total"] == 29089348.78
+    assert t["joint_committee_attributed"] == 4989800.69
+    assert t["n_at_cap"] == 644
     assert t["unmatched_refunds"] == []
+    assert len(t["refunds_to_organizations"]) == 3
     assert all(r["committee_check"] != "differs" for r in t["over_cap"])
 
 
@@ -55,7 +60,7 @@ def test_top100_is_a_reproducible_draw_from_the_max():
     t = json.loads((ROOT / "analysis" / "top_donors.json").read_text(encoding="utf-8"))
     draw = t["top100_random_from_cap"]
     assert draw["seed"] == "elsayed-top100-2026-10-16"
-    assert draw["pool"] == 446
+    assert draw["pool"] == 644
     assert len(draw["donors"]) == 100
     assert all(r["net"] >= 7000 for r in draw["donors"])
 
@@ -82,5 +87,5 @@ def test_sector_rules():
     for (occ, emp), want in cases.items():
         assert sector(occ, emp) == want, (occ, emp)
     sb = json.loads((ROOT / "analysis" / "sector_breakdown.json").read_text(encoding="utf-8"))
-    assert sb["named_itemized_total"] == 10265431.61
-    assert sb["healthcare_combined"]["pct"] == 28.8
+    assert sb["named_itemized_total"] == 24278061.59
+    assert sb["healthcare_combined"]["pct"] == 19.2

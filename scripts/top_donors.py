@@ -3,13 +3,16 @@
 Gross roster rows (analysis/roster_named_itemized.jsonl) overstate some donors: an
 excessive gift stays on Schedule A while its fix is filed elsewhere. Per-donor net is
 
-    non-memo SA11AI + memo-X SA11AI (IND reattributions / redesignations, +/-) - SB20A refunds
+    non-memo SA11AI + memo-X SA11AI (IND reattributions / redesignations, +/-)
+    + memo-X SA12 IND (the donor's share of a joint fundraising committee transfer) - SB20A refunds
 
-read from the same e-files as the roster. The 2025-26 limit is $3,500 per election
+read from the same e-files as the roster. A joint-committee share counts toward the donor's limit
+and the committee's own running total includes it, so it is part of the donor's net. The 2025-26 limit is $3,500 per election
 ($7,000 for primary + general), so a correct net total never exceeds $7,000.
 
-Donor key is last + first + suffix + ZIP5. Same name in the same state at another ZIP
-is NOT merged (identity unproven); it is reported next to the donor instead.
+Donor key is last + first + suffix + ZIP5 + house number. The same name at another ZIP or
+another house number is NOT merged (identity unproven; a mover splits rather than two people
+merging); it is reported next to the donor instead.
 
 Control: the committee's own cycle-to-date aggregate (Schedule A column 22) on each
 donor's last receipt, less refunds dated after it, must equal the computed net.
@@ -34,10 +37,12 @@ ROSTER = ROOT / "analysis" / "roster_named_itemized.jsonl"
 OUT_JSON = ROOT / "analysis" / "top_donors.json"
 OUT_TXT = ROOT / "analysis" / "TOP100_and_by_sector.txt"
 OUT_ALL = ROOT / "analysis" / "donors_net.jsonl"
+OUT_NAMES = ROOT / "analysis" / "TOP100_names.txt"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from sector_breakdown import sector  # noqa: E402
 
+THROUGH = "Sep 30, 2026"  # coverage end of the latest report in data/filings
 CAP = 7000.0
 N_TOP = 20
 N_SAMPLE = 100
@@ -54,13 +59,18 @@ def norm_token(s: str) -> str:
     return re.sub(r"\s+", " ", s).strip()
 
 
-def key_of(last: str, first: str, suffix: str, zip_: str) -> tuple[str, str, str, str]:
-    return (norm_token(last), norm_token(first), norm_token(suffix), (zip_ or "")[:5])
+def house_number(street: str) -> str:
+    m = re.match(r"\s*(?:P\.?\s*O\.?\s*BOX\s*)?(\d+)", (street or "").upper())
+    return m.group(1) if m else ""
 
 
-def load_filings() -> tuple[dict, list, list]:
-    """SA11AI rows by (filing, tran_id); memo IND rows; SB20A refund rows."""
-    sa, memo, refunds = {}, [], []
+def key_of(last: str, first: str, suffix: str, zip_: str, street: str) -> tuple[str, str, str, str, str]:
+    return (norm_token(last), norm_token(first), norm_token(suffix), (zip_ or "")[:5], house_number(street))
+
+
+def load_filings() -> tuple[dict, list, list, list]:
+    """SA11AI rows by (filing, tran_id); memo IND rows; joint-committee memo IND rows; SB20A refunds."""
+    sa, memo, jfc, refunds = {}, [], [], []
     for p in sorted(FILINGS.glob("*.csv")):
         num = re.search(r"(\d{7})\.csv$", p.name).group(1)
         with p.open(encoding="utf-8", errors="replace", newline="") as f:
@@ -71,9 +81,11 @@ def load_filings() -> tuple[dict, list, list]:
                         memo.append((num, r))
                     elif not is_memo:
                         sa[(num, r[TRAN])] = r
+                elif r[0] == "SA12" and "X" in r[25:] and r[ENTITY] == "IND":
+                    jfc.append((num, r))
                 elif r[0] == "SB20A":
                     refunds.append((num, r))
-    return sa, memo, refunds
+    return sa, memo, jfc, refunds
 
 
 def money(x: float) -> str:
@@ -87,8 +99,9 @@ def line(r: dict) -> str:
 def render_txt(out: dict) -> str:
     n_cap = out["n_at_cap"]
     lines = [
-        "Top donors, overall and by occupation sector (named itemized $, Jan 1 2025 – Jul 15 2026)",
-        "Net of refunds and of the committee's reattributions to a spouse or household member.",
+        f"Top donors, overall and by occupation sector (named itemized $, Jan 1 2025 – {THROUGH})",
+        "Net of refunds and of the committee's reattributions to a spouse or household member;",
+        "includes each donor's share of joint fundraising committee transfers.",
         "One person may give at most $7,000 ($3,500 primary + $3,500 general).",
         "",
         "Overall top 100",
@@ -100,8 +113,8 @@ def render_txt(out: dict) -> str:
     lines += [line(r) for r in out["top100_random_from_cap"]["donors"]]
     lines += [
         "",
-        f"Above $7,000: {out['n_over_cap']} donors, per the committee's own running totals as of the Jul 15 report",
-        "(an excess has 60 days to be refunded; refunds after Jul 15 are in later reports):",
+        f"Above $7,000: {out['n_over_cap']} donors, per the committee's own running totals as of the {THROUGH} report",
+        f"(an excess has 60 days to be refunded; refunds after {THROUGH} are in later reports):",
         "",
     ]
     lines += [line(r) for r in out["over_cap"]]
@@ -121,9 +134,9 @@ def render_txt(out: dict) -> str:
 
 
 def main() -> None:
-    sa, memo, refunds = load_filings()
+    sa, memo, jfc, refunds = load_filings()
     donors: dict = defaultdict(lambda: {
-        "gross": 0.0, "reattrib": 0.0, "refunded": 0.0, "n_gifts": 0,
+        "gross": 0.0, "reattrib": 0.0, "jfc": 0.0, "refunded": 0.0, "n_gifts": 0, "n_jfc": 0,
         "sector_amt": defaultdict(float), "occs": defaultdict(float), "emps": defaultdict(float),
         "events": [],  # (date, kind, amt, aggr)
         "name": "", "city": "", "state": "",
@@ -137,7 +150,7 @@ def main() -> None:
             if g["entity"] != "IND":
                 org_amt += g["amt"]
                 continue
-            d = donors[key_of(r[LAST], r[FIRST], r[SUFFIX], r[ZIP])]
+            d = donors[key_of(r[LAST], r[FIRST], r[SUFFIX], r[ZIP], r[STREET1])]
             d["gross"] += g["amt"]
             d["n_gifts"] += 1
             d["sector_amt"][sector(g.get("occupation") or "", g.get("employer") or "")] += g["amt"]
@@ -150,7 +163,7 @@ def main() -> None:
                 d["name"], d["city"], d["state"] = g["name"], g["city"], g["state"]
 
     for num, r in memo:
-        d = donors[key_of(r[LAST], r[FIRST], r[SUFFIX], r[ZIP])]
+        d = donors[key_of(r[LAST], r[FIRST], r[SUFFIX], r[ZIP], r[STREET1])]
         amt = float(r[AMT])
         d["reattrib"] += amt
         d["events"].append((r[DATE], "memo", amt, float(r[AGGR] or 0), num))
@@ -161,9 +174,26 @@ def main() -> None:
             if r[OCC].strip():
                 d["occs"][r[OCC].strip()] += abs(amt)
 
-    unmatched_refunds = []
+    for num, r in jfc:
+        d = donors[key_of(r[LAST], r[FIRST], r[SUFFIX], r[ZIP], r[STREET1])]
+        amt = float(r[AMT])
+        d["jfc"] += amt
+        d["n_jfc"] += 1
+        d["sector_amt"][sector(r[OCC], r[EMP])] += amt
+        if r[OCC].strip():
+            d["occs"][r[OCC].strip()] += amt
+        if r[EMP].strip():
+            d["emps"][r[EMP].strip()] += amt
+        d["events"].append((r[DATE], "jfc", amt, float(r[AGGR] or 0), num))
+        if not d["n_gifts"] and not d["name"]:
+            d["name"], d["city"], d["state"] = f"{r[LAST]}, {r[FIRST]}", r[CITY], r[STATE]
+
+    unmatched_refunds, org_refunds = [], []
     for num, r in refunds:
-        k = key_of(r[LAST], r[FIRST], r[SUFFIX], r[ZIP])
+        if r[ENTITY] != "IND":  # a corporate gift returned; corporate gifts are outside the individual totals
+            org_refunds.append({"org": r[6], "zip": r[ZIP], "amt": float(r[AMT])})
+            continue
+        k = key_of(r[LAST], r[FIRST], r[SUFFIX], r[ZIP], r[STREET1])
         if k not in donors:
             unmatched_refunds.append({"name": f"{r[LAST]}, {r[FIRST]}", "zip": r[ZIP], "amt": float(r[AMT])})
             continue
@@ -177,18 +207,29 @@ def main() -> None:
 
     rows = []
     for k, d in donors.items():
-        net = round(d["gross"] + d["reattrib"] - d["refunded"], 2)
+        net = round(d["gross"] + d["reattrib"] + d["jfc"] - d["refunded"], 2)
         # The committee aggregate is as of its report: refunds in the same filing are already
         # in it, refunds in a later filing are not.
-        receipts = sorted([e for e in d["events"] if e[1] in ("sa", "memo")], key=lambda e: (e[4], e[0]))
-        last = receipts[-1]
-        last_aggr = max(e[3] for e in receipts if (e[4], e[0]) == (last[4], last[0]))
-        later_refunds = sum(e[2] for e in d["events"] if e[1] == "refund" and e[4] > last[4])
-        committee = round(last_aggr - later_refunds, 2)
-        gap = round(committee - net, 2)
-        if abs(gap) < 0.01:
+        # A joint-committee row's aggregate is sometimes the donor's combined running total and
+        # sometimes the joint committee's own, so a donor with both kinds of receipts is checked
+        # against max(direct, joint) and direct + joint (1,210 and 10 of 1,241 such donors fit).
+        def last_aggregate(kinds: tuple[str, ...]) -> float | None:
+            rs = sorted([e for e in d["events"] if e[1] in kinds], key=lambda e: (e[4], e[0]))
+            if not rs:
+                return None
+            last = rs[-1]
+            aggr = max(e[3] for e in rs if (e[4], e[0]) == (last[4], last[0]))
+            return aggr - sum(e[2] for e in d["events"] if e[1] == "refund" and e[4] > last[4])
+
+        direct, joint = last_aggregate(("sa", "memo")), last_aggregate(("jfc",))
+        candidates = [c for c in (direct, joint) if c is not None]
+        if direct is not None and joint is not None:
+            candidates = [max(direct, joint), direct + joint]
+        gaps = [round(c - net, 2) for c in candidates]
+        committee = round(candidates[0], 2)
+        if any(abs(g) < 0.01 for g in gaps):
             check = "exact"
-        elif 0 < gap <= 200:
+        elif any(0 < g <= 200 for g in gaps):
             check = "unitemized_gap"  # aggregate also counts early gifts under the $200 itemization line
         else:
             check = "differs"
@@ -203,9 +244,11 @@ def main() -> None:
             "city": d["city"],
             "state": d["state"],
             "zip5": k[3],
+            "house": k[4],
             "net": net,
             "gross": round(d["gross"], 2),
             "reattributed": round(d["reattrib"], 2),
+            "joint_committee": round(d["jfc"], 2),
             "refunded": round(d["refunded"], 2),
             "n_gifts": d["n_gifts"],
             "occupation": max(d["occs"], key=d["occs"].get) if d["occs"] else "",
@@ -215,7 +258,8 @@ def main() -> None:
             "committee_aggregate": committee,
             "committee_check": check,
             "same_name_state_other_zip": [
-                {"zip5": o[3], "net": round(donors[o]["gross"] + donors[o]["reattrib"] - donors[o]["refunded"], 2)}
+                {"zip5": o[3], "house": o[4], "net": round(donors[o]["gross"] + donors[o]["reattrib"] + donors[o]["jfc"]
+                                            - donors[o]["refunded"], 2)}
                 for o in others
             ],
         })
@@ -231,7 +275,7 @@ def main() -> None:
 
     def draw_key(r: dict) -> str:
         return hashlib.sha256(
-            f"{SEED}|{r['last_norm']}|{r['first_norm']}|{r['suffix']}|{r['zip5']}".encode()).hexdigest()
+            f"{SEED}|{r['last_norm']}|{r['first_norm']}|{r['suffix']}|{r['zip5']}|{r['house']}".encode()).hexdigest()
 
     sample = sorted(sorted(maxed, key=draw_key)[:N_SAMPLE], key=lambda r: r["name"])
 
@@ -255,15 +299,18 @@ def main() -> None:
         "n_individual_donors": len(rows),
         "individual_net_total": round(total_net, 2),
         "org_rows_excluded_amt": round(org_amt, 2),
+        "joint_committee_attributed": round(sum(d["jfc"] for d in donors.values()), 2),
+        "n_donors_joint_committee_only": sum(1 for d in donors.values() if d["n_jfc"] and not d["n_gifts"]),
         "n_at_cap": len(maxed),
         "n_over_cap": len(over),
         "over_cap": over,
         "unmatched_refunds": unmatched_refunds,
+        "refunds_to_organizations": org_refunds,
         "control_committee_aggregate": dict(checks),
         "control_differs_rows": differs,
         "top100_random_from_cap": {
             "seed": SEED,
-            "rule": "order the at-or-above-$7,000 pool by sha256(seed|last|first|suffix|zip5); take 100",
+            "rule": "order the at-or-above-$7,000 pool by sha256(seed|last|first|suffix|zip5|house); take 100",
             "pool": len(maxed),
             "donors": sample,
         },
@@ -272,6 +319,7 @@ def main() -> None:
     }
     OUT_JSON.write_text(json.dumps(out, indent=2), encoding="utf-8")
     OUT_TXT.write_text(render_txt(out), encoding="utf-8")
+    OUT_NAMES.write_text("\n".join(r["name"] for r in sample) + "\n", encoding="utf-8")
     with OUT_ALL.open("w", encoding="utf-8") as f:
         for r in rows:
             f.write(json.dumps(r) + "\n")

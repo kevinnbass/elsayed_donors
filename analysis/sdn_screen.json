@@ -1,0 +1,65 @@
+{
+  "sdn_files_sha256": {
+    "sdn.csv": "0dee0d2de5e5a240e3e545741ee2903cfa3508666d2f2841d5d1ff2d59f0ce71",
+    "alt.csv": "7b76ad83a434083be9525f5effda986b1c1a70afd028836cf4cae031a13fb365",
+    "add.csv": "7c9c0120c4fd86f587f8450d6b030771c84ce8de7776b71f2af87782c8eadda6"
+  },
+  "n_sdn_individuals": 7516,
+  "n_donors_screened": 30726,
+  "n_donors_with_name_candidates": 1291,
+  "n_donors_at_max": 644,
+  "n_candidates_among_donors_at_max": 53,
+  "n_corroborated_matches": 0,
+  "corroborated_matches": [],
+  "control": {
+    "synthetic_from_sdn": 200,
+    "found_as_candidates": 200,
+    "us_address_listing_corroborated": true,
+    "us_address_listing_used": "MIJARES TRANCOSO, Gilberto"
+  },
+  "muslim_brotherhood": {
+    "branches_on_sdn": [
+      {
+        "ent_num": "56482",
+        "name": "JORDANIAN MUSLIM BROTHERHOOD",
+        "program": "SDGT"
+      },
+      {
+        "ent_num": "56483",
+        "name": "EGYPTIAN MUSLIM BROTHERHOOD",
+        "program": "SDGT"
+      },
+      {
+        "ent_num": "56730",
+        "name": "LEBANESE MUSLIM BROTHERHOOD",
+        "program": "FTO] [SDGT"
+      },
+      {
+        "ent_num": "57109",
+        "name": "SUDANESE MUSLIM BROTHERHOOD",
+        "program": "FTO] [SDGT"
+      }
+    ],
+    "individuals_linked_to_a_branch": [
+      {
+        "ent_num": "56731",
+        "name": "TAQQOSH, Muhammad Fawzi",
+        "program": "SDGT",
+        "linked_to": "Linked To: LEBANESE MUSLIM BROTHERHOOD"
+      },
+      {
+        "ent_num": "58195",
+        "name": "EL-ABIARY, Mahmoud",
+        "program": "SDGT",
+        "linked_to": "Linked To: EGYPTIAN MUSLIM BROTHERHOOD"
+      }
+    ],
+    "donor_name_candidates": 0,
+    "control_caught": {
+      "TAQQOSH, Muhammad Fawzi": true,
+      "EL-ABIARY, Mahmoud": true
+    }
+  },
+  "manual_review": "Data through Sep 30, 2026: the 47 candidate pairs whose SDN record mentions the U.S. (12 listings) were read by hand; none is the donor: MURAD, Abdul Hakim (alias AHMED, Saeed; incarcerated in the U.S.) x24, HIJAZI, Riad (aliases Abu-Ahmad; address Jordan) x5, AHMADY, Ali Fotowat (address Tehran) x5, AHMAD, Firas Nazem (address Johannesburg; donor first name Farisa) x1, and 8 DPRK listings whose only U.S. text is sanctions boilerplate x12.",
+  "rule": "Usage: python -I scripts/sdn_screen.py <dir with sdn.csv, alt.csv, add.csv> <candidates_out.json>"
+}

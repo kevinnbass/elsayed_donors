@@ -103,7 +103,7 @@ for d in donors:
     tot = sum(gross.values())
     for e, a in gross.items():
         emp[e][0] += d["net"] * a / tot
-        emp[e][1].add((d["last_norm"], d["first_norm"], d["suffix"], d["zip5"]))
+        emp[e][1].add((d["last_norm"], d["first_norm"], d["suffix"], d["zip5"], d["house"]))
 emp_out = sorted(
     [{"employer": k, "amt": round(v[0], 2), "n_donors": len(v[1])} for k, v in emp.items()],
     key=lambda x: -x["amt"])[:30]

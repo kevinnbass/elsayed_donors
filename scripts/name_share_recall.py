@@ -165,12 +165,12 @@ def donor_tiers() -> dict:
     """Arab-or-Muslim-named share of donors (net totals, analysis/donors_net.jsonl) by tier."""
     donors = [json.loads(line) for line in (ROOT / "analysis" / "donors_net.jsonl").open(encoding="utf-8")]
     top = json.loads((ROOT / "analysis" / "top_donors.json").read_text(encoding="utf-8"))
-    sample = {(d["last_norm"], d["first_norm"], d["suffix"], d["zip5"])
+    sample = {(d["last_norm"], d["first_norm"], d["suffix"], d["zip5"], d["house"])
               for d in top["top100_random_from_cap"]["donors"]}
     tiers = {
         "all_donors": donors,
         "at_7000_max": [d for d in donors if d["net"] >= 6999.995],
-        "random_top100": [d for d in donors if (d["last_norm"], d["first_norm"], d["suffix"], d["zip5"]) in sample],
+        "random_top100": [d for d in donors if (d["last_norm"], d["first_norm"], d["suffix"], d["zip5"], d["house"]) in sample],
     }
     out = {}
     for k, ds in tiers.items():
