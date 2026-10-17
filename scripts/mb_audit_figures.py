@@ -1,5 +1,6 @@
 """Figure audit for the claims-database figures (gate G5 of the anthropic verification gold standard, adapted):
-every drawn element resolves to row ids that exist in the tables; the hidden `<!-- rows: -->` comment resolves; no row id
+every drawn element resolves to row ids that exist in the tables (T tie, C claim, R super PAC receipt, P super PAC report,
+E super PAC expenditure, F campaign filing row, D campaign donor, ALL:<table>:<rows> a whole table); the hidden `<!-- rows: -->` comment resolves; no row id
 is printed in visible text; scripts/mb_figures.py carries no amount literal (dollar strings or integers of 5,000 or more,
 other than lines marked `# parameter`).
 
@@ -24,8 +25,12 @@ known = {f"T{t['tie_id']}" for t in load("ties")} | {f"C{c['claim_id']}" for c i
 known |= {f"R:{CODE[r['committee']]}:{r['transaction_id']}" for r in load("super_pac_receipts")}
 known |= {f"R:{CODE[r['committee']]}:{r['transaction_id']}" for r in load("fec_rows") if r["committee"] in CODE}
 known |= {f"F:{r['fec_file_number']}:{r['transaction_id']}" for r in load("fec_rows") if r["committee"] not in CODE}
-known |= {f"D:{d['last_norm']}|{d['first_norm']}|{d['suffix']}|{d['zip5']}|{d['house']}" for d in map(json.loads, open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8"))}
-ID = re.compile(r"\b(?:T[0-9a-f]{12}|C[0-9a-f]{16}-\d+|R:[A-Z]{3}:\S+|F:\d+:\S+|D:[A-Z ]+\|\S*|[0-9a-f]{12,16})\b")
+donors = [json.loads(l) for l in open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8")]
+known |= {f"D:{d['last_norm']}|{d['first_norm']}|{d['suffix']}|{d['zip5']}|{d['house']}".replace(" ", "_") for d in donors}
+known |= {f"P:{CODE[r['committee']]}:{r['file_number']}" for r in load("super_pac_reports")}
+known |= {f"E:{CODE[r['committee']]}:{r['file_number']}:{r['transaction_id']}" for r in load("super_pac_spending")}
+known.add(f"ALL:donors_net:{len(donors)}")         # a whole table, by its row count (a stale count fails)
+ID = re.compile(r"\b(?:T[0-9a-f]{12}|C[0-9a-f]{16}-\d+|[RPE]:[A-Z]{3}:\S+|F:\d+:\S+|D:[A-Z_]+\|\S*|ALL:\w+:\d+|[0-9a-f]{12,16})\b")
 
 problems = []
 code = (ROOT / "scripts" / "mb_figures.py").read_text(encoding="utf-8").splitlines()

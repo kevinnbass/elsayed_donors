@@ -156,6 +156,10 @@ def main() -> None:
             "n_donors": len(ds),
             "expected_pct_of_donors": round(100 * sum(j["p"] for j in js) / len(ds), 1),
             "expected_pct_of_net_dollars": round(100 * sum(j["p"] * d["net"] for j, d in zip(js, ds)) / net, 1),
+            "low_pct_of_donors": round(100 * sum(j["lo"] for j in js) / len(ds), 1),
+            "high_pct_of_donors": round(100 * sum(j["hi"] for j in js) / len(ds), 1),
+            "low_pct_of_net_dollars": round(100 * sum(j["lo"] * d["net"] for j, d in zip(js, ds)) / net, 1),
+            "high_pct_of_net_dollars": round(100 * sum(j["hi"] * d["net"] for j, d in zip(js, ds)) / net, 1),
             "tier_pct_of_all_net": round(100 * net / net_all, 1),
         }
     OUT.write_text(json.dumps(out, indent=2), encoding="utf-8")

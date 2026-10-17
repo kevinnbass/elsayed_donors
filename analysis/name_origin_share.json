@@ -103,24 +103,40 @@
       "n_donors": 30726,
       "expected_pct_of_donors": 33.5,
       "expected_pct_of_net_dollars": 51.2,
+      "low_pct_of_donors": 32.8,
+      "high_pct_of_donors": 34.2,
+      "low_pct_of_net_dollars": 50.4,
+      "high_pct_of_net_dollars": 52.0,
       "tier_pct_of_all_net": 100.0
     },
     "at_7000_max": {
       "n_donors": 644,
       "expected_pct_of_donors": 76.3,
       "expected_pct_of_net_dollars": 76.2,
+      "low_pct_of_donors": 75.3,
+      "high_pct_of_donors": 77.3,
+      "low_pct_of_net_dollars": 75.3,
+      "high_pct_of_net_dollars": 77.2,
       "tier_pct_of_all_net": 15.6
     },
     "joint_committee_only_donors": {
       "n_donors": 2072,
       "expected_pct_of_donors": 75.8,
       "expected_pct_of_net_dollars": 79.5,
+      "low_pct_of_donors": 74.8,
+      "high_pct_of_donors": 76.7,
+      "low_pct_of_net_dollars": 78.5,
+      "high_pct_of_net_dollars": 80.5,
       "tier_pct_of_all_net": 11.0
     },
     "random_top100": {
       "n_donors": 100,
       "expected_pct_of_donors": 71.0,
       "expected_pct_of_net_dollars": 70.8,
+      "low_pct_of_donors": 70.0,
+      "high_pct_of_donors": 71.9,
+      "low_pct_of_net_dollars": 69.9,
+      "high_pct_of_net_dollars": 71.8,
       "tier_pct_of_all_net": 2.4
     }
   }

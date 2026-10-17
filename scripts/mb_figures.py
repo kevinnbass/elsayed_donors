@@ -16,7 +16,7 @@ from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from fig_common import (AQUA, AXIS, BLUE, GRAY, GRID, INK, LGRAY, MUTED, ORANGE, PURPLE, RED, YELLOW, cite, esc,  # noqa: E402
+from fig_common import (AQUA, AXIS, BLUE, BLUE250, GRAY, GRID, INK, LGRAY, MUTED, ORANGE, PURPLE, RED, YELLOW, cite, esc,  # noqa: E402
                         legend, money, render, shell)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,6 +35,11 @@ def element(kind: str, label: str, rows: list[str]) -> list[str]:
 
 def receipt_id(r: dict) -> str:
     return f"R:{COMMITTEE_CODE[r['committee']]}:{r['transaction_id']}"
+
+
+def donor_id(d: dict) -> str:
+    """A campaign donor (donors_net key); spaces become underscores so the id survives the space-separated rows comment."""
+    return f"D:{d['last_norm']}|{d['first_norm']}|{d['suffix']}|{d['zip5']}|{d['house']}".replace(" ", "_")
 
 
 ACRONYMS = {"PAC", "LLC", "UAW", "IMEU", "CAIR", "MI", "DC", "USA", "US", "II", "III", "V", "CAP", "INC", "ACMER"}
@@ -76,7 +81,7 @@ def short_org(name: str) -> str:
 FAMILY = [(r"^CAIR|Council on American", "CAIR (national and chapters)", "muslim"), (r"ICNA", "ICNA and ICNA Relief", "muslim"),
           (r"Islamic Relief", "Islamic Relief USA", "muslim"), (r"Emgage", "Emgage", "muslim"), (r"MPower", "MPower Change", "muslim"),
           (r"USCMO", "U.S. Council of Muslim Organizations", "muslim"), (r"KindHearts", "KindHearts (closed 2006)", "muslim"),
-          (r"Unity & Justice", "Unity & Justice Fund (CAIR Action's super PAC)", "muslim"),
+          (r"Unity & Justice", "Unity & Justice Fund (super PAC CAIR Action helps fund)", "muslim"),
           (r"IMEU", "IMEU", "arab"), (r"ACMER", "ACMER and its MERIT PAC", "arab"), (r"AAPAC|Arab American Political", "Arab American PAC", "arab")]
 ORG_GIFTS = [(r"^CAIR ACTION", "CAIR Action", "muslim"), (r"^UNITY & JUSTICE FUND", "Unity & Justice Fund", "muslim"),
              (r"MIDDLE EAST UNDERSTANDING", "IMEU (as amended: IMEU Policy Project)", "arab"),
@@ -109,7 +114,7 @@ def fig_islam_money() -> tuple[str, int]:
             pacs = rec_by_nc.get((" ".join(r["donor"].upper().replace(",", ", ").split()).replace(" ,", ","), r["city"].upper()), [])
             people[key] = {"amount": sum(d["net"] for d in camp) + sum(p["amount"] or 0 for p in pacs),
                            "named": r["n_stories_naming_donor"] > 0 or (key[0], key[1]) in claimed, "name": r["donor"],
-                           "rows": [f"D:{d['last_norm']}|{d['first_norm']}|{d['suffix']}|{d['zip5']}|{d['house']}" for d in camp]
+                           "rows": [donor_id(d) for d in camp]
                                    + [receipt_id(p) for p in pacs]}
         fam.setdefault(f, set()).add(key)
     org_rows = []
@@ -428,8 +433,277 @@ def fig_cair() -> tuple[str, int]:
     return doc, h_svg + 420
 
 
+# ---- figure 5: how the money moved (receipts, and in version b what Fighting for Michigan spent) ----------------------
+SINCE = "2025-01-01"   # parameter: the 2025-26 cycle, the window of the schedule A pull
+SLATE = "#6f8fb0"
+
+
+def role_people() -> dict:
+    """People with confirmed roles in the figure-1 organization families: their campaign rows and super PAC receipts."""
+    donors = [json.loads(l) for l in open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8")]
+    by_nc = defaultdict(list)
+    for d in donors:
+        by_nc[(" ".join(d["name"].upper().split()), d["city"].upper(), d["state"])].append(d)
+    rec_by_nc = defaultdict(list)
+    for r in load("super_pac_receipts"):
+        if r["entity_type"] == "IND":
+            rec_by_nc[(" ".join(r["contributor"].upper().replace(",", ", ").split()).replace(" ,", ","), (r["city"] or "").upper())].append(r)
+    people = {}
+    for r in load("donor_org_roles_confirmed"):
+        fam = next((name for pat, name, _ in FAMILY if re.search(pat, r["org"])), None)
+        key = (" ".join(r["donor"].upper().split()), r["city"].upper(), r["state"])
+        if not fam:
+            continue
+        p = people.setdefault(key, {"name": r["donor"], "orgs": set(), "campaign": by_nc.get(key, []),
+                                    "pac": rec_by_nc.get((" ".join(r["donor"].upper().replace(",", ", ").split()).replace(" ,", ","), r["city"].upper()), [])})
+        p["orgs"].add((r["org"], r["roles"]))
+    return people
+
+
+def band(x0: float, a0: float, b0: float, x1: float, a1: float, b1: float, color: str, opacity: float = 0.0) -> str:
+    """A pipe from the vertical segment (x0, a0..b0) to (x1, a1..b1)."""
+    xm = (x0 + x1) / 2
+    opacity = opacity or (0.55 if color in (GRAY, LGRAY) else 0.8)      # colored pipes keep their legend color
+    return (f'<path d="M{x0:.1f},{a0:.1f} C{xm:.1f},{a0:.1f} {xm:.1f},{a1:.1f} {x1:.1f},{a1:.1f} L{x1:.1f},{b1:.1f} '
+            f'C{xm:.1f},{b1:.1f} {xm:.1f},{b0:.1f} {x0:.1f},{b0:.1f} Z" fill="{color}" opacity="{opacity}"/>')
+
+
+def flow_data() -> dict:
+    reps = load("super_pac_reports")
+    end = {c: max(r["coverage_end"] for r in reps if r["committee"] == c) for c in {r["committee"] for r in reps}}
+    total = {c: sum(r["total_receipts"] for r in reps if r["committee"] == c) for c in end}
+    recs = [r for r in load("super_pac_receipts") if r["committee"] in end and SINCE <= r["date"] <= end[r["committee"]]]
+    org = lambda c, pat: [r for r in recs if r["committee"] == c and r["entity_type"] != "IND" and re.search(pat, r["contributor"].upper())]
+    people = role_people()
+    ffm, uj = "Fighting for Michigan PAC", "Unity & Justice Fund"
+    in_window = lambda rs, c: [r for r in rs if r["committee"] == c and SINCE <= r["date"] <= end[c]]
+    role_uj = [r for p in people.values() for r in in_window(p["pac"], uj)]
+    role_ffm = {k: in_window(p["pac"], ffm) for k, p in people.items() if in_window(p["pac"], ffm)}
+    top = max(role_ffm, key=lambda k: sum(r["amount"] for r in role_ffm[k]))
+    camp = [(k, p) for k, p in people.items() if p["campaign"]]
+    return {"end": end, "total": total, "people": people, "ffm": ffm, "uj": uj, "reports": reps,
+            "cair_action": org(uj, r"^CAIR ACTION"), "role_uj": role_uj, "n_role_uj": len({k for k, p in people.items() if in_window(p["pac"], uj)}),
+            "uj_to_ffm": org(ffm, r"^UNITY & JUSTICE FUND"), "imeu": org(ffm, r"MIDDLE EAST UNDERSTANDING"),
+            "acmer": org(ffm, r"COMMITTEE FOR MIDDLE EAST RIGHTS"), "top_person": people[top], "top_rows": role_ffm[top],
+            "other_role_ffm": [r for k, rs in role_ffm.items() if k != top for r in rs],
+            "camp_people": camp, "camp_rows": [d for _, p in camp for d in p["campaign"]]}
+
+
+def fig_flow(spending: bool) -> tuple[str, int]:
+    f = flow_data()
+    ffm, uj, total = f["ffm"], f["uj"], f["total"]
+    amt = lambda rs: sum(r["amount"] or 0 for r in rs)
+    rid = lambda rs: [receipt_id(r) for r in rs]
+    rep_ids = lambda c: [f"P:{COMMITTEE_CODE[c]}:{r['file_number']}" for r in f["reports"] if r["committee"] == c]
+    tp = f["top_person"]
+    tp_role = next(iter(sorted(tp["orgs"])))
+    named_ffm = amt(f["uj_to_ffm"]) + amt(f["imeu"]) + amt(f["top_rows"]) + amt(f["acmer"]) + amt(f["other_role_ffm"])
+    pct = round(100 * named_ffm / total[ffm])
+    sources = [  # (group, label, note, amount, rows, color)
+        (uj, "CAIR Action", "CAIR's 501(c)(4) affiliate", amt(f["cair_action"]), rid(f["cair_action"]), BLUE),
+        (uj, f"{f['n_role_uj']} people with documented roles", "in Muslim or Arab-advocacy groups", amt(f["role_uj"]), rid(f["role_uj"]), BLUE250),
+        (uj, "All other donors to Unity & Justice", "", total[uj] - amt(f["cair_action"]) - amt(f["role_uj"]), rep_ids(uj), GRAY),
+        (ffm, "IMEU Policy Project", "first filed as IMEU, Inc., a 501(c)(3) charity", amt(f["imeu"]), rid(f["imeu"]), PURPLE),
+        (ffm, person(tp["name"]), f"{tp_role[0].replace('CAIR Michigan', 'CAIR-Michigan')} {tp_role[1].lower()}", amt(f["top_rows"]), rid(f["top_rows"]), BLUE250),
+        (ffm, "ACMER", "American Committee for Middle East Rights", amt(f["acmer"]), rid(f["acmer"]), PURPLE),
+    ]
+    if f["other_role_ffm"]:
+        sources.append((ffm, "Other people with documented roles", "", amt(f["other_role_ffm"]), rid(f["other_role_ffm"]), BLUE250))
+    sources.append((ffm, "All other donors to Fighting for Michigan", "", total[ffm] - named_ffm, rep_ids(ffm), GRAY))
+    scale = 900 / total[ffm]   # parameter: Fighting for Michigan's node is 900 px tall
+    h = lambda v: max(2.0, v * scale)
+    xs, xu, xf = 600, (1000 if spending else 1240), (1430 if spending else 1880)
+    xe, nw = 1840, 22
+    svg, ids = [], []
+    # sources, stacked down the left with room for a two-line label each
+    y, pos, group_prev = 150.0, [], uj      # room above for the Unity & Justice label
+    for g, label, note, v, rows, col in sources:
+        if g != group_prev:
+            y += 40
+            group_prev = g
+        slot = max(h(v), 60)
+        top = y + (slot - h(v)) / 2
+        pos.append((top, top + h(v)))
+        mid = top + h(v) / 2
+        svg.append(f'<rect x="{xs - nw}" y="{top:.1f}" width="{nw}" height="{h(v):.1f}" fill="{col}"/>'
+                   f'<text x="{xs - nw - 14}" y="{mid - 3:.1f}" font-size="20" font-weight="bold" fill="{INK}" text-anchor="end">{esc(label)}</text>'
+                   f'<text x="{xs - nw - 14}" y="{mid + 21:.1f}" font-size="17" fill="{MUTED}" text-anchor="end">{esc(note + " · " if note else "")}{money(v)}</text>')
+        y += slot + 8
+    # Unity & Justice: level with its donors; Fighting for Michigan: lower, so the pipe from U&J falls into its top
+    uj_top = pos[0][0]
+    uj_h = h(total[uj])
+    ffm_top = uj_top + uj_h + 60
+    svg.append(f'<rect x="{xu}" y="{uj_top:.1f}" width="{nw}" height="{uj_h:.1f}" fill="{SLATE}"/>')
+    svg.append(f'<rect x="{xf}" y="{ffm_top:.1f}" width="{nw}" height="{h(total[ffm]):.1f}" fill="{INK}"/>')
+    cu, cf = uj_top, ffm_top
+    for (g, label, note, v, rows, col), (a, b) in zip(sources, pos):
+        if g == uj:
+            svg.append(band(xs, a, b, xu, cu, cu + h(v), col))
+            cu += h(v)
+        else:
+            continue
+        ids += element("pipe", f"{label} to Unity & Justice", rows)
+    v_uj = amt(f["uj_to_ffm"])
+    svg.append(band(xu + nw, uj_top, uj_top + h(v_uj), xf, cf, cf + h(v_uj), SLATE))
+    ids += element("pipe", "Unity & Justice to Fighting for Michigan", rid(f["uj_to_ffm"]))
+    cf += h(v_uj)
+    for (g, label, note, v, rows, col), (a, b) in zip(sources, pos):
+        if g == ffm:
+            svg.append(band(xs, a, b, xf, cf, cf + h(v), col))
+            cf += h(v)
+            ids += element("pipe", f"{label} to Fighting for Michigan", rows)
+    ids += element("node", "Unity & Justice Fund", rep_ids(uj)) + element("node", "Fighting for Michigan PAC", rep_ids(ffm))
+    share_ca = round(100 * amt(f["cair_action"]) / total[uj])
+    ujl = [("Unity & Justice Fund (super PAC)", 20, INK, "bold"),
+           (f"raised {money(total[uj])}, {date.fromisoformat(SINCE):%b %Y} to {date.fromisoformat(f['end'][uj]):%b %-d, %Y}", 17, MUTED, "normal"),
+           (f"{share_ca}% from CAIR Action; its treasurer until 2025", 17, MUTED, "normal"),
+           ("was CAIR Action's executive director", 17, MUTED, "normal"),
+           (f"gave {money(v_uj)} to Fighting for Michigan", 17, MUTED, "normal")]
+    for i, (t, fs, col, wt) in enumerate(ujl):      # above the node, where no pipe runs
+        svg.append(f'<text x="{xu}" y="{uj_top - 118 + i * 23:.1f}" font-size="{fs}" font-weight="{wt}" fill="{col}">{esc(t)}</text>')
+    lab_x, anchor = xf, "start"
+    ffl = [("Fighting for Michigan PAC", 22, INK, "bold"), (f"raised {money(total[ffm])} through {date.fromisoformat(f['end'][ffm]):%b %-d, %Y}", 18, MUTED, "normal"),
+           (f"{pct}% of it from the sources in color", 18, MUTED, "normal")]
+    for i, (t, fs, col, wt) in enumerate(ffl):
+        svg.append(f'<text x="{lab_x}" y="{ffm_top - 76 + i * 24:.1f}" font-size="{fs}" font-weight="{wt}" fill="{col}" text-anchor="{anchor}">{esc(t)}</text>')
+    notes = ""
+    if spending:
+        sp = [s for s in load("super_pac_spending") if s["counts"]]
+        regular = [s for s in sp if s["committee"] == ffm and s["form"] == "F3X"]
+        es = [s for s in regular if s["support_oppose"] == "S" and "EL-SAYED" in (s["candidate"] or "")]
+        st = [s for s in regular if s["support_oppose"] == "O" and "STEVENS" in (s["candidate"] or "")]
+        assert len(es) + len(st) == len(regular), "a regular-report expenditure fits neither group"
+        sid = lambda rs: [f"E:{COMMITTEE_CODE[s['committee']]}:{s['file_number']}:{s['transaction_id']}" for s in rs]
+        fr = [r for r in f["reports"] if r["committee"] == ffm]
+        op = sum(r["operating_expenditures"] for r in fr)
+        oth = sum(r["other_disbursements"] + r["contributions_to_candidates_and_committees"] + r["contribution_refunds"]
+                  + r["unexplained_disbursements"] for r in fr)
+        cash = max(fr, key=lambda r: r["coverage_end"])["cash_on_hand_end"]
+        outs = [("Ads and voter contact for El-Sayed", amt(es), sid(es), AQUA), ("Ads against Haley Stevens (D)", amt(st), sid(st), RED),
+                ("Operating costs", op, rep_ids(ffm), GRAY), ("Other spending", oth, rep_ids(ffm), GRAY),
+                (f"Cash on hand, {date.fromisoformat(f['end'][ffm]):%b %-d}", cash, rep_ids(ffm), LGRAY)]
+        assert abs(sum(o[1] for o in outs) - total[ffm] - fr[0]["cash_on_hand_beginning"]) < 1, "spending column does not balance"
+        co, ye = ffm_top, ffm_top
+        for label, v, rows, col in outs:
+            slot = max(h(v), 56)
+            top = ye + (slot - h(v)) / 2
+            svg.append(band(xf + nw, co, co + h(v), xe, top, top + h(v), col)
+                       + f'<rect x="{xe}" y="{top:.1f}" width="{nw}" height="{h(v):.1f}" fill="{col}"/>'
+                       f'<text x="{xe + nw + 14}" y="{top + h(v) / 2 - 3:.1f}" font-size="20" font-weight="bold" fill="{INK}">{esc(label)}</text>'
+                       f'<text x="{xe + nw + 14}" y="{top + h(v) / 2 + 21:.1f}" font-size="18" fill="{MUTED}">{money(v)}</text>')
+            ids += element("spending", label, rows)
+            co += h(v)
+            ye += slot + 34
+        bottom = ye
+        # what the notices filed since the last regular report add (not drawn: the receipts that paid for them are not yet filed)
+        late = [s for s in sp if s["form"] == "F24"]
+        late_f = [s for s in late if s["committee"] == ffm]
+        late_u = [s for s in late if s["committee"] == uj and "EL-SAYED" in (s["candidate"] or "")]
+        big = max(late_u, key=lambda s: s["amount"])
+        pro_rogers = [s for s in late_f if s["support_oppose"] == "S" and "ROGERS" in (s["candidate"] or "")]
+        ids += element("footnote figure", "notices since the last regular report", sid(late_f + late_u))
+        notes = (f" <b>Since {date.fromisoformat(f['end'][ffm]):%b %-d} (not drawn):</b> 48-hour notices report {money(amt(late_f))} more by Fighting for "
+                 f"Michigan ({money(amt([s for s in late_f if s['support_oppose'] == 'S' and 'EL-SAYED' in (s['candidate'] or '')]))} for El-Sayed, "
+                 f"{money(amt([s for s in late_f if s['support_oppose'] == 'O' and 'ROGERS' in (s['candidate'] or '')]))} against Republican Mike Rogers"
+                 + (f", and {money(amt(pro_rogers))} in mail filed as supporting Rogers" if pro_rogers else "")
+                 + f") and {money(amt(late_u))} by Unity &amp; Justice for El-Sayed, including a {money(big['amount'])} canvassing estimate dated "
+                 f"{date.fromisoformat(big['expenditure_date']):%b %-d}, when its last report showed {money(max((r for r in f['reports'] if r['committee'] == uj), key=lambda r: r['coverage_end'])['cash_on_hand_end'])} on hand. "
+                 "The receipts that paid for them are due Oct 20. Ads for El-Sayed and against Stevens are the split each ad was filed under; "
+                 "\"other spending\" is mostly gifts to a nonprofit, 5PLUS1.")
+    # the campaign itself, on its own scale
+    cy = max(y, ffm_top + h(total[ffm]), bottom if spending else 0) + 50
+    camp_net = sum(d["net"] for d in f["camp_rows"])
+    all_net = sum(json.loads(l)["net"] for l in open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8"))
+    n_all = sum(1 for _ in open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8"))
+    bw = W - 120 - 600
+    wr = bw * camp_net / all_net
+    svg.append(f'<text x="0" y="{cy + 26:.1f}" font-size="22" font-weight="bold" fill="{INK}">The campaign itself</text>'
+               f'<text x="0" y="{cy + 52:.1f}" font-size="17" fill="{MUTED}">different scale: the whole bar is {money(all_net)}</text>'
+               f'<rect x="600" y="{cy + 8:.1f}" width="{bw}" height="40" fill="{GRAY}"/>'
+               f'<rect x="600" y="{cy + 8:.1f}" width="{max(wr, 3):.1f}" height="40" fill="{BLUE250}"/>'
+               f'<text x="600" y="{cy + 76:.1f}" font-size="18" fill="{INK}">{len(f["camp_people"])} people with documented roles gave '
+               f'{money(camp_net)} net, {100 * camp_net / all_net:.1f}% of what individual donors gave the campaign through Sep 30</text>')
+    ids += element("campaign bar", "role-holders to the campaign", [donor_id(d) for d in f["camp_rows"]])
+    ids += element("campaign bar", "all individual donors", [f"ALL:donors_net:{n_all}"])
+    h_svg = cy + 100
+    svg = [f'<svg width="{W - 120}" height="{h_svg:.0f}" viewBox="0 0 {W - 120} {h_svg:.0f}">'] + svg + ["</svg>"]
+    who = "a CAIR-Michigan director, two Arab and Palestinian advocacy groups and a super PAC CAIR Action helps fund"
+    if spending:
+        title = (f"{pct}% of the pro-El-Sayed super PAC's money came from {who}; by {date.fromisoformat(f['end'][ffm]):%b %-d} it had spent "
+                 f"{money(amt(es))} for him and {money(amt(st))} against Haley Stevens")
+    else:
+        title = f"{pct}% of the pro-El-Sayed super PAC's money came from {who}"
+    doc = shell(
+        title, "Where the super PAC money came from" + (", and where it went" if spending else ""),
+        "Pipe widths are in proportion to dollars. Receipts as Fighting for Michigan PAC and Unity &amp; Justice Fund filed them, "
+        f"{date.fromisoformat(SINCE):%B %Y} through {date.fromisoformat(f['end'][ffm]):%B %-d, %Y}; Unity &amp; Justice's gift to Fighting "
+        "for Michigan is drawn from Unity &amp; Justice, which pooled it with its other money.",
+        legend([(BLUE, "Muslim organization"), (PURPLE, "Arab or Palestinian advocacy group"), (BLUE250, "people with documented roles in such groups"),
+                (SLATE, "super PAC CAIR Action helps fund"), (GRAY, "all other donors")]) + "\n".join(svg) + cite(ids),
+        "<b>Source:</b> FEC reports of Fighting for Michigan PAC, Unity &amp; Justice Fund and Abdul for U.S. Senate, as amended through Oct 17, "
+        "2026 (on Oct 17 Fighting for Michigan refiled IMEU's two gifts, same address, under the name \"The Institute for Middle East "
+        "Understanding (IMEU) Policy Project\", citing \"a data entry error\"). Roles are from the organizations' own filings and pages, each "
+        "confirmed on two attributes. Unity &amp; Justice's treasurer is from its own FEC reports; CAIR Action's description of itself and "
+        f"of its executive director is from its own pages. {esc(person(tp['name']))} is widely reported to be El-Sayed's father-in-law; "
+        "we found no primary record of it, so the figure does not say so. <b>Not traceable:</b> money is pooled, so no donor's dollars can be "
+        "followed to a particular ad." + notes,
+        W, int(h_svg) + (520 if spending else 400))
+    return doc, int(h_svg) + (520 if spending else 400)
+
+
+# ---- figure 6: who gave the most -----------------------------------------------------------------------------------
+LIMIT = 7000   # parameter: the most one person may give, primary and general together
+
+
+def fig_constituency() -> tuple[str, int]:
+    tiers = json.loads((ROOT / "analysis" / "name_origin_share.json").read_text(encoding="utf-8"))["by_donor_tier"]
+    donors = [json.loads(l) for l in open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8")]
+    top = [d for d in donors if d["net"] >= LIMIT - 0.005]          # the same cut as scripts/name_origin_share.py
+    a, m = tiers["all_donors"], tiers["at_7000_max"]
+    assert a["n_donors"] == len(donors) and m["n_donors"] == len(top), "name_origin_share.json is out of date"
+    over = sum(d["net"] > LIMIT + 0.01 for d in top)
+    cell, gap = 54, 8
+    panels = [(0, f"All {len(donors):,} donors to the campaign", a, [f"ALL:donors_net:{len(donors)}"]),
+              (1180, f"The {len(top):,} who gave {money(LIMIT)}, the maximum", m, [donor_id(d) for d in top])]
+    h_svg = 60 + 10 * (cell + gap) + 30
+    svg, ids = [f'<svg width="{W - 120}" height="{h_svg}" viewBox="0 0 {W - 120} {h_svg}">'], []
+    for x0, label, t, rows in panels:
+        k = round(t["expected_pct_of_donors"])
+        svg.append(f'<text x="{x0}" y="30" font-size="26" font-weight="bold" fill="{INK}">{esc(label)}</text>')
+        for i in range(100):
+            r, c = divmod(i, 10)
+            svg.append(f'<rect x="{x0 + c * (cell + gap)}" y="{60 + r * (cell + gap)}" width="{cell}" height="{cell}" rx="4" '
+                       f'fill="{BLUE if i < k else LGRAY}"/>')
+        tx = x0 + 10 * (cell + gap) + 30
+        svg.append(f'<text x="{tx}" y="{60 + 150}" font-size="128" font-weight="bold" fill="{BLUE}">{k}%</text>'
+                   f'<text x="{tx}" y="{60 + 200}" font-size="24" fill="{INK}">of these donors have</text>'
+                   f'<text x="{tx}" y="{60 + 230}" font-size="24" fill="{INK}">Arab- or Muslim-heritage names</text>'
+                   f'<text x="{tx}" y="{60 + 290}" font-size="22" fill="{MUTED}">They gave {round(t["expected_pct_of_net_dollars"])}% of</text>'
+                   f'<text x="{tx}" y="{60 + 318}" font-size="22" fill="{MUTED}">the group\'s dollars</text>')
+        ids += element("waffle", label, rows)
+    svg.append("</svg>")
+    doc = shell(
+        f"{round(m['expected_pct_of_donors'])}% of the donors who gave El-Sayed's campaign the {money(LIMIT)} maximum have Arab- or "
+        "Muslim-heritage names",
+        "Who gave the most",
+        "Each square is 1% of donors. The measure is a name's heritage, not anyone's religion: Arab Christians count, and Muslims "
+        "whose names come from other traditions do not.",
+        legend([(BLUE, "Arab- or Muslim-heritage name"), (LGRAY, "other names")]) + "\n".join(svg) + cite(ids),
+        "<b>Source:</b> FEC filings of Abdul for U.S. Senate, itemized gifts from individuals including those passed through its joint "
+        "fundraising committees, net of refunds and reattributions, through Sep 30, 2026; a donor is one name at one ZIP code. "
+        f"{over} of the {len(top)} are above {money(LIMIT)} net, pending refunds. <b>Method:</b> each name's chance of being Arab- or "
+        "Muslim-heritage, from a name-origin lexicon checked against a Wikipedia name-category gold set, summed over donors: "
+        f"{m['expected_pct_of_donors']}% for the maximum donors (range {m['low_pct_of_donors']}–{m['high_pct_of_donors']}%), "
+        f"{a['expected_pct_of_donors']}% for all donors (range {a['low_pct_of_donors']}–{a['high_pct_of_donors']}%). The low end counts the "
+        "likelier of the two names, the high end either. <b>Not shown:</b> any individual's label; the estimate is for groups only.",
+        W, h_svg + 340)
+    return doc, h_svg + 340
+
+
 FIGS = {"e1-money-from-muslim-and-arab-advocacy-roles": fig_islam_money, "e2-jukaku-money-in-the-coverage": fig_jukaku,
-        "e3-what-held-up": fig_verdicts, "e4-cair-donor-figure": fig_cair}
+        "e3-what-held-up": fig_verdicts, "e4-cair-donor-figure": fig_cair,
+        "e5-super-pac-money-flow": lambda: fig_flow(False), "e5b-super-pac-money-flow-and-spending": lambda: fig_flow(True),
+        "e6-max-donors-heritage-names": fig_constituency}
 
 if __name__ == "__main__":
     if "--list-elements" in sys.argv:
