@@ -9,7 +9,7 @@ Curated input: analysis/private/mb_adjudications.jsonl  one decision per dispute
 Writes analysis/private/mb_verdicts.jsonl (one row per tie), mb_adjudication_todo.jsonl (disputes not yet decided)
 and mb_sources.jsonl (every record a lane or reviewer saved, all kept in the store, cited or not).
 
-A round-two lane line supersedes the round-one line for the same tie (it re-judged the tie against all its claims).
+A later round's line (lane folder L<nn>r<k>_...) supersedes earlier rounds for the same tie (it re-judged the tie against all its claims).
 A review that agrees leaves the verdict as is; a disagreement stands as `disputed` until adjudicated. A written\nadjudication overrides any verdict (the final pass may also correct a verdict both engines agreed on).
 """
 from __future__ import annotations
@@ -18,6 +18,7 @@ import csv
 import glob
 import hashlib
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -47,7 +48,8 @@ def keep(src_dir: Path, sha: str) -> str | None:
 
 final, sources = {}, []
 for lane in sorted(LANES.glob("L*")):
-    rnd = 2 if "r2_" in lane.name else 1
+    m_ = re.search(r"^L\d\dr(\d+)_", lane.name)
+    rnd = int(m_.group(1)) if m_ else 1
     for s in jl(lane / "sources.jsonl"):
         sources.append({**s, "lane": lane.name, "stored": keep(lane, s["sha256"])})
     review_dir = LANES / f"R_{lane.name}"
