@@ -350,10 +350,21 @@ def _stories_naming(row: dict) -> list[str]:
                   if pats and (not first_word or first_word in lower[h]) and all(p.search(t) for p in pats))
 
 
+# a receipt also counts as named when a claim ties its contributor to a story in other words ("Tlaib's campaign" for
+# RASHIDA TLAIB FOR CONGRESS): the stories of donation claims about the entity whose FEC matches include this receipt
+donation_stories = defaultdict(set)
+for c, n in claim_entities:
+    if c["link_type"] in DONATION:
+        donation_stories[n].add(c["story_id"])
+via_claims = defaultdict(set)
+for fr in fec_rows:
+    if fr["kind"] == "super_pac_receipt":
+        via_claims[(fr["committee"], fr["transaction_id"])] |= {(fr["entity"], s) for s in donation_stories.get(fr["entity"], ())}
 receipts = []
 for row in sorted(pac_all, key=lambda r: (r["committee"], -(r["amount"] or 0))):
-    named = stories_naming(row)
-    receipts.append({**row, "n_stories_naming_contributor": len(named), "story_ids": " ".join(named[:25])})
+    named = set(stories_naming(row)) | {s for _, s in via_claims.get((row["committee"], row["transaction_id"]), ())}
+    receipts.append({**row, "n_stories_naming_contributor": len(named), "story_ids": " ".join(sorted(named)[:25]),
+                     "named_as": "; ".join(sorted({e for e, _ in via_claims.get((row["committee"], row["transaction_id"]), ())}))})
 same = defaultdict(int)
 for r in receipts:
     same[(r["committee"], r["contributor"].upper(), r["date"], r["amount"])] += 1
