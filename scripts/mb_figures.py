@@ -282,7 +282,7 @@ def fig_two_counts() -> tuple[str, int]:
 
 
 # ---- figure 7: three panels: the money counted two ways, the maximum donors by name, the groups ------------------
-WC = 3000   # parameter: this figure's page width (three panels)
+WC = 3200   # parameter: this figure's page width (three panels)
 GROUP_TEXT = {  # what the saved records show about each organization family (ties judged against primary records)
     "CAIR (national and chapters)": ("CAIR", "Council on American-Islamic Relations and its chapters and CAIR Action. Named in 2007 on prosecutors' "
                                      "list of unindicted co-conspirators in the Holy Land Foundation Hamas-financing case; never charged. "
@@ -333,95 +333,103 @@ def max_donors_by_name() -> tuple[list, dict]:
 def fig_combo() -> tuple[str, int]:
     import math
     import textwrap
-    people = role_people()
     fam_of = lambda p: {next(n for pat, n, _ in FAMILY if re.search(pat, o)) for o, _ in p["orgs"]}
-    is_cair = lambda p: "CAIR (national and chapters)" in fam_of(p)
-    cair = {k: p for k, p in people.items() if is_cair(p) and p["campaign"]}
-    other = {k: p for k, p in people.items() if not is_cair(p) and p["campaign"]}
-    net = lambda grp: sum(d["net"] for p in grp.values() for d in p["campaign"])
-    did = lambda grp: [donor_id(d) for p in grp.values() for d in p["campaign"]]
-    pac = [r for p in people.values() for r in p["pac"]]
-    big = max(people.values(), key=lambda p: sum(r["amount"] or 0 for r in p["pac"]))
-    big_amt = sum(r["amount"] or 0 for r in big["pac"])
-    total_all = net(cair) + net(other) + sum(r["amount"] or 0 for r in pac)
-    fox = [c for c in load("claims") if c["entities"] == "CAIR-connected donors (group claim)" and c["published"]
-           and c["outlet"] == "Fox News" and isinstance(c["amount_usd"], (int, float))]
-    fox = [c for c in fox if c["published"] == min(x["published"] for x in fox)]
-    fox_amt = max(c["amount_usd"] for c in fox)
-    fox_n = max(int(m) for c in fox for m in re.findall(r"at least (\d+)", c["quote"] or ""))
+    CAIR = "CAIR (national and chapters)"
+    folks = [p for p in persons(role_people()) if p["campaign"] or p["pac"]]
+    camp = lambda grp: sum(d["net"] for p in grp for d in p["campaign"])
+    pacs = lambda grp: sum(r["amount"] or 0 for p in grp for r in p["pac"])
+    rows_of = lambda grp: [donor_id(d) for p in grp for d in p["campaign"]] + [receipt_id(r) for p in grp for r in p["pac"]]
+    total = camp(folks) + pacs(folks)
     svg, ids = [], []
-    head = lambda x, t: f'<text x="{x}" y="26" font-size="25" font-weight="bold" fill="{INK}">{esc(t)}</text>'
 
-    # left: the money, counted two ways
-    svg.append(head(0, "Money from staff and leaders of these groups"))
-    bar_w = 760 / total_all
-    rows = [("Fox News count of CAIR staff and leaders", 0, fox_amt, None, f"more than {money(fox_amt)} · at least {fox_n} people",
-             [f"C{c['claim_id']}" for c in fox]),
-            ("Our count of CAIR staff and leaders", 0, net(cair), BLUE, f"{money(net(cair))} · {len(cair)} people", did(cair)),
-            ("+ staff and leaders of the other groups", net(cair), net(other), PURPLE,
-             f"{money(net(cair) + net(other))} · {len(cair) + len(other)} people", did(other)),
-            ("+ these people's gifts to PACs backing El-Sayed", net(cair) + net(other), sum(r["amount"] or 0 for r in pac), ORANGE,
-             f"{money(total_all)} in all", [receipt_id(r) for r in pac])]
-    svg.append('<defs><pattern id="hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
-               f'<rect width="12" height="12" fill="{LGRAY}"/><line x1="0" y1="0" x2="0" y2="12" stroke="{GRAY}" stroke-width="6"/></pattern></defs>')
-    for i, (title, base, add, col, label, rr) in enumerate(rows):
-        y = 90 + i * 165
-        svg.append(f'<text x="0" y="{y}" font-size="20" font-weight="bold" fill="{INK}">{esc(title)}</text>')
-        if base:
-            svg.append(f'<rect x="0" y="{y + 14}" width="{base * bar_w:.1f}" height="54" fill="{LGRAY}"/>')
-        svg.append(f'<rect x="{base * bar_w:.1f}" y="{y + 14}" width="{add * bar_w:.1f}" height="54" fill="{col or "url(#hatch)"}"/>'
-                   f'<text x="{(base + add) * bar_w + 14:.1f}" y="{y + 49}" font-size="21" font-weight="bold" fill="{INK}">{esc(label)}</text>')
-        ids += element("bar", title, rr)
-    svg.append(f'<text x="0" y="{90 + 3 * 165 + 100}" font-size="18" fill="{MUTED}">{money(big_amt)} of the PAC money is one gift, '
-               f'{esc(person(big["name"]))}\'s to Fighting for Michigan.</text>')
+    # left: the donors at the limit (the figure-6 panel, same format)
+    tiers = json.loads((ROOT / "analysis" / "name_origin_share.json").read_text(encoding="utf-8"))["by_donor_tier"]
+    m = tiers["at_7000_max"]
+    top = [d for d in map(json.loads, open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8")) if d["net"] >= LIMIT - 0.005]
+    assert m["n_donors"] == len(top), "name_origin_share.json is out of date"
+    k = round(m["expected_pct_of_donors"])
+    cell, gap = 54, 8
+    svg.append(f'<text x="0" y="30" font-size="26" font-weight="bold" fill="{INK}">The {len(top):,} who gave {money(LIMIT)}, the maximum</text>')
+    for i in range(100):
+        r_, c_ = divmod(i, 10)
+        svg.append(f'<rect x="{c_ * (cell + gap)}" y="{60 + r_ * (cell + gap)}" width="{cell}" height="{cell}" rx="4" fill="{BLUE if i < k else LGRAY}"/>')
+    tx = 10 * (cell + gap) + 30
+    svg.append(f'<text x="{tx}" y="{60 + 150}" font-size="128" font-weight="bold" fill="{BLUE}">{k}%</text>'
+               f'<text x="{tx}" y="{60 + 200}" font-size="24" fill="{INK}">of these donors have</text>'
+               f'<text x="{tx}" y="{60 + 230}" font-size="24" fill="{INK}">Arab- or Muslim-heritage names</text>'
+               f'<text x="{tx}" y="{60 + 290}" font-size="22" fill="{MUTED}">They gave {round(m["expected_pct_of_net_dollars"])}% of</text>'
+               f'<text x="{tx}" y="{60 + 318}" font-size="22" fill="{MUTED}">the group\'s dollars</text>'
+               f'<rect x="0" y="{60 + 10 * (cell + gap) + 10}" width="18" height="18" rx="4" fill="{BLUE}"/>'
+               f'<text x="28" y="{60 + 10 * (cell + gap) + 25}" font-size="18" fill="{INK}">Arab- or Muslim-heritage name</text>'
+               f'<rect x="310" y="{60 + 10 * (cell + gap) + 10}" width="18" height="18" rx="4" fill="{LGRAY}"/>'
+               f'<text x="338" y="{60 + 10 * (cell + gap) + 25}" font-size="18" fill="{INK}">other names (each square is 1% of these donors)</text>')
+    ids += element("waffle", "donors at the limit", [donor_id(d) for d in top])
 
-    # center: the donors at the limit, by name
-    top, groups = max_donors_by_name()
-    am = sum(len(groups[k]) for k in ("ARABIC", "SOUTH_ASIAN_MUSLIM", "AM-other"))
-    cx, cy, r = 1500, 390, 185
-    svg.append(head(1100, f"The {len(top)} donors who gave the {money(LIMIT)} maximum"))
-    svg.append(f'<text x="1100" y="56" font-size="20" fill="{MUTED}">{am} of them ({round(100 * am / len(top))}%) have Arab- or Muslim-heritage names</text>')
+    # center: the money from people with roles in the groups, one slice per group, sized by dollars
+    x0c = 1080
+    first = lambda p: CAIR if CAIR in fam_of(p) else sorted(fam_of(p))[0]     # each person once: CAIR first
+    by_g = defaultdict(list)
+    for p in folks:
+        by_g[first(p)].append(p)
+    small = sorted([g for g in by_g if g != CAIR], key=lambda g: -(camp(by_g[g]) + pacs(by_g[g])))
+    svg.append(f'<text x="{x0c}" y="64" font-size="68" font-weight="bold" fill="{INK}">{money(total)}</text>'
+               f'<text x="{x0c}" y="100" font-size="22" fill="{INK}">from {len(folks)} people with roles in these groups,</text>'
+               f'<text x="{x0c}" y="128" font-size="22" fill="{INK}">to El-Sayed\'s campaign and the PACs backing him</text>')
+    cx, cy, ro, ri = x0c + 330, 450, 230, 140
     a0 = 0.0
-    for key, label, col in NAME_SLICES:
-        ds = groups.get(key, [])
-        if not ds:
-            continue
-        a1 = a0 + 2 * math.pi * len(ds) / len(top)
-        p0 = (cx + r * math.sin(a0), cy - r * math.cos(a0))
-        p1 = (cx + r * math.sin(a1), cy - r * math.cos(a1))
-        svg.append(f'<path d="M{cx},{cy} L{p0[0]:.1f},{p0[1]:.1f} A{r},{r} 0 {1 if a1 - a0 > math.pi else 0} 1 {p1[0]:.1f},{p1[1]:.1f} Z" '
-                   f'fill="{col}" stroke="{BG}" stroke-width="2"/>')
-        m = (a0 + a1) / 2
-        e = (cx + (r + 14) * math.sin(m), cy - (r + 14) * math.cos(m))
-        lx = cx + (r + 40) * math.sin(m)
-        ly = cy - (r + 40) * math.cos(m)
-        anchor = "start" if math.sin(m) >= 0 else "end"
-        svg.append(f'<line x1="{cx + r * math.sin(m):.1f}" y1="{cy - r * math.cos(m):.1f}" x2="{e[0]:.1f}" y2="{e[1]:.1f}" stroke="{MUTED}"/>'
-                   f'<line x1="{e[0]:.1f}" y1="{e[1]:.1f}" x2="{lx + (-6 if anchor == "start" else 6):.1f}" y2="{ly:.1f}" stroke="{MUTED}"/>'
-                   f'<text x="{lx:.1f}" y="{ly - 4:.1f}" font-size="19" font-weight="bold" fill="{INK}" text-anchor="{anchor}">{esc(label)}</text>'
-                   f'<text x="{lx:.1f}" y="{ly + 19:.1f}" font-size="18" fill="{MUTED}" text-anchor="{anchor}">{len(ds)} people · {money(sum(d["net"] for d in ds))}</text>')
-        # every slice cites the whole group of donors at the limit, so the file never labels an individual's name
-        ids += element("slice", label, [donor_id(d) for d in top])
+    lab_y = 190
+    shades = {"muslim": [BLUE250, "#5b9be4", "#9ec5f2", "#3f86dc", "#b9d5f5"], "arab": [PURPLE, "#a08ae6", "#c3b5f0"]}
+    used = defaultdict(int)
+    kind = {name: kd for _, name, kd in FAMILY}
+    for g in small + [CAIR]:
+        grp = by_g[g]
+        v = camp(grp) + pacs(grp)
+        a1 = a0 + 2 * math.pi * v / total
+        if g == CAIR:
+            col = BLUE
+        else:
+            pal = shades[kind[g]]
+            col = pal[used[kind[g]] % len(pal)]
+            used[kind[g]] += 1
+        pt = lambda a, rr: (cx + rr * math.sin(a), cy - rr * math.cos(a))
+        (x1, y1), (x2, y2), (x3, y3), (x4, y4) = pt(a0, ro), pt(a1, ro), pt(a1, ri), pt(a0, ri)
+        big = 1 if a1 - a0 > math.pi else 0
+        svg.append(f'<path d="M{x1:.2f},{y1:.2f} A{ro},{ro} 0 {big} 1 {x2:.2f},{y2:.2f} L{x3:.2f},{y3:.2f} A{ri},{ri} 0 {big} 0 {x4:.2f},{y4:.2f} Z" '
+                   f'fill="{col}" stroke="{BG}" stroke-width="{1.5 if g == CAIR else 0.6}"/>')
+        n = len(grp)
+        who = f"{n} {'person' if n == 1 else 'people'} · {money(v)}"
+        short = GROUP_TEXT[g][0]
+        mx, my = pt((a0 + a1) / 2, ro)
+        if g == CAIR:
+            yb = cy + ro + 56
+            lead = max(grp, key=lambda p: sum(r["amount"] or 0 for r in p["pac"]))
+            svg.append(f'<text x="{cx}" y="{yb}" font-size="24" font-weight="bold" fill="{INK}" text-anchor="middle">{esc(short)} · {esc(who)}</text>'
+                       f'<text x="{cx}" y="{yb + 28}" font-size="18" fill="{MUTED}" text-anchor="middle">{money(pacs(grp))} of it to PACs, '
+                       f'{money(sum(r["amount"] or 0 for r in lead["pac"]))} of that from {esc(person(lead["name"]))}</text>')
+        else:
+            lx = cx + ro + 60
+            svg.append(f'<polyline points="{mx:.1f},{my:.1f} {lx - 40:.1f},{lab_y - 6:.1f} {lx - 8:.1f},{lab_y - 6:.1f}" fill="none" stroke="{MUTED}" stroke-width="1"/>'
+                       f'<text x="{lx}" y="{lab_y}" font-size="19" fill="{INK}"><tspan font-weight="bold">{esc(short)}</tspan> · {esc(who)}</text>')
+            lab_y += 34
+        ids += element("slice", short, rows_of(grp))
         a0 = a1
 
     # right: the groups
-    x_r = 2010
-    svg.append(head(x_r, "The groups"))
-    fams = defaultdict(dict)
-    for k, p in people.items():
-        if p["campaign"] or p["pac"]:
-            for f in fam_of(p):
-                fams[f][k] = p
+    x_r = 2160
+    svg.append(f'<text x="{x_r}" y="30" font-size="26" font-weight="bold" fill="{INK}">The groups</text>')
+    fams = defaultdict(list)
+    for p in folks:
+        for f in fam_of(p):
+            fams[f].append(p)
     assert set(fams) <= set(GROUP_TEXT), f"no description for {set(fams) - set(GROUP_TEXT)}"
-    order = sorted(fams, key=lambda f: (f != "CAIR (national and chapters)", f != "KindHearts (closed 2006)", -net(fams[f])))
+    order = sorted(fams, key=lambda f: (f != CAIR, f != "KindHearts (closed 2006)", -(camp(fams[f]) + pacs(fams[f]))))
     all_ties = load("ties")
-    y = 70
+    y = 74
     for f in order:
         short, text = GROUP_TEXT[f]
         grp = fams[f]
-        n_c = sum(1 for p in grp.values() if p["campaign"])
-        pac_f = sum(r["amount"] or 0 for p in grp.values() for r in p["pac"])
-        amount = f"{n_c} {'person' if n_c == 1 else 'people'} · {money(net(grp))} to the campaign" + (f", {money(pac_f)} to PACs" if pac_f else "")
+        amount = (f"{len(grp)} {'person' if len(grp) == 1 else 'people'} · {money(camp(grp))} to the campaign"
+                  + (f", {money(pacs(grp))} to PACs" if pacs(grp) else ""))
         svg.append(f'<text x="{x_r}" y="{y}" font-size="20" font-weight="bold" fill="{INK}">{esc(short)}'
                    f'<tspan font-weight="normal" fill="{MUTED}">  {esc(amount)}</tspan></text>')
         for line in textwrap.wrap(text, 98):
@@ -429,29 +437,28 @@ def fig_combo() -> tuple[str, int]:
             svg.append(f'<text x="{x_r}" y="{y}" font-size="17" fill="{MUTED}">{esc(line)}</text>')
         tie_ids = [f"T{t['tie_id']}" for t in all_ties if short in GROUP_TIES and re.search(GROUP_TIES[short], t["entity"] or "")
                    and t["link_type"] in ("designation", "listed_in_document", "other")]
-        ids += element("group", short, did(grp) + [receipt_id(r) for p in grp.values() for r in p["pac"]] + tie_ids)
+        ids += element("group", short, rows_of(grp) + tie_ids)
         y += 40
-    h_svg = max(y, 760)
+    h_svg = max(y, 790)
     svg = [f'<svg width="{WC - 120}" height="{h_svg}" viewBox="0 0 {WC - 120} {h_svg}">'] + svg + [
-        f'<line x1="1060" y1="0" x2="1060" y2="{h_svg - 10}" stroke="{AXIS}"/><line x1="1960" y1="0" x2="1960" y2="{h_svg - 10}" stroke="{AXIS}"/></svg>']
+        f'<line x1="1040" y1="0" x2="1040" y2="{h_svg - 10}" stroke="{AXIS}"/><line x1="2120" y1="0" x2="2120" y2="{h_svg - 10}" stroke="{AXIS}"/></svg>']
     doc = shell(
-        f"CAIR staff and leaders gave El-Sayed's campaign {money(net(cair))}; {round(100 * am / len(top))}% of his maximum donors have "
-        "Arab- or Muslim-heritage names",
+        f"People with roles in CAIR and other Muslim and Arab-advocacy groups gave {money(total)} to El-Sayed's campaign and the PACs "
+        f"backing him; {k}% of his maximum donors have Arab- or Muslim-heritage names",
         "El-Sayed's donors and the groups in the coverage", "",
         "\n".join(svg) + cite(ids),
         "<b>How the links were made:</b> a donor counts as staff or a leader of a group when the group's own records name them (its IRS "
         "filings, website, annual reports or FEC filings) or when the donor's own FEC filing gives the group as employer, and only when "
-        "the record and the donor match on at least two details, such as name and city or name and employer; a person with roles in "
-        "two groups is listed under both. <b>Money:</b> FEC filings "
-        "of El-Sayed's campaign (net of refunds, through Sep 30, 2026) and of the PACs Fighting for Michigan, Unity &amp; Justice and "
-        "MERIT PAC (through Aug 31). Fox's figure is as Fox News reported it on Aug 5; Fox did not publish names. <b>The groups:</b> from "
-        "the Holy Land Foundation case filings and the 1991 memo entered as a trial exhibit, Treasury's 2006 notice on KindHearts, the "
-        "UAE's 2014 list, the Texas and Florida orders, Israel's 2014 order and the groups' own publications. <b>Names (center):</b> each "
-        "donor's name is sorted by heritage (Arabic; South Asian Muslim; other Muslim traditions such as Persian, Turkish, Afghan and "
-        "Balkan), not by religion: Arab Christians "
-        "count and Muslims with names from other traditions do not. This panel says nothing about any donor's ties to the groups.",
-        WC, h_svg + 310)
-    return doc, h_svg + 310
+        "the record and the donor match on at least two details, such as name and city or name and employer. In the center, each person "
+        "counts once, under CAIR if they also hold a role elsewhere; on the right, a person with roles in two groups is listed under both. "
+        "<b>Money:</b> FEC filings of El-Sayed's campaign (net of refunds, through Sep 30, 2026) and of the PACs Fighting for Michigan, "
+        "Unity &amp; Justice and MERIT PAC (through Aug 31). <b>The groups:</b> from the Holy Land Foundation case filings and the 1991 "
+        "memo entered as a trial exhibit, Treasury's 2006 notice on KindHearts, the UAE's 2014 list, the Texas and Florida orders, "
+        "Israel's 2014 order and the groups' own publications. <b>Names (left):</b> each donor's name is judged by its heritage (Arabic, "
+        "South Asian Muslim, Persian, Turkish and other Muslim traditions), not by religion: Arab Christians count and Muslims with names "
+        "from other traditions do not. That panel says nothing about any donor's ties to the groups.",
+        WC, h_svg + 300)
+    return doc, h_svg + 300
 
 
 # ---- figure 2: how Jukaku's super PAC money was described -----------------------------------------------------------
@@ -728,7 +735,43 @@ def role_people() -> dict:
         p = people.setdefault(key, {"name": r["donor"], "orgs": set(), "campaign": by_nc.get(key, []),
                                     "pac": rec_by_nc.get((" ".join(r["donor"].upper().replace(",", ", ").split()).replace(" ,", ","), r["city"].upper()), [])})
         p["orgs"].add((r["org"], r["roles"]))
+        p.setdefault("ev", set()).update(e["sha256"] for e in r["evidence"] if isinstance(e, dict) and e.get("sha256"))
     return people
+
+
+def persons(people: dict) -> list[dict]:
+    """Records of one person counted once: same state and first name, and either the same surname confirmed by the same
+    saved organization record, or a one-letter surname variant at the same city with the same self-reported employer."""
+    keys = sorted(people)
+    root = {k: k for k in keys}
+
+    def find(k):
+        while root[k] != k:
+            k = root[k]
+        return k
+    name = lambda p: (re.sub("[^A-Z]", "", p["name"].upper().partition(",")[0]),
+                      re.sub("[^A-Z]", "", (p["name"].upper().partition(",")[2].split() or [""])[0]))
+    skel = lambda last: last[:1] + re.sub("[AEIOU]", "", last[1:])
+    employer = lambda p: {r.split("/")[-1].strip().upper() for _, r in p["orgs"] if "/" in r}
+    for i, a in enumerate(keys):
+        for b in keys[i + 1:]:
+            pa, pb = people[a], people[b]
+            (la, fa), (lb, fb) = name(pa), name(pb)
+            if a[2] != b[2] or fa != fb:
+                continue
+            if (la == lb and pa["ev"] & pb["ev"]) or (a[1] == b[1] and skel(la) == skel(lb) and employer(pa) & employer(pb)):
+                root[find(b)] = find(a)
+    out = defaultdict(list)
+    for k in keys:
+        out[find(k)].append(k)
+    merged = []
+    for ks in out.values():
+        ps = [people[k] for k in ks]
+        camp = {donor_id(d): d for p in ps for d in p["campaign"]}
+        pac = {receipt_id(r): r for p in ps for r in p["pac"]}
+        merged.append({"name": ps[0]["name"], "orgs": set().union(*(p["orgs"] for p in ps)), "campaign": list(camp.values()),
+                       "pac": list(pac.values())})
+    return merged
 
 
 def band(x0: float, a0: float, b0: float, x1: float, a1: float, b1: float, color: str, opacity: float = 0.0) -> str:
