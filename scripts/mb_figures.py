@@ -206,6 +206,17 @@ def fig_two_counts() -> tuple[str, int]:
         if any(g["amt"] > 0 for g in rows):
             early[k] = sum(g["amt"] for g in rows)
     net = lambda grp: sum(d["net"] for p in grp.values() for d in p["campaign"])
+    short = {"ICNA and ICNA Relief": "ICNA", "Islamic Relief USA": "Islamic Relief", "KindHearts (closed 2006)": "KindHearts",
+             "ACMER and its MERIT PAC": "ACMER", "Arab American PAC": "AAPAC", "U.S. Council of Muslim Organizations": "USCMO"}
+
+    def groups_of(grp: dict) -> list[str]:
+        """Organization families of a group of people, largest campaign total first."""
+        tot = defaultdict(float)
+        for p in grp.values():
+            for f in {next(n for pat, n, _ in FAMILY if re.search(pat, o)) for o, _ in p["orgs"]}:
+                tot[f] += sum(d["net"] for d in p["campaign"])
+        return [short.get(f, f) for f, _ in sorted(tot.items(), key=lambda x: -x[1])]
+
     did = lambda grp: [donor_id(d) for p in grp.values() for d in p["campaign"]]
     pac = [r for p in people.values() for r in p["pac"]]
     big = max(people.values(), key=lambda p: sum(r["amount"] or 0 for r in p["pac"]))
@@ -225,7 +236,7 @@ def fig_two_counts() -> tuple[str, int]:
          [donor_id(d) for k in early for d in cair[k]["campaign"]], False),
         ("Fox's definition, our records", "all gifts through Sep 30", 0, net(cair), BLUE,
          f"{money(net(cair))} from {len(cair)} people; stories named {sum(named(k) for k in cair)}", did(cair), False),
-        ("+ other Muslim and Arab-advocacy groups", "ICNA, Islamic Relief, MPower, Emgage, IMEU, ACMER, AAPAC, KindHearts", net(cair), net(other), PURPLE,
+        ("+ other Muslim and Arab-advocacy groups", ", ".join(groups_of(other)), net(cair), net(other), PURPLE,
          f"{money(net(cair) + net(other))} from {len(cair) + len(other)} people (+{len(other)}); stories named {sum(named(k) for k in other)} of the new",
          did(other), False),
         ("+ gifts by people with these roles to PACs", f"{money(big_amt)} of it from {person(big['name'])}, reported in many stories", net(cair) + net(other),
