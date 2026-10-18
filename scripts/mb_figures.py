@@ -781,7 +781,7 @@ def persons(people: dict) -> list[dict]:
         camp = {donor_id(d): d for p in ps for d in p["campaign"]}
         pac = {receipt_id(r): r for p in ps for r in p["pac"]}
         merged.append({"name": ps[0]["name"], "orgs": set().union(*(p["orgs"] for p in ps)), "campaign": list(camp.values()),
-                       "pac": list(pac.values())})
+                       "pac": list(pac.values()), "keys": ks})
     return merged
 
 
