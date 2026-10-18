@@ -425,7 +425,7 @@ def fig_combo() -> tuple[str, int]:
     assert set(fams) <= set(GROUP_TEXT), f"no description for {set(fams) - set(GROUP_TEXT)}"
     order = sorted(fams, key=lambda f: (f != CAIR, f != "KindHearts (closed 2006)", -(camp(fams[f]) + pacs(fams[f]))))
     all_ties = load("ties")
-    wrap, lh, gap_b, top_y = 118, 27, 26, y_top + 92        # 20 px text wrapped to fill a 1,100 px column
+    wrap, lh, gap_b, top_y = 118, 27, 26, y_top + 92        # 20 px text wrapped to fill the column
     lines = {f: textwrap.wrap(GROUP_TEXT[f][1], wrap) for f in order}
     height = lambda f: 30 + lh * len(lines[f]) + gap_b
     half = sum(height(f) for f in order) / 2
