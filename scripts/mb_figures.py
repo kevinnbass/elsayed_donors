@@ -16,7 +16,7 @@ from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from fig_common import (AQUA, AXIS, BLUE, BLUE250, GRAY, GRID, INK, LGRAY, MUTED, ORANGE, PURPLE, RED, YELLOW, cite, esc,  # noqa: E402
+from fig_common import (AQUA, AXIS, BG, BLUE, BLUE250, GRAY, GRID, INK, LGRAY, MUTED, ORANGE, PURPLE, RED, YELLOW, cite, esc,  # noqa: E402
                         legend, money, render, shell)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -279,6 +279,179 @@ def fig_two_counts() -> tuple[str, int]:
         "pending investigation; that says nothing about the person who chaired it earlier.",
         W, h_svg + 410)
     return doc, h_svg + 410
+
+
+# ---- figure 7: three panels: the money counted two ways, the maximum donors by name, the groups ------------------
+WC = 3000   # parameter: this figure's page width (three panels)
+GROUP_TEXT = {  # what the saved records show about each organization family (ties judged against primary records)
+    "CAIR (national and chapters)": ("CAIR", "Council on American-Islamic Relations and its chapters and CAIR Action. Named in 2007 on prosecutors' "
+                                     "list of unindicted co-conspirators in the Holy Land Foundation Hamas-financing case; never charged. "
+                                     "Listed as a terrorist group by the UAE in 2014; labeled one by Texas and Florida in 2025 (Florida's "
+                                     "order partly blocked in court)."),
+    "KindHearts (closed 2006)": ("KindHearts", "Toledo charity, now closed. Treasury froze its assets in 2006 \"pending investigation\", calling it "
+                                 "tied to Hamas; it was never formally designated. The donor was its chairman in 2002-03."),
+    "ACMER and its MERIT PAC": ("ACMER", "American Committee for Middle East Rights, an advocacy group, and its MERIT PAC. The donor is its "
+                                "executive director."),
+    "Emgage": ("Emgage", "Muslim American civic and voter-turnout group. The donor is a state political director."),
+    "ICNA and ICNA Relief": ("ICNA", "Islamic Circle of North America and its relief arm. Named in a 1991 Muslim Brotherhood memo, a Holy "
+                             "Land trial exhibit, on a list headed \"our organizations and the organizations of our friends\"."),
+    "Islamic Relief USA": ("Islamic Relief USA", "Humanitarian charity. Its international parent, Islamic Relief Worldwide, was banned by "
+                           "Israel in 2014. The donors are its CEO and a fundraiser."),
+    "MPower Change": ("MPower Change", "Muslim grassroots advocacy group; published a 2018 report with CAIR."),
+    "Arab American PAC": ("AAPAC", "Arab American Political Action Committee, Dearborn. The donor is its president."),
+    "IMEU": ("IMEU", "Institute for Middle East Understanding, a Palestinian-focused communications group. The donor is its executive director."),
+    "U.S. Council of Muslim Organizations": ("USCMO", "U.S. Council of Muslim Organizations, an umbrella group. The donor is its secretary general."),
+    "Unity & Justice Fund (super PAC CAIR Action helps fund)": ("Unity & Justice Fund", "Super PAC that CAIR Action helps fund; it gave "
+                                                                "to Fighting for Michigan. The donor, a CAIR executive director, was its treasurer until 2025."),
+}
+GROUP_TIES = {"CAIR": r"^(CAIR|Council (on|for) American)", "ICNA": r"ICNA|Islamic Circle", "Islamic Relief USA": r"Islamic Relief",
+              "MPower Change": r"MPower", "Unity & Justice Fund": r"^Unity & Justice"}
+NAME_SLICES = [("ARABIC", "Arabic names", BLUE), ("SOUTH_ASIAN_MUSLIM", "South Asian Muslim names", "#5b9be4"),
+               ("AM-other", "Other Muslim names", BLUE250), ("other", "Other names", LGRAY),
+               ("uncertain", "Can't tell from the name", GRAY)]
+
+
+def max_donors_by_name() -> tuple[list, dict]:
+    """The donors at the limit, each name sorted into one heritage group (a confident judgment, or 'uncertain')."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("nos", ROOT / "scripts" / "name_origin_share.py")
+    nos = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(nos)
+    judge = nos.load_judge()
+    top = [d for d in map(json.loads, open(ROOT / "analysis" / "donors_net.jsonl", encoding="utf-8")) if d["net"] >= LIMIT - 0.005]
+    groups = defaultdict(list)
+    for d in top:
+        j = judge(d["name"])
+        if j["lo"] >= nos.CONFIDENT:
+            k = j["origin"] if j["origin"] in ("ARABIC", "SOUTH_ASIAN_MUSLIM") else "AM-other"
+        else:
+            k = "other" if j["hi"] <= 1 - nos.CONFIDENT else "uncertain"
+        groups[k].append(d)
+    return top, groups
+
+
+def fig_combo() -> tuple[str, int]:
+    import math
+    import textwrap
+    people = role_people()
+    fam_of = lambda p: {next(n for pat, n, _ in FAMILY if re.search(pat, o)) for o, _ in p["orgs"]}
+    is_cair = lambda p: "CAIR (national and chapters)" in fam_of(p)
+    cair = {k: p for k, p in people.items() if is_cair(p) and p["campaign"]}
+    other = {k: p for k, p in people.items() if not is_cair(p) and p["campaign"]}
+    net = lambda grp: sum(d["net"] for p in grp.values() for d in p["campaign"])
+    did = lambda grp: [donor_id(d) for p in grp.values() for d in p["campaign"]]
+    pac = [r for p in people.values() for r in p["pac"]]
+    big = max(people.values(), key=lambda p: sum(r["amount"] or 0 for r in p["pac"]))
+    big_amt = sum(r["amount"] or 0 for r in big["pac"])
+    total_all = net(cair) + net(other) + sum(r["amount"] or 0 for r in pac)
+    fox = [c for c in load("claims") if c["entities"] == "CAIR-connected donors (group claim)" and c["published"]
+           and c["outlet"] == "Fox News" and isinstance(c["amount_usd"], (int, float))]
+    fox = [c for c in fox if c["published"] == min(x["published"] for x in fox)]
+    fox_amt = max(c["amount_usd"] for c in fox)
+    fox_n = max(int(m) for c in fox for m in re.findall(r"at least (\d+)", c["quote"] or ""))
+    svg, ids = [], []
+    head = lambda x, t: f'<text x="{x}" y="26" font-size="25" font-weight="bold" fill="{INK}">{esc(t)}</text>'
+
+    # left: the money, counted two ways
+    svg.append(head(0, "Money from staff and leaders of these groups"))
+    bar_w = 760 / total_all
+    rows = [("Fox News count of CAIR staff and leaders", 0, fox_amt, None, f"more than {money(fox_amt)} · at least {fox_n} people",
+             [f"C{c['claim_id']}" for c in fox]),
+            ("Our count of CAIR staff and leaders", 0, net(cair), BLUE, f"{money(net(cair))} · {len(cair)} people", did(cair)),
+            ("+ staff and leaders of the other groups", net(cair), net(other), PURPLE,
+             f"{money(net(cair) + net(other))} · {len(cair) + len(other)} people", did(other)),
+            ("+ these people's gifts to PACs backing El-Sayed", net(cair) + net(other), sum(r["amount"] or 0 for r in pac), ORANGE,
+             f"{money(total_all)} in all", [receipt_id(r) for r in pac])]
+    svg.append('<defs><pattern id="hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+               f'<rect width="12" height="12" fill="{LGRAY}"/><line x1="0" y1="0" x2="0" y2="12" stroke="{GRAY}" stroke-width="6"/></pattern></defs>')
+    for i, (title, base, add, col, label, rr) in enumerate(rows):
+        y = 90 + i * 165
+        svg.append(f'<text x="0" y="{y}" font-size="20" font-weight="bold" fill="{INK}">{esc(title)}</text>')
+        if base:
+            svg.append(f'<rect x="0" y="{y + 14}" width="{base * bar_w:.1f}" height="54" fill="{LGRAY}"/>')
+        svg.append(f'<rect x="{base * bar_w:.1f}" y="{y + 14}" width="{add * bar_w:.1f}" height="54" fill="{col or "url(#hatch)"}"/>'
+                   f'<text x="{(base + add) * bar_w + 14:.1f}" y="{y + 49}" font-size="21" font-weight="bold" fill="{INK}">{esc(label)}</text>')
+        ids += element("bar", title, rr)
+    svg.append(f'<text x="0" y="{90 + 3 * 165 + 100}" font-size="18" fill="{MUTED}">{money(big_amt)} of the PAC money is one gift, '
+               f'{esc(person(big["name"]))}\'s to Fighting for Michigan.</text>')
+
+    # center: the donors at the limit, by name
+    top, groups = max_donors_by_name()
+    am = sum(len(groups[k]) for k in ("ARABIC", "SOUTH_ASIAN_MUSLIM", "AM-other"))
+    cx, cy, r = 1500, 390, 185
+    svg.append(head(1100, f"The {len(top)} donors who gave the {money(LIMIT)} maximum"))
+    svg.append(f'<text x="1100" y="56" font-size="20" fill="{MUTED}">{am} of them ({round(100 * am / len(top))}%) have Arab- or Muslim-heritage names</text>')
+    a0 = 0.0
+    for key, label, col in NAME_SLICES:
+        ds = groups.get(key, [])
+        if not ds:
+            continue
+        a1 = a0 + 2 * math.pi * len(ds) / len(top)
+        p0 = (cx + r * math.sin(a0), cy - r * math.cos(a0))
+        p1 = (cx + r * math.sin(a1), cy - r * math.cos(a1))
+        svg.append(f'<path d="M{cx},{cy} L{p0[0]:.1f},{p0[1]:.1f} A{r},{r} 0 {1 if a1 - a0 > math.pi else 0} 1 {p1[0]:.1f},{p1[1]:.1f} Z" '
+                   f'fill="{col}" stroke="{BG}" stroke-width="2"/>')
+        m = (a0 + a1) / 2
+        e = (cx + (r + 14) * math.sin(m), cy - (r + 14) * math.cos(m))
+        lx = cx + (r + 40) * math.sin(m)
+        ly = cy - (r + 40) * math.cos(m)
+        anchor = "start" if math.sin(m) >= 0 else "end"
+        svg.append(f'<line x1="{cx + r * math.sin(m):.1f}" y1="{cy - r * math.cos(m):.1f}" x2="{e[0]:.1f}" y2="{e[1]:.1f}" stroke="{MUTED}"/>'
+                   f'<line x1="{e[0]:.1f}" y1="{e[1]:.1f}" x2="{lx + (-6 if anchor == "start" else 6):.1f}" y2="{ly:.1f}" stroke="{MUTED}"/>'
+                   f'<text x="{lx:.1f}" y="{ly - 4:.1f}" font-size="19" font-weight="bold" fill="{INK}" text-anchor="{anchor}">{esc(label)}</text>'
+                   f'<text x="{lx:.1f}" y="{ly + 19:.1f}" font-size="18" fill="{MUTED}" text-anchor="{anchor}">{len(ds)} people · {money(sum(d["net"] for d in ds))}</text>')
+        # every slice cites the whole group of donors at the limit, so the file never labels an individual's name
+        ids += element("slice", label, [donor_id(d) for d in top])
+        a0 = a1
+
+    # right: the groups
+    x_r = 2010
+    svg.append(head(x_r, "The groups"))
+    fams = defaultdict(dict)
+    for k, p in people.items():
+        if p["campaign"] or p["pac"]:
+            for f in fam_of(p):
+                fams[f][k] = p
+    assert set(fams) <= set(GROUP_TEXT), f"no description for {set(fams) - set(GROUP_TEXT)}"
+    order = sorted(fams, key=lambda f: (f != "CAIR (national and chapters)", f != "KindHearts (closed 2006)", -net(fams[f])))
+    all_ties = load("ties")
+    y = 70
+    for f in order:
+        short, text = GROUP_TEXT[f]
+        grp = fams[f]
+        n_c = sum(1 for p in grp.values() if p["campaign"])
+        pac_f = sum(r["amount"] or 0 for p in grp.values() for r in p["pac"])
+        amount = f"{n_c} {'person' if n_c == 1 else 'people'} · {money(net(grp))} to the campaign" + (f", {money(pac_f)} to PACs" if pac_f else "")
+        svg.append(f'<text x="{x_r}" y="{y}" font-size="20" font-weight="bold" fill="{INK}">{esc(short)}'
+                   f'<tspan font-weight="normal" fill="{MUTED}">  {esc(amount)}</tspan></text>')
+        for line in textwrap.wrap(text, 98):
+            y += 22
+            svg.append(f'<text x="{x_r}" y="{y}" font-size="17" fill="{MUTED}">{esc(line)}</text>')
+        tie_ids = [f"T{t['tie_id']}" for t in all_ties if short in GROUP_TIES and re.search(GROUP_TIES[short], t["entity"] or "")
+                   and t["link_type"] in ("designation", "listed_in_document", "other")]
+        ids += element("group", short, did(grp) + [receipt_id(r) for p in grp.values() for r in p["pac"]] + tie_ids)
+        y += 40
+    h_svg = max(y, 760)
+    svg = [f'<svg width="{WC - 120}" height="{h_svg}" viewBox="0 0 {WC - 120} {h_svg}">'] + svg + [
+        f'<line x1="1060" y1="0" x2="1060" y2="{h_svg - 10}" stroke="{AXIS}"/><line x1="1960" y1="0" x2="1960" y2="{h_svg - 10}" stroke="{AXIS}"/></svg>']
+    doc = shell(
+        f"CAIR staff and leaders gave El-Sayed's campaign {money(net(cair))}; {round(100 * am / len(top))}% of his maximum donors have "
+        "Arab- or Muslim-heritage names",
+        "El-Sayed's donors and the groups in the coverage", "",
+        "\n".join(svg) + cite(ids),
+        "<b>How the links were made:</b> a donor counts as staff or a leader of a group when the group's own records name them (its IRS "
+        "filings, website, annual reports or FEC filings) or when the donor's own FEC filing gives the group as employer, and only when "
+        "the record and the donor match on at least two details, such as name and city or name and employer; a person with roles in "
+        "two groups is listed under both. <b>Money:</b> FEC filings "
+        "of El-Sayed's campaign (net of refunds, through Sep 30, 2026) and of the PACs Fighting for Michigan, Unity &amp; Justice and "
+        "MERIT PAC (through Aug 31). Fox's figure is as Fox News reported it on Aug 5; Fox did not publish names. <b>The groups:</b> from "
+        "the Holy Land Foundation case filings and the 1991 memo entered as a trial exhibit, Treasury's 2006 notice on KindHearts, the "
+        "UAE's 2014 list, the Texas and Florida orders, Israel's 2014 order and the groups' own publications. <b>Names (center):</b> each "
+        "donor's name is sorted by heritage (Arabic; South Asian Muslim; other Muslim traditions such as Persian, Turkish, Afghan and "
+        "Balkan), not by religion: Arab Christians "
+        "count and Muslims with names from other traditions do not. This panel says nothing about any donor's ties to the groups.",
+        WC, h_svg + 310)
+    return doc, h_svg + 310
 
 
 # ---- figure 2: how Jukaku's super PAC money was described -----------------------------------------------------------
@@ -802,7 +975,8 @@ FIGS = {"e1-money-from-muslim-and-arab-advocacy-roles": fig_islam_money, "e1b-ca
         "e2-jukaku-money-in-the-coverage": fig_jukaku,
         "e3-what-held-up": fig_verdicts, "e4-cair-donor-figure": fig_cair,
         "e5-super-pac-money-flow": lambda: fig_flow(False), "e5b-super-pac-money-flow-and-spending": lambda: fig_flow(True),
-        "e6-max-donors-heritage-names": fig_constituency}
+        "e6-max-donors-heritage-names": fig_constituency, "e7-donors-and-groups": fig_combo}
+WIDTH = {"e7-donors-and-groups": WC}
 
 if __name__ == "__main__":
     if "--list-elements" in sys.argv:
@@ -812,4 +986,4 @@ if __name__ == "__main__":
     else:
         for stem in [a for a in sys.argv[1:] if not a.startswith("-")] or list(FIGS):
             doc, height = FIGS[stem]()
-            render(stem, doc, W, height)
+            render(stem, doc, WIDTH.get(stem, W), height)

@@ -51,7 +51,8 @@ def tokens(name: str) -> tuple[str, str]:
     return last.replace(" ", ""), first
 
 
-def main() -> None:
+def load_judge():
+    """The per-name judgment: lexicon, final-pass audit overrides, then full-name pair judgments."""
     sur, giv = load_lexicon("surnames.jsonl"), load_lexicon("given.jsonl")
     # final-pass audit corrections (each with a written reason)
     for line in (LEX / "audit_overrides.jsonl").open(encoding="utf-8"):
@@ -85,6 +86,11 @@ def main() -> None:
         return {"lo": lo, "hi": hi, "p": (lo + hi) / 2, "origin": origin, "which": which, "other_origin": other_origin,
                 "labelled": bool(ls or gs), "pair": bool(pr)}
 
+    return judge
+
+
+def main() -> None:
+    judge = load_judge()
     roster = [json.loads(line) for line in (ROOT / "analysis" / "roster_named_itemized.jsonl").open(encoding="utf-8")]
     tot = sum(r["amt"] for r in roster)
     acc = defaultdict(lambda: defaultdict(float))
