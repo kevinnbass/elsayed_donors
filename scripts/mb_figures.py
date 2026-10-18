@@ -380,6 +380,7 @@ def fig_combo() -> tuple[str, int]:
     shades = {"muslim": [BLUE250, "#5b9be4", "#9ec5f2", "#3f86dc", "#b9d5f5"], "arab": [PURPLE, "#a08ae6", "#c3b5f0"]}
     used = defaultdict(int)
     kind = {name: kd for _, name, kd in FAMILY}
+    slice_col = {}
     for g in small + [CAIR]:
         grp = by_g[g]
         v = camp(grp) + pacs(grp)
@@ -390,6 +391,7 @@ def fig_combo() -> tuple[str, int]:
             pal = shades[kind[g]]
             col = pal[used[kind[g]] % len(pal)]
             used[kind[g]] += 1
+        slice_col[g] = col
         pt = lambda a, rr: (cx + rr * math.sin(a), cy - rr * math.cos(a))
         (x1, y1), (x2, y2), (x3, y3), (x4, y4) = pt(a0, ro), pt(a1, ro), pt(a1, ri), pt(a0, ri)
         big = 1 if a1 - a0 > math.pi else 0
@@ -415,7 +417,7 @@ def fig_combo() -> tuple[str, int]:
 
     # right: the groups
     y_top = 800                                   # where the bottom half starts
-    svg.append(f'<text x="0" y="{y_top + 50}" font-size="26" font-weight="bold" fill="{INK}">The groups</text>')
+    svg.append(f'<text x="0" y="{y_top + 52}" font-size="26" font-weight="bold" fill="{INK}">The groups</text>')
     fams = defaultdict(list)
     for p in folks:
         for f in fam_of(p):
@@ -423,28 +425,29 @@ def fig_combo() -> tuple[str, int]:
     assert set(fams) <= set(GROUP_TEXT), f"no description for {set(fams) - set(GROUP_TEXT)}"
     order = sorted(fams, key=lambda f: (f != CAIR, f != "KindHearts (closed 2006)", -(camp(fams[f]) + pacs(fams[f]))))
     all_ties = load("ties")
-    wrap = 118
+    wrap, lh, gap_b, top_y = 118, 27, 26, y_top + 92        # 20 px text wrapped to fill a 1,100 px column
     lines = {f: textwrap.wrap(GROUP_TEXT[f][1], wrap) for f in order}
-    height = lambda f: 22 * len(lines[f]) + 40
+    height = lambda f: 30 + lh * len(lines[f]) + gap_b
     half = sum(height(f) for f in order) / 2
-    col_x, y, done, bottom = 0, y_top + 96, 0.0, 0.0
+    col_x, y, done, bottom = 0, top_y, 0.0, 0.0
     for f in order:
         if col_x == 0 and done >= half - height(f) / 2:
-            col_x, y = 1160, y_top + 96                   # the second column
+            col_x, y = 1170, top_y                        # the second column
         done += height(f)
         short = GROUP_TEXT[f][0]
         grp = fams[f]
         amount = (f"{len(grp)} {'person' if len(grp) == 1 else 'people'} · {money(camp(grp))} to the campaign"
                   + (f", {money(pacs(grp))} to PACs" if pacs(grp) else ""))
-        svg.append(f'<text x="{col_x}" y="{y}" font-size="20" font-weight="bold" fill="{INK}">{esc(short)}'
-                   f'<tspan font-weight="normal" fill="{MUTED}">  {esc(amount)}</tspan></text>')
-        for line in lines[f]:
-            y += 22
-            svg.append(f'<text x="{col_x}" y="{y}" font-size="17" fill="{MUTED}">{esc(line)}</text>')
+        block = 30 + lh * len(lines[f])
+        svg.append(f'<rect x="{col_x}" y="{y - 22}" width="7" height="{block}" rx="3" fill="{slice_col.get(f, SLATE)}"/>'
+                   f'<text x="{col_x + 20}" y="{y}" font-size="23" font-weight="bold" fill="{INK}">{esc(short)}'
+                   f'<tspan font-weight="normal" font-size="21" fill="{INK}">  {esc(amount)}</tspan></text>')
+        for i, line in enumerate(lines[f]):
+            svg.append(f'<text x="{col_x + 20}" y="{y + 30 + i * lh}" font-size="20" fill="{MUTED}">{esc(line)}</text>')
         tie_ids = [f"T{t['tie_id']}" for t in all_ties if short in GROUP_TIES and re.search(GROUP_TIES[short], t["entity"] or "")
                    and t["link_type"] in ("designation", "listed_in_document", "other")]
         ids += element("group", short, rows_of(grp) + tie_ids)
-        y += 40
+        y += block + gap_b
         bottom = max(bottom, y)
     h_svg = bottom
     svg = [f'<svg width="{WC - 120}" height="{h_svg}" viewBox="0 0 {WC - 120} {h_svg}">'] + svg + [
