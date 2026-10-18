@@ -183,6 +183,93 @@ def fig_islam_money() -> tuple[str, int]:
     return doc, h_svg + 330
 
 
+# ---- figure 1b: the same money counted two ways ------------------------------------------------------------------
+FOX_DATA_END = "20260715"   # parameter: last day of the campaign's pre-primary report, the newest filing before Fox's Aug 5 review
+
+
+def fig_two_counts() -> tuple[str, int]:
+    people = role_people()
+    is_cair = lambda p: any(re.search(r"^CAIR|Council on American", o) for o, _ in p["orgs"])
+    gifts = defaultdict(list)
+    for r in map(json.loads, open(ROOT / "analysis" / "roster_named_itemized.jsonl", encoding="utf-8")):
+        gifts[(r["last_norm"], r["first_norm"], (r["zip"] or "")[:5])].append(r)
+    named_fec = {(" ".join(r["name_as_filed"].upper().split()), (r["city"] or "").upper()) for r in load("fec_rows")
+                 if r["committee"] == "Abdul for U.S. Senate"}
+    n_stories = {(" ".join(r["donor"].upper().split()), r["city"].upper(), r["state"]): r["n_stories_naming_donor"]
+                 for r in load("donor_org_roles_confirmed")}
+    named = lambda k: n_stories.get(k, 0) > 0 or (k[0], k[1]) in named_fec
+    cair = {k: p for k, p in people.items() if is_cair(p) and p["campaign"]}
+    other = {k: p for k, p in people.items() if not is_cair(p) and p["campaign"]}
+    early = {}
+    for k, p in cair.items():
+        rows = [g for d in p["campaign"] for g in gifts.get((d["last_norm"], d["first_norm"], d["zip5"]), []) if g["date"] <= FOX_DATA_END]
+        if any(g["amt"] > 0 for g in rows):
+            early[k] = sum(g["amt"] for g in rows)
+    net = lambda grp: sum(d["net"] for p in grp.values() for d in p["campaign"])
+    did = lambda grp: [donor_id(d) for p in grp.values() for d in p["campaign"]]
+    pac = [r for p in people.values() for r in p["pac"]]
+    big = max(people.values(), key=lambda p: sum(r["amount"] or 0 for r in p["pac"]))
+    big_amt = sum(r["amount"] or 0 for r in big["pac"])
+    fox = [c for c in load("claims") if c["entities"] == "CAIR-connected donors (group claim)" and c["published"]
+           and c["outlet"] == "Fox News" and isinstance(c["amount_usd"], (int, float))]
+    fox_first = min(c["published"] for c in fox)
+    fox = [c for c in fox if c["published"] == fox_first]
+    fox_amt = max(c["amount_usd"] for c in fox)
+    fox_n = max(int(m) for c in fox for m in re.findall(r"at least (\d+)", c["quote"] or "")) if any("at least" in (c["quote"] or "") for c in fox) else None
+    total_all = net(cair) + net(other) + sum(r["amount"] or 0 for r in pac)
+    rows = [  # (title, definition, base, added, color, label, ids, hatch)
+        ("What Fox reported", f"{date.fromisoformat(fox_first):%b %-d}; names not published", 0, fox_amt, GRAY,
+         f"more than {money(fox_amt)} from at least {fox_n} people", [f"C{c['claim_id']}" for c in fox], True),
+        ("Fox's definition, our records", f"gifts through {date(int(FOX_DATA_END[:4]), int(FOX_DATA_END[4:6]), int(FOX_DATA_END[6:])):%b %-d}, the newest filing before Fox's review",
+         0, sum(early.values()), BLUE, f"{money(sum(early.values()))} from {len(early)} people; stories named {sum(named(k) for k in early)}",
+         [donor_id(d) for k in early for d in cair[k]["campaign"]], False),
+        ("Fox's definition, our records", "all gifts through Sep 30", 0, net(cair), BLUE,
+         f"{money(net(cair))} from {len(cair)} people; stories named {sum(named(k) for k in cair)}", did(cair), False),
+        ("+ other Muslim and Arab-advocacy groups", "ICNA, Islamic Relief, MPower, Emgage, IMEU, ACMER, AAPAC, KindHearts", net(cair), net(other), PURPLE,
+         f"{money(net(cair) + net(other))} from {len(cair) + len(other)} people (+{len(other)}); stories named {sum(named(k) for k in other)} of the new",
+         did(other), False),
+        ("+ gifts by people with these roles to PACs", f"{money(big_amt)} of it from {person(big['name'])}, reported in many stories", net(cair) + net(other),
+         sum(r["amount"] or 0 for r in pac), ORANGE, f"{money(total_all)} in all", [receipt_id(r) for r in pac], False),
+    ]
+    x0, bw, row_h = 820, W - 120 - 820 - 520, 118
+    scale = bw / total_all
+    h_svg = 30 + len(rows) * row_h + 60
+    svg, ids = [f'<svg width="{W - 120}" height="{h_svg}" viewBox="0 0 {W - 120} {h_svg}">',
+                '<defs><pattern id="hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+                f'<rect width="12" height="12" fill="{LGRAY}"/><line x1="0" y1="0" x2="0" y2="12" stroke="{GRAY}" stroke-width="6"/></pattern></defs>'], []
+    for i, (title, sub, base, add, col, label, rr, hatch) in enumerate(rows):
+        y = 30 + i * row_h
+        if i == 1:
+            svg.append(f'<line x1="0" y1="{y - 22}" x2="{W - 120}" y2="{y - 22}" stroke="{AXIS}"/>')
+        svg.append(f'<text x="0" y="{y + 30}" font-size="22" font-weight="bold" fill="{INK}">{esc(title)}</text>'
+                   f'<text x="0" y="{y + 58}" font-size="17" fill="{MUTED}">{esc(sub)}</text>')
+        if base:
+            svg.append(f'<rect x="{x0}" y="{y + 8}" width="{base * scale:.1f}" height="54" fill="{LGRAY}"/>')
+        svg.append(f'<rect x="{x0 + base * scale:.1f}" y="{y + 8}" width="{add * scale:.1f}" height="54" '
+                   f'fill="{"url(#hatch)" if hatch else col}"/>'
+                   f'<text x="{x0 + (base + add) * scale + 14:.1f}" y="{y + 42}" font-size="20" font-weight="bold" fill="{INK}">{esc(label)}</text>')
+        ids += element("bar", title + " " + sub, rr)
+    svg.append(f'<line x1="{x0}" y1="14" x2="{x0}" y2="{h_svg - 40}" stroke="{AXIS}"/></svg>')
+    share_big = round(100 * big_amt / total_all)
+    doc = shell(
+        f"Counted Fox's way, CAIR staff and leaders gave El-Sayed's campaign about {money(round(net(cair), -3))}; the {money(round(total_all, -3))} total "
+        f"adds other groups and PAC gifts, {share_big}% of it from one donor",
+        "The same money, counted two ways",
+        "Fox's definition: people who work or worked for CAIR, or held leadership roles there, and their gifts to the campaign. The "
+        "broader count adds people with roles in the other Muslim and Arab-advocacy groups the coverage names, and those people's "
+        "gifts to the PACs backing El-Sayed (the super PACs Fighting for Michigan and Unity &amp; Justice, and ACMER's MERIT PAC). Each bar is a running total; the colored part is what that step adds.",
+        legend([(GRAY, "as Fox reported it"), (BLUE, "CAIR staff and leaders, to the campaign"), (PURPLE, "other groups' staff and leaders, to the campaign"),
+                (ORANGE, "their gifts to PACs")]) + "\n".join(svg) + cite(ids),
+        "<b>Source:</b> FEC filings of Abdul for U.S. Senate (net of refunds, through Sep 30, 2026) and of Fighting for Michigan, Unity "
+        "&amp; Justice and MERIT PAC; roles from the organizations' own filings and pages, each confirmed on two attributes. Fox did "
+        "not say which filings it used or publish its list, so how many of our people Fox counted is unknown; we count fewer than Fox "
+        "in its window because we keep only roles we could confirm. The cut at Fox's date matches each donor's dated gifts by name and "
+        "ZIP code. \"Stories named\": any captured story printed the person's name. KindHearts' assets were frozen by Treasury in 2006 "
+        "pending investigation; that says nothing about the person who chaired it earlier.",
+        W, h_svg + 410)
+    return doc, h_svg + 410
+
+
 # ---- figure 2: how Jukaku's super PAC money was described -----------------------------------------------------------
 def fig_jukaku() -> tuple[str, int]:
     claims = [c for c in load("claims") if "Tayeb Jukaku" in (c["entities"] or "").split("; ")
@@ -700,7 +787,8 @@ def fig_constituency() -> tuple[str, int]:
     return doc, h_svg + 340
 
 
-FIGS = {"e1-money-from-muslim-and-arab-advocacy-roles": fig_islam_money, "e2-jukaku-money-in-the-coverage": fig_jukaku,
+FIGS = {"e1-money-from-muslim-and-arab-advocacy-roles": fig_islam_money, "e1b-cair-money-counted-two-ways": fig_two_counts,
+        "e2-jukaku-money-in-the-coverage": fig_jukaku,
         "e3-what-held-up": fig_verdicts, "e4-cair-donor-figure": fig_cair,
         "e5-super-pac-money-flow": lambda: fig_flow(False), "e5b-super-pac-money-flow-and-spending": lambda: fig_flow(True),
         "e6-max-donors-heritage-names": fig_constituency}
