@@ -282,12 +282,11 @@ def fig_two_counts() -> tuple[str, int]:
 
 
 # ---- figure 7: three panels: the money counted two ways, the maximum donors by name, the groups ------------------
-WC = 3200   # parameter: this figure's page width (three panels)
+WC = 2400   # parameter: this figure's page width (two panels over one)
 GROUP_TEXT = {  # what the saved records show about each organization family (ties judged against primary records)
     "CAIR (national and chapters)": ("CAIR", "Council on American-Islamic Relations and its chapters and CAIR Action. Named in 2007 on prosecutors' "
                                      "list of unindicted co-conspirators in the Holy Land Foundation Hamas-financing case; never charged. "
-                                     "Listed as a terrorist group by the UAE in 2014; labeled one by Texas and Florida in 2025 (Florida's "
-                                     "order partly blocked in court)."),
+                                     "Listed as a terrorist group by the UAE in 2014; labeled one by Texas and Florida in 2025."),
     "KindHearts (closed 2006)": ("KindHearts", "Toledo charity, now closed. Treasury froze its assets in 2006 \"pending investigation\", calling it "
                                  "tied to Hamas; it was never formally designated. The donor was its chairman in 2002-03."),
     "ACMER and its MERIT PAC": ("ACMER", "American Committee for Middle East Rights, an advocacy group, and its MERIT PAC. The donor is its "
@@ -366,7 +365,7 @@ def fig_combo() -> tuple[str, int]:
     ids += element("waffle", "donors at the limit", [donor_id(d) for d in top])
 
     # center: the money from people with roles in the groups, one slice per group, sized by dollars
-    x0c = 1080
+    x0c = 1150
     first = lambda p: CAIR if CAIR in fam_of(p) else sorted(fam_of(p))[0]     # each person once: CAIR first
     by_g = defaultdict(list)
     for p in folks:
@@ -415,8 +414,8 @@ def fig_combo() -> tuple[str, int]:
         a0 = a1
 
     # right: the groups
-    x_r = 2160
-    svg.append(f'<text x="{x_r}" y="30" font-size="26" font-weight="bold" fill="{INK}">The groups</text>')
+    y_top = 800                                   # where the bottom half starts
+    svg.append(f'<text x="0" y="{y_top + 50}" font-size="26" font-weight="bold" fill="{INK}">The groups</text>')
     fams = defaultdict(list)
     for p in folks:
         for f in fam_of(p):
@@ -424,24 +423,33 @@ def fig_combo() -> tuple[str, int]:
     assert set(fams) <= set(GROUP_TEXT), f"no description for {set(fams) - set(GROUP_TEXT)}"
     order = sorted(fams, key=lambda f: (f != CAIR, f != "KindHearts (closed 2006)", -(camp(fams[f]) + pacs(fams[f]))))
     all_ties = load("ties")
-    y = 74
+    wrap = 118
+    lines = {f: textwrap.wrap(GROUP_TEXT[f][1], wrap) for f in order}
+    height = lambda f: 22 * len(lines[f]) + 40
+    half = sum(height(f) for f in order) / 2
+    col_x, y, done, bottom = 0, y_top + 96, 0.0, 0.0
     for f in order:
-        short, text = GROUP_TEXT[f]
+        if col_x == 0 and done >= half - height(f) / 2:
+            col_x, y = 1160, y_top + 96                   # the second column
+        done += height(f)
+        short = GROUP_TEXT[f][0]
         grp = fams[f]
         amount = (f"{len(grp)} {'person' if len(grp) == 1 else 'people'} · {money(camp(grp))} to the campaign"
                   + (f", {money(pacs(grp))} to PACs" if pacs(grp) else ""))
-        svg.append(f'<text x="{x_r}" y="{y}" font-size="20" font-weight="bold" fill="{INK}">{esc(short)}'
+        svg.append(f'<text x="{col_x}" y="{y}" font-size="20" font-weight="bold" fill="{INK}">{esc(short)}'
                    f'<tspan font-weight="normal" fill="{MUTED}">  {esc(amount)}</tspan></text>')
-        for line in textwrap.wrap(text, 98):
+        for line in lines[f]:
             y += 22
-            svg.append(f'<text x="{x_r}" y="{y}" font-size="17" fill="{MUTED}">{esc(line)}</text>')
+            svg.append(f'<text x="{col_x}" y="{y}" font-size="17" fill="{MUTED}">{esc(line)}</text>')
         tie_ids = [f"T{t['tie_id']}" for t in all_ties if short in GROUP_TIES and re.search(GROUP_TIES[short], t["entity"] or "")
                    and t["link_type"] in ("designation", "listed_in_document", "other")]
         ids += element("group", short, rows_of(grp) + tie_ids)
         y += 40
-    h_svg = max(y, 790)
+        bottom = max(bottom, y)
+    h_svg = bottom
     svg = [f'<svg width="{WC - 120}" height="{h_svg}" viewBox="0 0 {WC - 120} {h_svg}">'] + svg + [
-        f'<line x1="1040" y1="0" x2="1040" y2="{h_svg - 10}" stroke="{AXIS}"/><line x1="2120" y1="0" x2="2120" y2="{h_svg - 10}" stroke="{AXIS}"/></svg>']
+        f'<line x1="1110" y1="0" x2="1110" y2="{y_top - 10}" stroke="{AXIS}"/><line x1="0" y1="{y_top + 10}" x2="{WC - 120}" '
+        f'y2="{y_top + 10}" stroke="{AXIS}"/></svg>']
     doc = shell(
         f"People with roles in CAIR and other Muslim and Arab-advocacy groups gave {money(total)} to El-Sayed's campaign and the PACs "
         f"backing him; {k}% of his maximum donors have Arab- or Muslim-heritage names",
@@ -449,12 +457,12 @@ def fig_combo() -> tuple[str, int]:
         "\n".join(svg) + cite(ids),
         "<b>How the links were made:</b> a donor counts as staff or a leader of a group when the group's own records name them (its IRS "
         "filings, website, annual reports or FEC filings) or when the donor's own FEC filing gives the group as employer, and only when "
-        "the record and the donor match on at least two details, such as name and city or name and employer. In the center, each person "
-        "counts once, under CAIR if they also hold a role elsewhere; on the right, a person with roles in two groups is listed under both. "
+        "the record and the donor match on at least two details, such as name and city or name and employer. In the ring, each person "
+        "counts once, under CAIR if they also hold a role elsewhere; below, a person with roles in two groups is listed under both. "
         "<b>Money:</b> FEC filings of El-Sayed's campaign (net of refunds, through Sep 30, 2026) and of the PACs Fighting for Michigan, "
         "Unity &amp; Justice and MERIT PAC (through Aug 31). <b>The groups:</b> from the Holy Land Foundation case filings and the 1991 "
         "memo entered as a trial exhibit, Treasury's 2006 notice on KindHearts, the UAE's 2014 list, the Texas and Florida orders, "
-        "Israel's 2014 order and the groups' own publications. <b>Names (left):</b> each donor's name is judged by its heritage (Arabic, "
+        "Israel's 2014 order and the groups' own publications. <b>Names (top left):</b> each donor's name is judged by its heritage (Arabic, "
         "South Asian Muslim, Persian, Turkish and other Muslim traditions), not by religion: Arab Christians count and Muslims with names "
         "from other traditions do not. That panel says nothing about any donor's ties to the groups.",
         WC, h_svg + 300)
