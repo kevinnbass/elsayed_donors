@@ -28,6 +28,18 @@ def money(r: dict, k: str) -> float:
     return round(float(r.get(k) or 0), 2)
 
 
+def raw_se(file_number: int) -> list[list[str]]:
+    """Schedule E lines of an e-filed report from <pull_dir>/fec_raw/<file_number>.fec (FEC format 8.5, 44 fields)."""
+    p = PULL / "fec_raw" / f"{file_number}.fec"
+    if not p.exists():
+        return []
+    lines = [ln.rstrip("\r").split("\x1c") for ln in p.read_text(encoding="latin-1").split("\n")]  # not splitlines: it splits on 0x1C
+    assert lines[0][:3] == ["HDR", "FEC", "8.5"], f"{p.name}: format {lines[0][:3]}"
+    se = [f for f in lines if f[0].startswith("SE")]
+    assert all(len(f) == 44 for f in se), f"{p.name}: unexpected schedule E width"
+    return se
+
+
 reports, spending = [], []
 for key, (committee, cid) in COMMITTEES.items():
     reps = [r for r in json.load(open(PULL / f"{key}_reports.json")) if r.get("most_recent")
@@ -67,6 +79,25 @@ for key, (committee, cid) in COMMITTEES.items():
                          "payee": r.get("payee_name"), "description": r.get("expenditure_description"),
                          "memo_code": r.get("memo_code"), "filed": (r.get("filing_date") or "")[:10],
                          "counts": counts, "basis": basis, "last_regular_report_end": last_end})
+    # a current report FEC has not processed yet (new, or an amendment whose processed lines still carry the original's file
+    # number): its lines come from the e-filed report itself
+    processed_files = {s["file_number"] for s in spending if s["committee"] == committee and s["form"] == "F3X"}
+    for r in reps:
+        if r["file_number"] in processed_files or not money(r, "independent_expenditures_period"):
+            continue
+        for f in raw_se(r["file_number"]):
+            spending.append({"committee": committee, "form": "F3X", "report_type": r["report_type"], "file_number": r["file_number"],
+                             "transaction_id": f[2], "expenditure_date": f"{(f[21] or f[19])[:4]}-{(f[21] or f[19])[4:6]}-{(f[21] or f[19])[6:8]}",
+                             "dissemination_date": f"{f[19][:4]}-{f[19][4:6]}-{f[19][6:8]}" if f[19] else "",
+                             "amount": round(float(f[20]), 2), "support_oppose": f[26],
+                             "candidate": ", ".join(x for x in (f[28], " ".join(y for y in (f[29], f[30]) if y)) if x).upper(),
+                             "candidate_id": f[27] or None, "candidate_party": None, "candidate_state": f[35],
+                             "payee": f[6] or ", ".join(x for x in (f[7], f[8]) if x), "description": f[23],
+                             "memo_code": f[42] or None, "filed": (r.get("receipt_date") or "")[:10],
+                             "counts": f[42] != "X",
+                             "basis": ("regular report, most recent version (lines read from the e-filed report; not yet processed by FEC)"
+                                       if f[42] != "X" else "memo line (not in the report's totals)"),
+                             "last_regular_report_end": last_end})
     # reconciliation: counted F3X lines against each report's line-24 total
     by_file = defaultdict(float)
     for s in spending:

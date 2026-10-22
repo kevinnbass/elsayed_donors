@@ -143,7 +143,7 @@ def main() -> None:
 
     CAIR = "CAIR (national and chapters)"
     fam_of = lambda orgs: {next(n for pat, n, _ in M.FAMILY if re.search(pat, o)) for o, _ in orgs}
-    people = M.role_people()
+    people = M.role_people(M.PAC_END)
     folks = sorted([p for p in M.persons(people) if p["campaign"] or p["pac"]], key=lambda p: (p["name"].upper(), p["keys"][0]))
     pid = {}
     for i, p in enumerate(folks, 1):
